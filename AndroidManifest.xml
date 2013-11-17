@@ -18,7 +18,9 @@
         android:theme="@style/Theme.AppCompat.Light.DarkActionBar" >
         <activity
             android:name="com.polimuevet.android.MainActivity"
-            android:label="@string/app_name" >
+            android:label="Estado Parkings"
+            android:configChanges="keyboardHidden|orientation" >
+            
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

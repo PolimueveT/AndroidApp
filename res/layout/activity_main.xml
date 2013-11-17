@@ -40,12 +40,15 @@
             android:layout_gravity="center"
             android:visibility="gone" />
 
-        <TableLayout
-            android:id="@+id/tablaparkings"
+   
+
+        <ListView
+            android:id="@+id/parkings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:stretchColumns="*" >
-        </TableLayout>
+            android:dividerHeight="0dp" >
+        </ListView>
+
     </LinearLayout>
 
 </LinearLayout>

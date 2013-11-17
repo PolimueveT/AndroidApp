@@ -1,16 +1,16 @@
 package com.polimuevet.android;
 
-import java.util.List;
+import java.util.ArrayList;
 
 
 public class ParkingList {
-	private List<Parking> parkings;
+	private ArrayList<Parking> parkings;
 
-	public List<Parking> getParkings() {
+	public ArrayList<Parking> getParkings() {
 		return parkings;
 	}
 
-	public void setParkings(List<Parking> parkings) {
+	public void setParkings(ArrayList<Parking> parkings) {
 		this.parkings = parkings;
 	}
 }
