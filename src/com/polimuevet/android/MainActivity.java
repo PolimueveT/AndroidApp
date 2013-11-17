@@ -27,6 +27,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -52,27 +53,26 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 	private Button actualizar;
 	ListView ParkingsView;
 	private AdaptadorParking Padapter;
-	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		// iptv =(TextView)findViewById(R.id.ipTextView);
-		
+
 		ip = (EditText) findViewById(R.id.ipEditText);
 		ip.setText("192.168.1.10:3000");
 		progreso = (ProgressBar) findViewById(R.id.carga);
 		actualizar = (Button) findViewById(R.id.actualizar);
 		actualizar.setOnClickListener(this);
 		ParkingsView = (ListView) findViewById(R.id.parkings);
-		//lista.getParkings().add(new Parking(1,"test","ETSINF",4,2,"libre"));
-		
+		// lista.getParkings().add(new Parking(1,"test","ETSINF",4,2,"libre"));
+
 	}
-	
-	
-	public void asociarAdapter(){
-		Padapter = new AdaptadorParking(this, R.layout.elemento_fila,lista.getParkings());
+
+	public void asociarAdapter() {
+		Padapter = new AdaptadorParking(this, R.layout.elemento_fila,
+				lista.getParkings());
 		ParkingsView.setAdapter(Padapter);
 	}
 
@@ -81,6 +81,19 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    // Handle item selection
+	    switch (item.getItemId()) {
+	        case R.id.action_refresh:
+	        	cargar_parkings();
+	            return true;
+	     
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
 	}
 
 	private void cargar_parkings() {
@@ -104,49 +117,31 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 		protected void onPostExecute(Void result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
-			if (lista != null) {
+			if (lista.getParkings() != null) {
 				Collections.sort(lista.getParkings());
 				asociarAdapter();
-				
-				/*	
-				for (int s = lista.getParkings().size() - 1; s >= 0; s--) {
-					
-										
-					
-				
-			
-					TableRow row = new TableRow(MainActivity.this);
-					TextView tvnombre = new TextView(MainActivity.this);
-					tvnombre.setText(lista.getParkings().get(s).getLugar());
-					tvnombre.setTextSize(24);
-					tvnombre.setTextColor(getResources()
-							.getColor(R.color.Black));
 
 				
-					row.addView(tvnombre);
-					TextView tvp = new TextView(MainActivity.this);
-					tvp.setText("" + lista.getParkings().get(s).getPlazas());
-					tvp.setTextSize(24);
-					tvp.setTextColor(getResources().getColor(R.color.Black));
-					row.addView(tvp);
-					table.addView(row);
-					
-				 
-					
-				}
-				*/
 				Padapter.notifyDataSetChanged();
 
+			} else {
+				Toast notification = Toast
+						.makeText(MainActivity.this,
+								"Fallo de conexión con el servidor",
+								Toast.LENGTH_SHORT);
+				notification.setGravity(Gravity.CENTER, 0, 0);
+				notification.show();
 			}
 			progreso.setVisibility(View.GONE);
-			// host.getTabWidget().getChildTabViewAt(1).setEnabled(true);
+		
 		}
 
 		@Override
 		protected void onPreExecute() {
 			// TODO Auto-generated method stub
 			super.onPreExecute();
-			// host.getTabWidget().getChildTabViewAt(1).setEnabled(false);
+			progreso.setVisibility(View.VISIBLE);
+			
 		}
 
 		@Override
@@ -217,7 +212,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
-		progreso.setVisibility(View.VISIBLE);
+		
 		if (isOnline()) {
 			cargar_parkings();
 			// reintentar.setVisibility(View.GONE);
@@ -274,8 +269,9 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 					ocupadas.setText("" + p.getOcupadas());
 				}
 				if (estado != null) {
-					if(p.getEstado().compareTo("Cerrado")==0){
-						estado.setBackgroundColor(getResources().getColor(R.color.Icrojo));
+					if (p.getEstado().compareTo("Cerrado") == 0) {
+						estado.setBackgroundColor(getResources().getColor(
+								R.color.Icrojo));
 					}
 					estado.setText(p.getEstado());
 				}
