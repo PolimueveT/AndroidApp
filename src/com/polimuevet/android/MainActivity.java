@@ -260,7 +260,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 		@Override
 		public View getView(final int position, View convertView,
 				ViewGroup parent) {
-
+			int nplazas = 0, nocupadas=0;
 			// posicion=position;
 			View v = convertView;
 			if (v == null) {
@@ -286,14 +286,29 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 				}
 				if (plazas != null) {
 					plazas.setText("" + p.getPlazas());
+					nplazas=p.getPlazas();
 				}
 				if (ocupadas != null) {
-					ocupadas.setText("" + p.getOcupadas());
+					nocupadas=p.getOcupadas();
+					
+					ocupadas.setText("" + (nplazas-nocupadas));
 				}
 				if (estado != null) {
 					if (p.getEstado().compareTo("Cerrado") == 0) {
 						estado.setBackgroundColor(getResources().getColor(
+								R.color.Gray));
+					}
+					else if (p.getEstado().compareTo("Libre") == 0) {
+						estado.setBackgroundColor(getResources().getColor(
+								R.color.Icverde));
+					}
+					else if (p.getEstado().compareTo("Completo") == 0) {
+						estado.setBackgroundColor(getResources().getColor(
 								R.color.Icrojo));
+					}
+					else if (p.getEstado().compareTo("Personal autorizado") == 0) {
+						estado.setBackgroundColor(getResources().getColor(
+								R.color.Icamarillo));
 					}
 					estado.setText(p.getEstado());
 				}
