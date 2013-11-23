@@ -60,13 +60,25 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 		setContentView(R.layout.activity_main);
 		// iptv =(TextView)findViewById(R.id.ipTextView);
 
-		ip = (EditText) findViewById(R.id.ipEditText);
-		ip.setText("192.168.1.10:3000");
+	//	ip = (EditText) findViewById(R.id.ipEditText);
+	//	ip.setText("192.168.1.10:3000");
 		progreso = (ProgressBar) findViewById(R.id.carga);
-		actualizar = (Button) findViewById(R.id.actualizar);
-		actualizar.setOnClickListener(this);
+	//	actualizar = (Button) findViewById(R.id.actualizar);
+	//	actualizar.setOnClickListener(this);
 		ParkingsView = (ListView) findViewById(R.id.parkings);
 		// lista.getParkings().add(new Parking(1,"test","ETSINF",4,2,"libre"));
+		
+		
+		if (isOnline()) {
+			cargar_parkings();
+			// reintentar.setVisibility(View.GONE);
+		} else {
+			Toast notification = Toast.makeText(this,
+					"Activa tu conexión a internet", Toast.LENGTH_SHORT);
+			notification.setGravity(Gravity.CENTER, 0, 0);
+			notification.show();
+			progreso.setVisibility(View.GONE);
+		}
 
 	}
 
@@ -88,7 +100,16 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 	    // Handle item selection
 	    switch (item.getItemId()) {
 	        case R.id.action_refresh:
-	        	cargar_parkings();
+	    		if (isOnline()) {
+	    			cargar_parkings();
+	    			// reintentar.setVisibility(View.GONE);
+	    		} else {
+	    			Toast notification = Toast.makeText(this,
+	    					"Activa tu conexión a internet", Toast.LENGTH_SHORT);
+	    			notification.setGravity(Gravity.CENTER, 0, 0);
+	    			notification.show();
+	    			progreso.setVisibility(View.GONE);
+	    		}
 	            return true;
 	     
 	        default:
@@ -105,9 +126,10 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 		 */
 
 		HttpParkings get = new HttpParkings();
-		Log.d("URL", "http://" + ip.getText().toString() + "/api/parking");
+	//	Log.d("URL", "http://" + ip.getText().toString() + "/api/parking");
 
-		get.execute("http://" + ip.getText().toString() + "/api/parking");
+	//	get.execute("http://" + ip.getText().toString() + "/api/parking");
+		get.execute("http://polimuevet.eu01.aws.af.cm/api/parking");
 
 	}
 
@@ -213,16 +235,16 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		
-		if (isOnline()) {
-			cargar_parkings();
-			// reintentar.setVisibility(View.GONE);
-		} else {
-			Toast notification = Toast.makeText(this,
-					"Activa tu conexión a internet", Toast.LENGTH_SHORT);
-			notification.setGravity(Gravity.CENTER, 0, 0);
-			notification.show();
-			progreso.setVisibility(View.GONE);
-		}
+//		if (isOnline()) {
+//			cargar_parkings();
+//			// reintentar.setVisibility(View.GONE);
+//		} else {
+//			Toast notification = Toast.makeText(this,
+//					"Activa tu conexión a internet", Toast.LENGTH_SHORT);
+//			notification.setGravity(Gravity.CENTER, 0, 0);
+//			notification.show();
+//			progreso.setVisibility(View.GONE);
+//		}
 	}
 
 	public class AdaptadorParking extends ArrayAdapter<Parking> {

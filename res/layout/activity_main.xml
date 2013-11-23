@@ -19,13 +19,15 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:ems="10"
-            android:hint="IP Servidor" />
+            android:hint="IP Servidor"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/actualizar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Actualizar" />
+            android:text="Actualizar"
+            android:visibility="gone" />
     </LinearLayout>
 
     <LinearLayout
