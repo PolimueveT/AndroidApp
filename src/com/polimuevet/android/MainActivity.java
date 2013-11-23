@@ -49,8 +49,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 	String server;
 	ParkingList lista = new ParkingList();
 	private ProgressBar progreso;
-	private TableLayout table;
-	private Button actualizar;
+
 	ListView ParkingsView;
 	private AdaptadorParking Padapter;
 
@@ -58,30 +57,18 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		// iptv =(TextView)findViewById(R.id.ipTextView);
 
-	//	ip = (EditText) findViewById(R.id.ipEditText);
-	//	ip.setText("192.168.1.10:3000");
 		progreso = (ProgressBar) findViewById(R.id.carga);
-	//	actualizar = (Button) findViewById(R.id.actualizar);
-	//	actualizar.setOnClickListener(this);
+	
 		ParkingsView = (ListView) findViewById(R.id.parkings);
-		// lista.getParkings().add(new Parking(1,"test","ETSINF",4,2,"libre"));
+	
 		
-		
-		if (isOnline()) {
-			cargar_parkings();
-			// reintentar.setVisibility(View.GONE);
-		} else {
-			Toast notification = Toast.makeText(this,
-					"Activa tu conexión a internet", Toast.LENGTH_SHORT);
-			notification.setGravity(Gravity.CENTER, 0, 0);
-			notification.show();
-			progreso.setVisibility(View.GONE);
-		}
+		conectar();
 
 	}
-
+	/**
+	 * Crea el adapter para el Listview lista , este adapter se encarga de poner  un layout a cada elemento de la  lista, de colocar el color del estado del parking , de calcular plazas disponibles etc.
+	 */
 	public void asociarAdapter() {
 		Padapter = new AdaptadorParking(this, R.layout.elemento_fila,
 				lista.getParkings());
@@ -100,35 +87,40 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 	    // Handle item selection
 	    switch (item.getItemId()) {
 	        case R.id.action_refresh:
-	    		if (isOnline()) {
-	    			cargar_parkings();
-	    			// reintentar.setVisibility(View.GONE);
-	    		} else {
-	    			Toast notification = Toast.makeText(this,
-	    					"Activa tu conexión a internet", Toast.LENGTH_SHORT);
-	    			notification.setGravity(Gravity.CENTER, 0, 0);
-	    			notification.show();
-	    			progreso.setVisibility(View.GONE);
-	    		}
+	    	conectar();
 	            return true;
 	     
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }
 	}
-
+	
+	
+	/**
+	 * Intenta conectar con el parking si el dispositivo tiene conexión a internet 
+	 * 
+	 */
+	public void conectar(){
+		if (isOnline()) {
+			cargar_parkings();
+			// reintentar.setVisibility(View.GONE);
+		} else {
+			Toast notification = Toast.makeText(this,
+					"Activa tu conexión a internet", Toast.LENGTH_SHORT);
+			notification.setGravity(Gravity.CENTER, 0, 0);
+			notification.show();
+			progreso.setVisibility(View.GONE);
+		}
+	}
+	
+   /**
+    * Conecta con el servidor para obtener los datos del parking y colocarlos en el listview lista
+    */
 	private void cargar_parkings() {
 		// TODO Auto-generated method stub
 		// obtener estado parkings
-		/*
-		 * SharedPreferences preferences = getSharedPreferences("prefs",
-		 * Context.MODE_PRIVATE);
-		 */
 
-		HttpParkings get = new HttpParkings();
-	//	Log.d("URL", "http://" + ip.getText().toString() + "/api/parking");
-
-	//	get.execute("http://" + ip.getText().toString() + "/api/parking");
+		HttpParkings get = new HttpParkings();	
 		get.execute("http://polimuevet.eu01.aws.af.cm/api/parking");
 
 	}
@@ -221,6 +213,10 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 			return null;
 		}
 	}
+	/**
+	 * Comprueba si el dispositivo tiene conexión a internet
+	 * @return true si tiene conexión ,false en caso contrario
+	 */
 
 	public boolean isOnline() {
 		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -235,16 +231,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		
-//		if (isOnline()) {
-//			cargar_parkings();
-//			// reintentar.setVisibility(View.GONE);
-//		} else {
-//			Toast notification = Toast.makeText(this,
-//					"Activa tu conexión a internet", Toast.LENGTH_SHORT);
-//			notification.setGravity(Gravity.CENTER, 0, 0);
-//			notification.show();
-//			progreso.setVisibility(View.GONE);
-//		}
+		
 	}
 
 	public class AdaptadorParking extends ArrayAdapter<Parking> {
@@ -317,5 +304,6 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 			return v;
 		}
 	}
+	
 
 }

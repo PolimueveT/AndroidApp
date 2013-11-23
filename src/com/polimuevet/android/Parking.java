@@ -1,5 +1,9 @@
 package com.polimuevet.android;
-
+/**
+ * Parking individual : (1,P1A,ETSINF,200,50,Libre)
+ * @author César
+ *
+ */
 public class Parking implements Comparable<Parking> {
 
 	int id;
