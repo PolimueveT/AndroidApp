@@ -3,60 +3,76 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/card_background_white"
-    android:orientation="horizontal"
-    
-    android:padding="8dp" >
+    android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/codigo"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.9"
-        android:padding="4dp"
-        android:text="Codigo"
-        android:textSize="20sp" />
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="8dp" />
 
-    <TextView
-        android:id="@+id/lugar"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="2.2"
-        android:ellipsize="end"
-        android:maxLength="11"
-        android:padding="4dp"
-        android:text="Lugar"
-        android:textSize="20sp" />
+        android:orientation="horizontal"
+        android:padding="4dp" >
 
-    <TextView
-        android:id="@+id/plazas"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.8"
-        android:padding="4dp"
-        android:text="Plazas"
-        android:layout_gravity="right"
-        android:gravity="right"
-        android:textSize="20sp" />
+        <TextView
+            android:id="@+id/codigo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.9"
+           
+            android:text="Codigo"
+            android:textSize="20sp" />
 
-    <TextView
-        android:id="@+id/ocupadas"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.8"
-        android:padding="4dp"
-        android:text="Ocupadas"
-         android:layout_gravity="right"
-         android:gravity="right"
-        android:textSize="20sp" />
+        <TextView
+            android:id="@+id/lugar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2.2"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:maxLength="11"
+            android:textStyle="bold"
+            android:text="Lugar"
+            android:textSize="20sp" />
 
-    <TextView
-        android:id="@+id/estado"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1.6"
-        android:padding="4dp"
-        android:text="Estado"
-        android:textColor="@color/White"
-        android:textSize="20sp" />
+        <TextView
+            android:id="@+id/plazas"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_weight="0.8"
+            android:gravity="right"
+           
+            android:text="Plazas"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/ocupadas"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_weight="0.8"
+            android:gravity="right"
+            
+            android:layout_marginRight="8dp"
+            android:text="Ocupadas"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/estado"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.6"
+            android:gravity="center"
+            android:text="Estado"
+            android:textStyle="bold"
+            android:textColor="@color/White"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="8dp" />
 
 </LinearLayout>

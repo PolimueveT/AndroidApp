@@ -284,20 +284,24 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 					if (p.getEstado().compareTo("Cerrado") == 0) {
 						estado.setBackgroundColor(getResources().getColor(
 								R.color.Gray));
+						estado.setText(p.getEstado());
 					}
 					else if (p.getEstado().compareTo("Libre") == 0) {
 						estado.setBackgroundColor(getResources().getColor(
 								R.color.Icverde));
+						estado.setText(p.getEstado());
 					}
 					else if (p.getEstado().compareTo("Completo") == 0) {
 						estado.setBackgroundColor(getResources().getColor(
 								R.color.Icrojo));
+						estado.setText(p.getEstado());
 					}
-					else if (p.getEstado().compareTo("Personal autorizado") == 0) {
+					else if (p.getEstado().compareTo("Personal Autorizado") == 0) {
 						estado.setBackgroundColor(getResources().getColor(
 								R.color.Icamarillo));
+						estado.setText("Autorizado");
 					}
-					estado.setText(p.getEstado());
+					//estado.setText(p.getEstado());
 				}
 
 			}
