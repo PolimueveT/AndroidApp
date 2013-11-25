@@ -9,49 +9,19 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+    <ProgressBar
+        android:id="@+id/carga"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
 
-        <EditText
-            android:id="@+id/ipEditText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:ems="10"
-            android:hint="IP Servidor"
-            android:visibility="gone" />
-
-        <Button
-            android:id="@+id/actualizar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Actualizar"
-            android:visibility="gone" />
-    </LinearLayout>
-
-    <LinearLayout
+    <ListView
+        android:id="@+id/parkings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
-
-        <ProgressBar
-            android:id="@+id/carga"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:visibility="gone" />
-
-   
-
-        <ListView
-            android:id="@+id/parkings"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:dividerHeight="0dp"
-            android:divider="@null" >
-        </ListView>
-
-    </LinearLayout>
+        android:divider="@null"
+        android:dividerHeight="0dp" >
+    </ListView>
 
 </LinearLayout>

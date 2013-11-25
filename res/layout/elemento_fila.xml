@@ -17,58 +17,54 @@
 
         <TextView
             android:id="@+id/codigo"
+            style="@style/Texto"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.9"
-           
-            android:text="Codigo"
-            android:textSize="20sp" />
+            android:text="Codigo" />
 
         <TextView
             android:id="@+id/lugar"
+            style="@style/Lugar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2.2"
-            android:singleLine="true"
             android:ellipsize="end"
             android:maxLength="11"
-            android:textStyle="bold"
-            android:text="Lugar"
-            android:textSize="20sp" />
+            android:singleLine="true"
+            android:text="Lugar" />
 
         <TextView
             android:id="@+id/plazas"
+            style="@style/Cifra"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:layout_weight="0.8"
             android:gravity="right"
-           
-            android:text="Plazas"
-            android:textSize="18sp" />
+            android:text="Plazas" />
 
         <TextView
             android:id="@+id/ocupadas"
+            style="@style/Cifra"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
+            android:layout_marginRight="8dp"
             android:layout_weight="0.8"
             android:gravity="right"
-            
-            android:layout_marginRight="8dp"
-            android:text="Ocupadas"
-            android:textSize="18sp" />
+            android:text="Ocupadas" />
 
         <TextView
             android:id="@+id/estado"
+            style="@style/Estado"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="1.6"
             android:gravity="center"
             android:text="Estado"
-            android:textStyle="bold"
             android:textColor="@color/White"
-            android:textSize="18sp" />
+            android:textStyle="bold" />
     </LinearLayout>
 
     <View
