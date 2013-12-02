@@ -43,7 +43,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-public class MainActivity extends ActionBarActivity implements OnClickListener {
+public class EstadoParking extends ActionBarActivity implements OnClickListener {
 	TextView iptv;
 	EditText ip;
 	String server;
@@ -56,7 +56,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.activity_estado_parking);
 
 		progreso = (ProgressBar) findViewById(R.id.carga);
 	
@@ -78,7 +78,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
+		getMenuInflater().inflate(R.menu.estado_parking, menu);
 		return true;
 	}
 	
@@ -117,7 +117,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
     * Conecta con el servidor para obtener los datos del parking y colocarlos en el listview lista
     */
 	private void cargar_parkings() {
-		// TODO Auto-generated method stub
+		
 		// obtener estado parkings
 
 		HttpParkings get = new HttpParkings();	
@@ -129,7 +129,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 
 		@Override
 		protected void onPostExecute(Void result) {
-			// TODO Auto-generated method stub
+
 			super.onPostExecute(result);
 			if (lista.getParkings() != null) {
 				Collections.sort(lista.getParkings());
@@ -140,7 +140,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 
 			} else {
 				Toast notification = Toast
-						.makeText(MainActivity.this,
+						.makeText(EstadoParking.this,
 								"Fallo de conexión con el servidor",
 								Toast.LENGTH_SHORT);
 				notification.setGravity(Gravity.CENTER, 0, 0);
@@ -152,7 +152,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 
 		@Override
 		protected void onPreExecute() {
-			// TODO Auto-generated method stub
+		
 			super.onPreExecute();
 			progreso.setVisibility(View.VISIBLE);
 			
@@ -160,13 +160,13 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 
 		@Override
 		protected void onProgressUpdate(Void... values) {
-			// TODO Auto-generated method stub
+
 			super.onProgressUpdate(values);
 		}
 
 		@Override
 		protected Void doInBackground(String... urls) {
-			// TODO Auto-generated method stub
+
 			StringBuilder builder = new StringBuilder();
 			HttpClient client = new DefaultHttpClient();
 			HttpGet httpGet = new HttpGet(urls[0]);

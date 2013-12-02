@@ -13,19 +13,18 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/icono"
-        android:label="@string/app_name"
+        android:icon="@drawable/carpooling"
+        android:label="Polimuevet"
         android:theme="@style/Theme.AppCompat.Light.DarkActionBar" >
         <activity
-            android:name="com.polimuevet.android.MainActivity"
+            android:name="com.polimuevet.android.EstadoParking"
             android:configChanges="keyboardHidden|orientation"
             android:label="Estado Parkings" >
-          
         </activity>
         <activity
             android:name="com.polimuevet.android.Portada"
-            android:label="Registro" >
-              <intent-filter>
+            android:label="Acceso" >
+            <intent-filter android:label="PolimueveT" >
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
