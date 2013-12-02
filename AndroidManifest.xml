@@ -18,10 +18,14 @@
         android:theme="@style/Theme.AppCompat.Light.DarkActionBar" >
         <activity
             android:name="com.polimuevet.android.MainActivity"
-            android:label="Estado Parkings"
-            android:configChanges="keyboardHidden|orientation" >
-            
-            <intent-filter>
+            android:configChanges="keyboardHidden|orientation"
+            android:label="Estado Parkings" >
+          
+        </activity>
+        <activity
+            android:name="com.polimuevet.android.Portada"
+            android:label="Registro" >
+              <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
