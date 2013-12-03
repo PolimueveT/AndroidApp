@@ -89,7 +89,7 @@ public class Portada extends ActionBarActivity implements OnClickListener {
 			String usuario=user.getText().toString();
 			String password=pass.getText().toString();
 			HttpLogin get = new HttpLogin();	
-			get.execute("http://192.168.1.12:3000/api/isuserregistered/"+usuario+"/"+password);
+			get.execute("http://polimuevet.eu01.aws.af.cm/api/isuserregistered/"+usuario+"/"+password);
 
 		}
 
@@ -223,6 +223,8 @@ public class Portada extends ActionBarActivity implements OnClickListener {
 		}
 		else if(arg0.getId()==R.id.registrar){
 			//intent activity registro
+			Intent intent = new Intent(Portada.this, Registro.class);
+			startActivity(intent);
 		}
 	}
 

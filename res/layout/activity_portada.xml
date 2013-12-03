@@ -17,7 +17,8 @@
         android:layout_marginTop="36dp"
         android:background="@drawable/apptheme_edit_text_holo_light"
         android:ems="10"
-        android:hint="usuario"
+        android:inputType="textPersonName"
+        android:hint="Usuario"
         android:textSize="24sp" >
 
         <requestFocus />
@@ -32,7 +33,7 @@
         android:layout_marginTop="40dp"
         android:background="@drawable/apptheme_edit_text_holo_light"
         android:ems="10"
-        android:hint="contraseña"
+        android:hint="Contraseña"
         android:inputType="textPassword"
         android:textSize="24sp" />
 
@@ -63,6 +64,8 @@
         android:layout_marginBottom="13dp"
         android:background="@drawable/apptheme_btn_default_holo_light"
         android:text="Acceder"
+        android:textColor="@color/White"
+        android:textStyle="bold"
         android:textSize="18sp" />
 
     <ProgressBar
