@@ -65,7 +65,7 @@ public class Registro extends Activity implements OnClickListener {
 	private int year;
 	private int month;
 	private int day;
-	private DatePicker dpResult;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
