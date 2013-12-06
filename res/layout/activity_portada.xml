@@ -8,44 +8,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".Portada" >
 
-    <EditText
-        android:id="@+id/user"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="36dp"
-        android:background="@drawable/apptheme_edit_text_holo_light"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Usuario"
-        android:textSize="24sp" >
-
-        <requestFocus />
-    </EditText>
-
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/user"
-        android:layout_below="@+id/user"
-        android:layout_marginTop="40dp"
-        android:background="@drawable/apptheme_edit_text_holo_light"
-        android:ems="10"
-        android:hint="Contraseña"
-        android:inputType="textPassword"
-        android:textSize="24sp" />
-
-    <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="94dp"
-        android:src="@drawable/polimuevet" />
-
     <Button
         android:id="@+id/registrar"
         android:layout_width="fill_parent"
@@ -53,19 +15,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:text="Registrarse"
-        android:textSize="18sp" />
-
-    <Button
-        android:id="@+id/acceder"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/registrar"
-        android:layout_alignLeft="@+id/imageView1"
-        android:layout_marginBottom="13dp"
-        android:background="@drawable/apptheme_btn_default_holo_light"
-        android:text="Acceder"
-        android:textColor="@color/White"
-        android:textStyle="bold"
         android:textSize="18sp" />
 
     <ProgressBar
@@ -76,5 +25,65 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
         android:visibility="gone" />
+
+    <Button
+        android:id="@+id/acceder"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/registrar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="17dp"
+        android:background="@drawable/apptheme_btn_default_holo_light"
+        android:text="Acceder"
+        android:textColor="@color/White"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/acceder"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/apptheme_edit_text_holo_light"
+        android:ems="10"
+        android:hint="Contraseña"
+        android:inputType="textPassword"
+        android:textSize="24sp" />
+
+    <EditText
+        android:id="@+id/user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/password"
+        android:layout_alignLeft="@+id/password"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/apptheme_edit_text_holo_light"
+        android:ems="10"
+        android:hint="Usuario"
+        android:inputType="textPersonName"
+        android:textSize="24sp" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="34dp"
+        android:src="@drawable/polimuevet" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/user"
+        android:layout_alignLeft="@+id/imageView1"
+        android:layout_marginBottom="27dp"
+        android:text="Ahorra viajando a la universidad en grupo.Compartir es ganar"
+        android:textColor="@color/Gray"
+        android:textSize="20sp"
+        android:textStyle="italic" />
 
 </RelativeLayout>
