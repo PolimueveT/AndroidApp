@@ -37,6 +37,8 @@
             android:hint="Nombre"
             android:inputType="textPersonName"
             android:textSize="20sp" >
+
+            <requestFocus />
         </EditText>
 
         <EditText
@@ -48,7 +50,45 @@
             android:ems="10"
             android:hint="Email UPV"
             android:inputType="textEmailAddress"
-            android:textSize="20sp" />
+            android:textSize="20sp" >
+        </EditText>
+
+        <EditText
+            android:id="@+id/fecha"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/apptheme_edit_text_holo_light"
+            android:cursorVisible="false"
+            android:ems="10"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:hint="Fecha Nac."
+            android:inputType="date"
+            android:textSize="20sp" >
+        </EditText>
+
+        <RadioGroup
+            android:id="@+id/radioGroup1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/radio0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/apptheme_btn_radio_holo_light"
+                android:checked="true"
+                android:text="Hombre" />
+
+            <RadioButton
+                android:id="@+id/radio1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/apptheme_btn_radio_holo_light"
+                android:text="Mujer" />
+        </RadioGroup>
 
         <EditText
             android:id="@+id/passusuario"
@@ -72,37 +112,43 @@
             android:inputType="textPassword"
             android:textSize="20sp" />
 
-        <ProgressBar
-            android:id="@+id/carga"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="50dp"
-            android:visibility="gone" />
-
         <RadioGroup
-            android:id="@+id/radioGroup1"
+            android:id="@+id/radioGroup2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-           
             android:orientation="horizontal" >
 
             <RadioButton
-                android:id="@+id/radio0"
+                android:id="@+id/radioAlumno"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:button="@drawable/apptheme_btn_radio_holo_light"
                 android:checked="true"
-                android:text="Hombre"
-                android:button="@drawable/apptheme_btn_radio_holo_light" />
+                android:text="Alumno" />
 
             <RadioButton
-                android:id="@+id/radio1"
+                android:id="@+id/radioProfe"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                 android:button="@drawable/apptheme_btn_radio_holo_light"
-                android:text="Mujer" />
+                android:button="@drawable/apptheme_btn_radio_holo_light"
+                android:text="Profesor" />
+
+            <RadioButton
+                android:id="@+id/radioPas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/apptheme_btn_radio_holo_light"
+                android:text="PAS/PDI" />
         </RadioGroup>
     </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/carga"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_weight="0.91"
+        android:visibility="gone" />
 
     <LinearLayout
         android:layout_width="match_parent"

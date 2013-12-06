@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.apache.http.HttpEntity;
@@ -22,6 +23,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -33,6 +36,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
@@ -43,6 +47,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 public class Registro extends Activity implements OnClickListener {
+
+	static final int DATE_DIALOG_ID = 999;
 	private ProgressBar progreso;
 	EditText user;
 	EditText email;
@@ -51,8 +57,15 @@ public class Registro extends Activity implements OnClickListener {
 	Button registrar;
 	Respuesta respuesta;
 	private RadioGroup radioSexGroup;
+	private RadioGroup radioTipoGroup;
 	private RadioButton radioSexButton;
-	//private Button btnDisplay;
+	private RadioButton radioTipoButton;
+	// private Button btnDisplay;
+	private EditText fecha;
+	private int year;
+	private int month;
+	private int day;
+	private DatePicker dpResult;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,18 +77,126 @@ public class Registro extends Activity implements OnClickListener {
 		respuesta = new Respuesta();
 		user = (EditText) findViewById(R.id.nombreusuario);
 		email = (EditText) findViewById(R.id.emailusuario);
+
 		pass = (EditText) findViewById(R.id.passusuario);
 		passconf = (EditText) findViewById(R.id.confirmacion);
 		radioSexGroup = (RadioGroup) findViewById(R.id.radioGroup1);
-		
-		
+		radioTipoGroup = (RadioGroup) findViewById(R.id.radioGroup2);
+		Inicializa_fecha();
+
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.registro, menu);
-		return true;
+	/**
+	 * Hace que el Edittext de la fecha de nacimiento despliegue un Datepicker
+	 * al ser clicado
+	 */
+	public void Inicializa_fecha() {
+
+		fecha = (EditText) findViewById(R.id.fecha);
+		fecha.setClickable(true);
+		fecha.setOnClickListener(this);
+
+		final Calendar c = Calendar.getInstance();
+		year = c.get(Calendar.YEAR);
+		month = c.get(Calendar.MONTH);
+		day = c.get(Calendar.DAY_OF_MONTH);
+
+	}
+
+	/**
+	 * Comprueba la estructura del email y que sea del dominio de la upv
+	 * 
+	 * @return true si el email pasa las pruebas false en caso contrario
+	 */
+	private boolean comprobar_email() {
+		String mail = email.getText().toString();
+
+		if (mail.matches(".*@.*\\.upv.es")) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean comprobar_contraseñas() {
+		String contraseña = pass.getText().toString();
+		String confir = passconf.getText().toString();
+		if (contraseña.compareTo(confir) == 0) {
+			return true;
+		}
+		return false;
+
+	}
+
+	/**
+	 * Comprueba si todos los campos tienen información "correcta" para enviar
+	 * al servidor
+	 * 
+	 * @return true si la info es correcta , false en caso contrario
+	 */
+	public boolean comprobar_datos() {
+		boolean ok = true;
+
+		// campos vacios
+		if (user.getText().toString().compareTo("") == 0) {
+
+			ok = false;
+		} else if (email.getText().toString().compareTo("") == 0) {
+
+			ok = false;
+		} else if (pass.getText().toString().compareTo("") == 0) {
+
+			ok = false;
+		} else if (passconf.getText().toString().compareTo("") == 0) {
+
+			ok = false;
+		}
+
+		else if (fecha.getText().toString().compareTo("") == 0) {
+
+			ok = false;
+		}
+
+		// si no hay ningún campo vacio
+		if (ok) {
+			if (!comprobar_email()) {
+				Toast notification = Toast.makeText(this,
+						"El email debe ser dominio @'facultad'.upv.es",
+						Toast.LENGTH_SHORT);
+				notification.setGravity(Gravity.CENTER, 0, 0);
+				notification.show();
+				
+				ok=false;
+			}
+							
+			
+
+			// si las contraseñas coinciden
+			else if (!comprobar_contraseñas()) {
+				// toast contraseñas no coinciden
+				Toast notification = Toast.makeText(this,
+						"La contraseña y la confirmación deben ser iguales",
+						Toast.LENGTH_SHORT);
+				notification.setGravity(Gravity.CENTER, 0, 0);
+				notification.show();
+				ok=false;
+				
+			}
+			
+				
+			
+
+		}
+
+		else {
+			// toast rellena campos
+			Toast notification = Toast.makeText(this,
+					"Debes rellenar todos los campos", Toast.LENGTH_SHORT);
+			notification.setGravity(Gravity.CENTER, 0, 0);
+			notification.show();
+			progreso.setVisibility(View.GONE);
+		}
+
+		return ok;
 	}
 
 	/**
@@ -101,8 +222,8 @@ public class Registro extends Activity implements OnClickListener {
 	private void register_user() {
 
 		HttpRegister post = new HttpRegister();
-		//post.execute("http://polimuevet.eu01.aws.af.cm/api/newuser");
-		post.execute("http://192.168.1.14/api/newuser");
+		post.execute("http://polimuevet.eu01.aws.af.cm/api/newuser");
+		// post.execute("http://192.168.1.12/api/newuser");
 
 	}
 
@@ -125,19 +246,59 @@ public class Registro extends Activity implements OnClickListener {
 	public void onClick(View arg0) {
 		// TODO Auto-generated method stub
 		if (arg0.getId() == R.id.registrar) {
-			conectar();
+			if (comprobar_datos()) {
+				conectar();
+			}
+		}
+
+		else if (arg0.getId() == R.id.fecha) {
+			showDialog(DATE_DIALOG_ID);
 		}
 
 	}
 
-	
-	public void obtener_genero(){
-		 // get selected radio button from radioGroup
-		int selectedId = radioSexGroup.getCheckedRadioButtonId();
+	/**
+	 * Pone en las variables de los RadioButtons el Radiobutton elegido en cada
+	 * RadioGroup
+	 */
+	public void obtener_radiobuttons() {
 
-		// find the radiobutton by returned id
-	        radioSexButton = (RadioButton) findViewById(selectedId);
+		int selectedId = radioSexGroup.getCheckedRadioButtonId();
+		radioSexButton = (RadioButton) findViewById(selectedId);
+		selectedId = radioTipoGroup.getCheckedRadioButtonId();
+		radioTipoButton = (RadioButton) findViewById(selectedId);
 	}
+
+	/**
+	 * Recoge la información que ha introducido el usuario en todos los campos y
+	 * lo prepara para enviarlo en el POST creando pares de valores
+	 * 
+	 * @return la lista de pares clave valor
+	 */
+	public List<NameValuePair> recoger_datos() {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+		nameValuePairs.add(new BasicNameValuePair("nombre", user.getText()
+				.toString()));
+		nameValuePairs.add(new BasicNameValuePair("email", email.getText()
+				.toString()));
+		nameValuePairs.add(new BasicNameValuePair("fechanacimiento", fecha
+				.getText().toString()));
+		obtener_radiobuttons();
+		nameValuePairs.add(new BasicNameValuePair("pass", pass.getText()
+				.toString()));
+
+		nameValuePairs.add(new BasicNameValuePair("passconf", passconf
+				.getText().toString()));
+
+		obtener_radiobuttons();
+		nameValuePairs.add(new BasicNameValuePair("sexo", radioSexButton
+				.getText().toString()));
+		nameValuePairs.add(new BasicNameValuePair("usertype", radioTipoButton
+				.getText().toString()));
+
+		return nameValuePairs;
+	}
+
 	/**
 	 * Petición get al servidor a la url urls[0] que recibe como parámetro al
 	 * instanciarse,el json que devuelve se guarda en respuesta variable global
@@ -160,7 +321,8 @@ public class Registro extends Activity implements OnClickListener {
 			} else {
 				pass.setText("");
 				Toast notification = Toast.makeText(Registro.this,
-						"Fallo en el registro , intentalo otra vez", Toast.LENGTH_SHORT);
+						"Fallo en el registro , intentalo otra vez",
+						Toast.LENGTH_SHORT);
 				notification.setGravity(Gravity.CENTER, 0, 0);
 				notification.show();
 				// progreso.setVisibility(View.GONE);
@@ -168,7 +330,6 @@ public class Registro extends Activity implements OnClickListener {
 			}
 
 		}
-		
 
 		@Override
 		protected void onPreExecute() {
@@ -192,20 +353,9 @@ public class Registro extends Activity implements OnClickListener {
 
 			// Ejemplo POST
 			HttpPost req = new HttpPost(urls[0]);
-			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-			nameValuePairs.add(new BasicNameValuePair("nombre", user.getText()
-					.toString()));
-			nameValuePairs.add(new BasicNameValuePair("email", email.getText()
-					.toString()));
-			nameValuePairs.add(new BasicNameValuePair("pass", pass.getText()
-					.toString()));
-			obtener_genero();
-			nameValuePairs.add(new BasicNameValuePair("sexo", radioSexButton.getText().toString()));
-			
-			// nameValuePairs.add(new BasicNameValuePair("passconf",
-			// passconf.getText().toString()));
+
 			try {
-				req.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+				req.setEntity(new UrlEncodedFormEntity(recoger_datos()));
 			} catch (UnsupportedEncodingException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -226,8 +376,6 @@ public class Registro extends Activity implements OnClickListener {
 						builder.append(line);
 					}
 					Log.v("Getter", "Your data: " + builder.toString());
-					// response
-					// data
 
 					String responseString = builder.toString();
 					String responsefinal = "{\"respuesta\":" + responseString
@@ -252,6 +400,40 @@ public class Registro extends Activity implements OnClickListener {
 
 			return null;
 		}
+	}
+
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		switch (id) {
+		case DATE_DIALOG_ID:
+			// set date picker as current date
+			return new DatePickerDialog(this, datePickerListener, year - 18,
+					month, day);
+		}
+		return null;
+	}
+
+	private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
+
+		// when dialog box is closed, below method will be called.
+		public void onDateSet(DatePicker view, int selectedYear,
+				int selectedMonth, int selectedDay) {
+			year = selectedYear;
+			month = selectedMonth;
+			day = selectedDay;
+
+			// set selected date into textview
+			fecha.setText(new StringBuilder().append(day).append("-")
+					.append(month + 1).append("-").append(year).append(" "));
+
+		}
+	};
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.registro, menu);
+		return true;
 	}
 
 }
