@@ -62,10 +62,9 @@ public class EstadoParking extends ActionBarActivity implements
 	private DrawerLayout mDrawer;
 	private ListView mDrawerOptions;
 	  private String[] navMenuTitles;
-	private Object mTitle;
+	//private Object mTitle;
 	private CharSequence mDrawerTitle;
-	private static final String[] values = { "Crear Trayecto",
-			"Buscar Trayecto", "Cerrar sesión" };
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +75,7 @@ public class EstadoParking extends ActionBarActivity implements
 		progreso = (ProgressBar) findViewById(R.id.carga);
 
 		ParkingsView = (ListView) findViewById(R.id.parkings);
-		mTitle = mDrawerTitle = getTitle();
+		mDrawerTitle = getTitle();
 		menu_lateral();
 
 		conectar();
@@ -120,98 +119,12 @@ public class EstadoParking extends ActionBarActivity implements
 
 		// obtener estado parkings
 
-		HttpParkings get = new HttpParkings();
+		HttpParkings get = new HttpParkings(EstadoParking.this,progreso);
 		get.execute("http://polimuevet.eu01.aws.af.cm/api/parking");
 
 	}
+	
 
-	class HttpParkings extends AsyncTask<String, Void, Void> {
-
-		@Override
-		protected void onPostExecute(Void result) {
-
-			super.onPostExecute(result);
-			if (lista.getParkings() != null) {
-				Collections.sort(lista.getParkings());
-				asociarAdapter();
-
-				Padapter.notifyDataSetChanged();
-
-			} else {
-				Toast notification = Toast
-						.makeText(EstadoParking.this,
-								"Fallo de conexión con el servidor",
-								Toast.LENGTH_SHORT);
-				notification.setGravity(Gravity.CENTER, 0, 0);
-				notification.show();
-			}
-			progreso.setVisibility(View.GONE);
-
-		}
-
-		@Override
-		protected void onPreExecute() {
-
-			super.onPreExecute();
-			progreso.setVisibility(View.VISIBLE);
-
-		}
-
-		@Override
-		protected void onProgressUpdate(Void... values) {
-
-			super.onProgressUpdate(values);
-		}
-
-		@Override
-		protected Void doInBackground(String... urls) {
-
-			StringBuilder builder = new StringBuilder();
-			HttpClient client = new DefaultHttpClient();
-			HttpGet httpGet = new HttpGet(urls[0]);
-
-			try {
-				HttpResponse response = client.execute(httpGet);
-				StatusLine statusLine = response.getStatusLine();
-				int statusCode = statusLine.getStatusCode();
-				Log.d("RESPUESTA", "statusCode: " + statusCode);
-				if (statusCode == 200) {
-					HttpEntity entity = response.getEntity();
-					InputStream content = entity.getContent();
-					BufferedReader reader = new BufferedReader(
-							new InputStreamReader(content));
-					String line;
-					while ((line = reader.readLine()) != null) {
-						builder.append(line);
-					}
-					Log.v("Getter", "Your data: " + builder.toString());
-					// response
-					// data
-
-					String responseString = builder.toString();
-					String responsefinal = "{\"parkings\":" + responseString
-							+ "}";
-					Log.d("JSON", responsefinal);
-					GsonBuilder gbuilder = new GsonBuilder();
-					Gson gson = gbuilder.create();
-					JSONObject json = new JSONObject(responsefinal);
-					lista = gson.fromJson(json.toString(), ParkingList.class);
-
-				} else {
-					Log.e("Getter", "Failed to download file");
-				}
-			} catch (ClientProtocolException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			return null;
-		}
-	}
 
 	/**
 	 * Comprueba si el dispositivo tiene conexión a internet
@@ -243,11 +156,11 @@ public class EstadoParking extends ActionBarActivity implements
 		mDrawerOptions = (ListView) findViewById(R.id.left_drawer);
 		mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 		 // load slide menu items
-       // navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
+        navMenuTitles = getResources().getStringArray(R.array.lateral_parking);
 		mDrawerOptions
 				.setAdapter(new ArrayAdapter<String>(this,
 						android.R.layout.simple_list_item_1,
-						android.R.id.text1, values));
+						android.R.id.text1, navMenuTitles));
 		mDrawerOptions.setOnItemClickListener(this);
 	    mDrawerToggle = new ActionBarDrawerToggle(this, mDrawer,
                 R.drawable.ic_navigation_drawer, //nav menu toggle icon
@@ -271,7 +184,7 @@ public class EstadoParking extends ActionBarActivity implements
 
 	@Override
 	public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-		 Toast.makeText(this, "Pulsado " + values[i], Toast.LENGTH_SHORT).show();
+		
 		switch (i) {
 		case 0:
 			//Intent intent = new Intent(Portada.this, Registro.class);
@@ -335,7 +248,7 @@ public class EstadoParking extends ActionBarActivity implements
  
     @Override
     public void setTitle(CharSequence title) {
-        mTitle = title;
+       
         getSupportActionBar().setTitle(mDrawerTitle);
     }
  
@@ -358,76 +271,6 @@ public class EstadoParking extends ActionBarActivity implements
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
-	public class AdaptadorParking extends ArrayAdapter<Parking> {
-		private ArrayList<Parking> items;
-
-		public AdaptadorParking(Context context, int textViewResourceId,
-				ArrayList<Parking> items) {
-			super(context, textViewResourceId, items);
-			this.items = items;
-
-		}
-
-		@Override
-		public View getView(final int position, View convertView,
-				ViewGroup parent) {
-			int nplazas = 0, nocupadas = 0;
-			// posicion=position;
-			View v = convertView;
-			if (v == null) {
-				Log.d("indice", "indice " + position);
-				LayoutInflater vi = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-				v = vi.inflate(R.layout.elemento_fila, null);
-
-			}
-			Parking p = items.get(position);
-			if (p != null) {
-
-				TextView codigo = (TextView) v.findViewById(R.id.codigo);
-				TextView lugar = (TextView) v.findViewById(R.id.lugar);
-				TextView plazas = (TextView) v.findViewById(R.id.plazas);
-				TextView ocupadas = (TextView) v.findViewById(R.id.ocupadas);
-				TextView estado = (TextView) v.findViewById(R.id.estado);
-
-				if (codigo != null) {
-					codigo.setText(p.getCodigo());
-				}
-				if (lugar != null) {
-					lugar.setText(p.getLugar());
-				}
-				if (plazas != null) {
-					plazas.setText("" + p.getPlazas());
-					nplazas = p.getPlazas();
-				}
-				if (ocupadas != null) {
-					nocupadas = p.getOcupadas();
-
-					ocupadas.setText("" + (nplazas - nocupadas));
-				}
-				if (estado != null) {
-					if (p.getEstado().compareTo("Cerrado") == 0) {
-						estado.setBackgroundColor(getResources().getColor(
-								R.color.Gray));
-						estado.setText(p.getEstado());
-					} else if (p.getEstado().compareTo("Libre") == 0) {
-						estado.setBackgroundColor(getResources().getColor(
-								R.color.Icverde));
-						estado.setText(p.getEstado());
-					} else if (p.getEstado().compareTo("Completo") == 0) {
-						estado.setBackgroundColor(getResources().getColor(
-								R.color.Icrojo));
-						estado.setText(p.getEstado());
-					} else if (p.getEstado().compareTo("Personal Autorizado") == 0) {
-						estado.setBackgroundColor(getResources().getColor(
-								R.color.Icamarillo));
-						estado.setText("Autorizado");
-					}
-					// estado.setText(p.getEstado());
-				}
-
-			}
-			return v;
-		}
-	}
+	
 
 }
