@@ -14,20 +14,18 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_weight="0.91"
-      
-        android:orientation="vertical"
-         >
+        android:orientation="vertical" >
 
         <TextView
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Introduce tus datos:"
-            android:textSize="25sp"
-            android:textColor="@color/Black"
             android:layout_marginBottom="20dp"
             android:gravity="center"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:text="Introduce tus datos:"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/Black"
+            android:textSize="25sp" />
 
         <EditText
             android:id="@+id/nombreusuario"
@@ -37,8 +35,8 @@
             android:background="@drawable/apptheme_edit_text_holo_light"
             android:ems="10"
             android:hint="Nombre"
-            android:textSize="24sp"
-            android:inputType="textPersonName" >
+            android:inputType="textPersonName"
+            android:textSize="20sp" >
         </EditText>
 
         <EditText
@@ -49,8 +47,8 @@
             android:background="@drawable/apptheme_edit_text_holo_light"
             android:ems="10"
             android:hint="Email UPV"
-            android:textSize="24sp"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            android:textSize="20sp" />
 
         <EditText
             android:id="@+id/passusuario"
@@ -60,8 +58,8 @@
             android:background="@drawable/apptheme_edit_text_holo_light"
             android:ems="10"
             android:hint="Contraseña"
-            android:textSize="24sp"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:textSize="20sp" />
 
         <EditText
             android:id="@+id/confirmacion"
@@ -71,15 +69,39 @@
             android:background="@drawable/apptheme_edit_text_holo_light"
             android:ems="10"
             android:hint="Confirmación"
-            android:textSize="24sp"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:textSize="20sp" />
+
         <ProgressBar
-        android:id="@+id/carga"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="50dp"
-        android:visibility="gone" />
+            android:id="@+id/carga"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:visibility="gone" />
+
+        <RadioGroup
+            android:id="@+id/radioGroup1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+           
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/radio0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="Hombre"
+                android:button="@drawable/apptheme_btn_radio_holo_light" />
+
+            <RadioButton
+                android:id="@+id/radio1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                 android:button="@drawable/apptheme_btn_radio_holo_light"
+                android:text="Mujer" />
+        </RadioGroup>
     </LinearLayout>
 
     <LinearLayout
