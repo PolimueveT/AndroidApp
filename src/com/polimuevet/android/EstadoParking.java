@@ -20,6 +20,8 @@ import org.json.JSONObject;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -55,7 +57,7 @@ public class EstadoParking extends ActionBarActivity implements
 	String server;
 	ParkingList lista = new ParkingList();
 	private ProgressBar progreso;
-
+	boolean cerrar = false;
 	ListView ParkingsView;
 	private AdaptadorParking Padapter;
 	 private ActionBarDrawerToggle mDrawerToggle;
@@ -191,18 +193,36 @@ public class EstadoParking extends ActionBarActivity implements
 			//startActivity(intent);
 			break;
 		case 1:
-			//Intent intent = new Intent(Portada.this, Registro.class);
-			//startActivity(intent);
+			cerrar=true;
+			Intent intent = new Intent(EstadoParking.this, Busqueda.class);
+			startActivity(intent);
 			break;
 		case 2:
-			Intent intent = new Intent(EstadoParking.this, Portada.class);
-			startActivity(intent);
+			cerrar_sesion();
+		
 			break;
 
 		default:
 			break;
 		}
 		mDrawer.closeDrawers();
+	}
+
+	
+	/**
+	 * Prepara el activity y el shared preference para terminar la sesión , abre la pantalla de login/registro
+	 */
+	private void cerrar_sesion() {
+		cerrar=true;
+		SharedPreferences preferences = getSharedPreferences("sesion",
+				Context.MODE_PRIVATE);
+		Editor editor = preferences.edit();
+		editor.putBoolean("login", false);
+		editor.putString("user", "");
+		editor.commit();
+		
+		Intent intent = new Intent(EstadoParking.this, Portada.class);
+		startActivity(intent);
 	}
 
 	@Override
@@ -270,6 +290,15 @@ public class EstadoParking extends ActionBarActivity implements
         // Pass any configuration change to the drawer toggls
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		if (cerrar) {
+			finish();
+		}
+
+	}
 
 	
 

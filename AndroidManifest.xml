@@ -34,6 +34,10 @@
             android:name="com.polimuevet.android.Registro"
             android:label="@string/title_activity_registro" >
         </activity>
+        <activity
+            android:name="com.polimuevet.android.Busqueda"
+            android:label="@string/title_activity_busqueda" >
+        </activity>
     </application>
 
 </manifest>

@@ -6,5 +6,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_portada">Portada</string>
     <string name="title_activity_registro">Registro</string>
+    <string name="title_activity_busqueda">Busqueda</string>
 
 </resources>

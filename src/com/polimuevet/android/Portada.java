@@ -17,6 +17,8 @@ import org.json.JSONObject;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -43,18 +45,20 @@ public class Portada extends ActionBarActivity implements OnClickListener {
 	EditText user;
 	EditText pass;
 
+	boolean cerrar = false;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_portada);
-		acceder=(Button)findViewById(R.id.acceder);
+		acceder = (Button) findViewById(R.id.acceder);
 		acceder.setOnClickListener(this);
-		registrar=(Button)findViewById(R.id.registrar);
-		registrar.setOnClickListener(this);		
+		registrar = (Button) findViewById(R.id.registrar);
+		registrar.setOnClickListener(this);
 		progreso = (ProgressBar) findViewById(R.id.carga);
-		respuesta=new Respuesta();
-		user=(EditText)findViewById(R.id.user);
-		pass=(EditText)findViewById(R.id.password);
+		respuesta = new Respuesta();
+		user = (EditText) findViewById(R.id.user);
+		pass = (EditText) findViewById(R.id.password);
 	}
 
 	@Override
@@ -65,13 +69,14 @@ public class Portada extends ActionBarActivity implements OnClickListener {
 	}
 
 	/**
-	 * Intenta conectar con el parking si el dispositivo tiene conexión a internet 
+	 * Intenta conectar con el parking si el dispositivo tiene conexión a
+	 * internet
 	 * 
 	 */
-	public void conectar(){
+	public void conectar() {
 		if (isOnline()) {
 			login_server();
-			
+
 		} else {
 			Toast notification = Toast.makeText(this,
 					"Activa tu conexión a internet", Toast.LENGTH_SHORT);
@@ -80,50 +85,51 @@ public class Portada extends ActionBarActivity implements OnClickListener {
 			progreso.setVisibility(View.GONE);
 		}
 	}
-	
-	   /**
-	    * Conecta con el servidor para obtener si el usuario esta registrado o no
-	    */
-		private void login_server() {
-			// TODO url definitiva
-			String usuario=user.getText().toString();
-			String password=pass.getText().toString();
-			HttpLogin get = new HttpLogin();	
-			get.execute("http://polimuevet.eu01.aws.af.cm/api/isuserregistered/"+usuario+"/"+password);
 
-		}
+	/**
+	 * Conecta con el servidor para obtener si el usuario esta registrado o no
+	 */
+	private void login_server() {
+		// TODO url definitiva
+		String usuario = user.getText().toString();
+		String password = pass.getText().toString();
+		HttpLogin get = new HttpLogin();
+		get.execute("http://polimuevet.eu01.aws.af.cm/api/isuserregistered/"
+				+ usuario + "/" + password);
 
-		/**
-		 * Petición get al servidor a la url urls[0] que recibe como parámetro al instanciarse,el json que devuelve se guarda en respuesta
-		 * variable global de tipo Respuesta
-		 * @author cesar
-		 *
-		 */
+	}
+
+	/**
+	 * Petición get al servidor a la url urls[0] que recibe como parámetro al
+	 * instanciarse,el json que devuelve se guarda en respuesta variable global
+	 * de tipo Respuesta
+	 * 
+	 * @author cesar
+	 * 
+	 */
 	class HttpLogin extends AsyncTask<String, Void, Void> {
 
 		@Override
 		protected void onPostExecute(Void result) {
 			// TODO completar intent Acceso al app , error en caso contrario
 			super.onPostExecute(result);
-			
+
 			progreso.setVisibility(View.GONE);
 			Log.d("JSON", respuesta.testrespuesta());
-			if(respuesta.data){
-				//acceso permitido ;)
-				Intent intent = new Intent(Portada.this, EstadoParking.class);
-				startActivity(intent);
-				
-			}
-			else{
+			if (respuesta.data) {
+				// acceso permitido ;)
+
+				loguear();
+			} else {
 				pass.setText("");
 				Toast notification = Toast.makeText(Portada.this,
 						"Usuario o contraseña incorrectos", Toast.LENGTH_SHORT);
 				notification.setGravity(Gravity.CENTER, 0, 0);
 				notification.show();
-				//progreso.setVisibility(View.GONE);
-				
+				// progreso.setVisibility(View.GONE);
+
 			}
-		
+
 		}
 
 		@Override
@@ -131,7 +137,7 @@ public class Portada extends ActionBarActivity implements OnClickListener {
 			// TODO Auto-generated method stub
 			super.onPreExecute();
 			progreso.setVisibility(View.VISIBLE);
-			
+
 		}
 
 		@Override
@@ -146,19 +152,19 @@ public class Portada extends ActionBarActivity implements OnClickListener {
 			StringBuilder builder = new StringBuilder();
 			HttpClient client = new DefaultHttpClient();
 			HttpGet req = new HttpGet(urls[0]);
-			
-			//Ejemplo POST
-			//HttpPost req = new HttpPost(urls[0]);
-			/*List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-	        nameValuePairs.add(new BasicNameValuePair("id", "12345"));
-	        nameValuePairs.add(new BasicNameValuePair("stringdata", "AndDev is Cool!"));
-	        try {
-				req.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-			} catch (UnsupportedEncodingException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}*/
-			
+
+			// Ejemplo POST
+			// HttpPost req = new HttpPost(urls[0]);
+			/*
+			 * List<NameValuePair> nameValuePairs = new
+			 * ArrayList<NameValuePair>(2); nameValuePairs.add(new
+			 * BasicNameValuePair("id", "12345")); nameValuePairs.add(new
+			 * BasicNameValuePair("stringdata", "AndDev is Cool!")); try {
+			 * req.setEntity(new UrlEncodedFormEntity(nameValuePairs)); } catch
+			 * (UnsupportedEncodingException e1) { // TODO Auto-generated catch
+			 * block e1.printStackTrace(); }
+			 */
+
 			try {
 				HttpResponse response = client.execute(req);
 				StatusLine statusLine = response.getStatusLine();
@@ -201,8 +207,10 @@ public class Portada extends ActionBarActivity implements OnClickListener {
 			return null;
 		}
 	}
+
 	/**
 	 * Comprueba si el dispositivo tiene conexión a internet
+	 * 
 	 * @return true si tiene conexión ,false en caso contrario
 	 */
 
@@ -218,18 +226,55 @@ public class Portada extends ActionBarActivity implements OnClickListener {
 	@Override
 	public void onClick(View arg0) {
 		// TODO intent registro
-		if(arg0.getId()==R.id.acceder){
+		if (arg0.getId() == R.id.acceder) {
 			conectar();
-		}
-		else if(arg0.getId()==R.id.registrar){
-			//intent activity registro
+		} else if (arg0.getId() == R.id.registrar) {
+			// intent activity registro
 			Intent intent = new Intent(Portada.this, Registro.class);
 			startActivity(intent);
 		}
 	}
 
+	private void restoreData() {
+		SharedPreferences preferences = getSharedPreferences("sesion",
+				Context.MODE_PRIVATE);
+		if (preferences.getBoolean("login", false)) {
+			loguear();
+		}
 
-	
-	
-	
+	}
+
+	/**
+	 * Almacena en el shared preferences que se ha iniciado sesión y da acceso a
+	 * la aplicación
+	 */
+	private void loguear() {
+		cerrar = true;
+		SharedPreferences preferences = getSharedPreferences("sesion",
+				Context.MODE_PRIVATE);
+		Editor editor = preferences.edit();
+		editor.putBoolean("login", true);
+		editor.putString("user", user.getText().toString());
+		editor.commit();
+		Intent intent = new Intent(Portada.this, EstadoParking.class);
+		startActivity(intent);
+	}
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		restoreData();
+	}
+
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		if (cerrar) {
+			finish();
+		}
+
+	}
+
 }
