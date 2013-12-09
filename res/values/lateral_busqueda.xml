@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string-array name="lateral_parking">
+    <string-array name="lateral_busqueda">
         <item>Crear trayecto</item>
-        <item>Buscar trayecto</item>
+        <item>Estado Parkings</item>
         <item>Cerrar sesión</item>
     </string-array>
 
