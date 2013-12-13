@@ -29,28 +29,20 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
 
-public class Busqueda extends ActionBarActivity implements TextWatcher,
-		AdapterView.OnItemClickListener {
+public class Busqueda extends ActivityMenuLateral implements TextWatcher{
 	AutoCompleteTextView destino;
 	AutoCompleteTextView origen;
 	ArrayList<String> calles = new ArrayList<String>();
 	ArrayList<String> facultades = new ArrayList<String>();
-	private ActionBarDrawerToggle mDrawerToggle;
-	private DrawerLayout mDrawer;
-	private ListView mDrawerOptions;
-	private String[] navMenuTitles;
-	// private Object mTitle;
-	private CharSequence mDrawerTitle;
+	
 	private boolean cerrar = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_busqueda);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		mDrawerTitle = getTitle();
-
-		getSupportActionBar().setHomeButtonEnabled(true);
+		menu_lateral(R.array.lateral_busqueda,this);
+		
 		origen = (AutoCompleteTextView) findViewById(R.id.origen);
 		origen.addTextChangedListener(this);
 		cargarcalles();
@@ -61,43 +53,9 @@ public class Busqueda extends ActionBarActivity implements TextWatcher,
 		cargarfacultades();
 		destino.setAdapter(new ArrayAdapter<String>(this,
 				android.R.layout.simple_dropdown_item_1line, facultades));
-		menu_lateral();
+		
 	}
 
-	/**
-	 * Prepara el menu lateral para su correcta visualización
-	 */
-
-	public void menu_lateral() {
-		mDrawerOptions = (ListView) findViewById(R.id.left_drawer);
-		mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-		// load slide menu items
-		navMenuTitles = getResources().getStringArray(R.array.lateral_busqueda);
-		mDrawerOptions.setAdapter(new ArrayAdapter<String>(this,
-				android.R.layout.simple_list_item_1, android.R.id.text1,
-				navMenuTitles));
-		mDrawerOptions.setOnItemClickListener(this);
-		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawer,
-				R.drawable.ic_navigation_drawer, // nav menu toggle icon
-				R.string.app_name, // nav drawer open - description for
-									// accessibility
-				R.string.app_name // nav drawer close - description for
-									// accessibility
-		) {
-			public void onDrawerClosed(View view) {
-				getSupportActionBar().setTitle(mDrawerTitle);
-				// calling onPrepareOptionsMenu() to show action bar icons
-				ActivityCompat.invalidateOptionsMenu(Busqueda.this);
-			}
-
-			public void onDrawerOpened(View drawerView) {
-				getSupportActionBar().setTitle(mDrawerTitle);
-				// calling onPrepareOptionsMenu() to hide action bar icons
-				ActivityCompat.invalidateOptionsMenu(Busqueda.this);
-			}
-		};
-		mDrawer.setDrawerListener(mDrawerToggle);
-	}
 
 	public void cargarcalles() {
 		try {
@@ -243,31 +201,7 @@ public class Busqueda extends ActionBarActivity implements TextWatcher,
 		return super.onPrepareOptionsMenu(menu);
 	}
 
-	@Override
-	public void setTitle(CharSequence title) {
-
-		getSupportActionBar().setTitle(mDrawerTitle);
-	}
-
-	/**
-	 * When using the ActionBarDrawerToggle, you must call it during
-	 * onPostCreate() and onConfigurationChanged()...
-	 */
-
-	@Override
-	protected void onPostCreate(Bundle savedInstanceState) {
-		super.onPostCreate(savedInstanceState);
-		// Sync the toggle state after onRestoreInstanceState has occurred.
-		mDrawerToggle.syncState();
-	}
-
-	@Override
-	public void onConfigurationChanged(Configuration newConfig) {
-		super.onConfigurationChanged(newConfig);
-		// Pass any configuration change to the drawer toggls
-		mDrawerToggle.onConfigurationChanged(newConfig);
-	}
-
+	
 	@Override
 	protected void onPause() {
 		// TODO Auto-generated method stub
