@@ -256,7 +256,7 @@ public class Portada extends ActionBarActivity implements OnClickListener {
 		editor.putBoolean("login", true);
 		editor.putString("user", user.getText().toString());
 		editor.commit();
-		Intent intent = new Intent(Portada.this, EstadoParking.class);
+		Intent intent = new Intent(Portada.this, Busqueda.class);
 		startActivity(intent);
 	}
 

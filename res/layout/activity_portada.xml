@@ -40,19 +40,6 @@
         android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/acceder"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="24dp"
-        android:background="@drawable/apptheme_edit_text_holo_light"
-        android:ems="10"
-        android:hint="Contraseña"
-        android:inputType="textPassword"
-        android:textSize="24sp" />
-
-    <EditText
         android:id="@+id/user"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -65,9 +52,22 @@
         android:inputType="textPersonName"
         android:textSize="24sp" />
 
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/acceder"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/apptheme_edit_text_holo_light"
+        android:ems="10"
+        android:hint="Contraseña"
+        android:inputType="textPassword"
+        android:textSize="24sp" />
+
     <ImageView
         android:id="@+id/imageView1"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/textView1"
         android:layout_centerHorizontal="true"
@@ -81,6 +81,7 @@
         android:layout_above="@+id/user"
         android:layout_alignLeft="@+id/imageView1"
         android:layout_marginBottom="27dp"
+        android:gravity="center"
         android:text="Ahorra viajando a la universidad en grupo.Compartir es ganar"
         android:textColor="@color/Gray"
         android:textSize="20sp"

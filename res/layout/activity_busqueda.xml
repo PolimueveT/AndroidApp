@@ -18,15 +18,23 @@
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
             android:paddingTop="@dimen/activity_vertical_margin" >
+            
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.61"
+                android:orientation="vertical" >
 
             <RadioGroup
-                android:id="@+id/radioGroupEstado"
-                android:layout_width="wrap_content"
+                android:id="@+id/radioGroupmodo"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" >
+                android:orientation="horizontal"
+              
+                >
 
                 <RadioButton
-                    android:id="@+id/radio0"
+                    android:id="@+id/radioida"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:button="@drawable/apptheme_btn_radio_holo_light"
@@ -34,7 +42,7 @@
                     android:text="Ir a la UPV" />
 
                 <RadioButton
-                    android:id="@+id/radio1"
+                    android:id="@+id/radiovuelta"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:button="@drawable/apptheme_btn_radio_holo_light"
@@ -43,12 +51,12 @@
 
             <AutoCompleteTextView
                 android:id="@+id/origen"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="8dp"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/apptheme_edit_text_holo_light"
-                android:completionHint="prueba"
                 android:completionThreshold="4"
                 android:ems="10"
                 android:hint="Origen"
@@ -59,33 +67,40 @@
 
             <AutoCompleteTextView
                 android:id="@+id/destino"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="8dp"
                 android:background="@drawable/apptheme_edit_text_holo_light"
-                android:completionHint="prueba"
                 android:completionThreshold="1"
                 android:ems="10"
                 android:hint="Destino"
                 android:textSize="20sp" >
             </AutoCompleteTextView>
 
-            <EditText
-                android:id="@+id/fecha"
-                android:layout_width="wrap_content"
+            <Spinner
+                android:id="@+id/spinnerdia"
+                android:background="@drawable/apptheme_spinner_background_holo_light"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="8dp"
-                android:background="@drawable/apptheme_edit_text_holo_light"
-                android:cursorVisible="false"
-                android:ems="10"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:hint="Fecha"
-                android:inputType="date"
-                android:textSize="20sp" >
-            </EditText>
+                 />
+
+               </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <Button
+                    android:id="@+id/buscar"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/apptheme_btn_default_holo_light"
+                    android:text="Buscar"
+                    android:textColor="@color/White"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
         </LinearLayout>
     </FrameLayout>
     <!-- The navigation drawer -->

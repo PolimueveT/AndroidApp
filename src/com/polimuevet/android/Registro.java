@@ -181,10 +181,6 @@ public class Registro extends Activity implements OnClickListener {
 				ok=false;
 				
 			}
-			
-				
-			
-
 		}
 
 		else {

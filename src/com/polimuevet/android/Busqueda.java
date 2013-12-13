@@ -4,45 +4,83 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Locale;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.ListView;
+import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.widget.Spinner;
 
-public class Busqueda extends ActivityMenuLateral implements TextWatcher{
+@SuppressLint("NewApi")
+public class Busqueda extends ActivityMenuLateral implements TextWatcher, OnClickListener {
 	AutoCompleteTextView destino;
 	AutoCompleteTextView origen;
 	ArrayList<String> calles = new ArrayList<String>();
 	ArrayList<String> facultades = new ArrayList<String>();
-	
+	private RadioGroup radiomodoGroup;
+	private RadioButton radiomodoButton;
+	 ArrayAdapter<String> adapter ;
+    List<String> SpinnerArray;
 	private boolean cerrar = false;
+	Button buscar;
+	private int year;
+	private int month;
+	private int day;
+	private Spinner Items;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_busqueda);
-		menu_lateral(R.array.lateral_busqueda,this);
+		menu_lateral(R.array.lateral_busqueda, this);
+		radiomodoGroup = (RadioGroup) findViewById(R.id.radioGroupmodo);
+		radiomodoGroup
+				.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+					public void onCheckedChanged(RadioGroup group, int checkedId) {
+						// checkedId is the RadioButton selected
+						radiomodoButton = (RadioButton) findViewById(checkedId);
+						switch (checkedId) {
+						case R.id.radioida:
+
+							break;
+						case R.id.radiovuelta:
+							
+							break;
+						default:
+							break;
+						}
+					}
+				});
 		
+		
+		
+		buscar=(Button)findViewById(R.id.buscar);
+		buscar.setOnClickListener(this);
+		 Items = (Spinner) findViewById(R.id.spinnerdia);
+		configurar_spinner();
+
 		origen = (AutoCompleteTextView) findViewById(R.id.origen);
 		origen.addTextChangedListener(this);
 		cargarcalles();
@@ -53,10 +91,41 @@ public class Busqueda extends ActivityMenuLateral implements TextWatcher{
 		cargarfacultades();
 		destino.setAdapter(new ArrayAdapter<String>(this,
 				android.R.layout.simple_dropdown_item_1line, facultades));
-		
+
 	}
 
-
+	public void configurar_spinner(){
+		 SpinnerArray =  new ArrayList<String>();
+		    SpinnerArray.add("Hoy");
+		    SpinnerArray.add("Mañana");
+		    final Calendar c = Calendar.getInstance();
+			year = c.get(Calendar.YEAR);
+			month = c.get(Calendar.MONTH);
+			day = c.get(Calendar.DAY_OF_MONTH);
+			for(int i=0;i<15;i++){
+			c.add(Calendar.DAY_OF_MONTH,+1);
+			day = c.get(Calendar.DAY_OF_MONTH);
+			month = c.get(Calendar.MONTH);
+			year = c.get(Calendar.YEAR);
+			int mes=month+1;
+			SpinnerArray.add(day+"/"+mes+"/"+year);
+			}
+		    adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, SpinnerArray);
+		    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		    
+		    Items.setAdapter(adapter);
+	}
+	
+	@Override
+	public void onClick(View arg0) {
+	
+		if (arg0.getId() == R.id.buscar) {
+			Intent intent = new Intent(Busqueda.this, Busqueda.class);
+			startActivity(intent);
+		}
+	}
+	
+	
 	public void cargarcalles() {
 		try {
 			InputStream inputStream = getResources().openRawResource(
@@ -126,6 +195,17 @@ public class Busqueda extends ActivityMenuLateral implements TextWatcher{
 
 	}
 
+	/**
+	 * Pone en las variables de los RadioButtons el Radiobutton elegido en cada
+	 * RadioGroup
+	 */
+	public void obtener_radiobuttons() {
+
+		int selectedId = radiomodoGroup.getCheckedRadioButtonId();
+		radiomodoButton = (RadioButton) findViewById(selectedId);
+
+	}
+
 	public void intercambiar() {
 
 	}
@@ -140,7 +220,7 @@ public class Busqueda extends ActivityMenuLateral implements TextWatcher{
 			break;
 		case 1:
 			cerrar = true;
-			Intent intent = new Intent(Busqueda.this, Busqueda.class);
+			Intent intent = new Intent(Busqueda.this, EstadoParking.class);
 			startActivity(intent);
 			break;
 		case 2:
@@ -201,7 +281,6 @@ public class Busqueda extends ActivityMenuLateral implements TextWatcher{
 		return super.onPrepareOptionsMenu(menu);
 	}
 
-	
 	@Override
 	protected void onPause() {
 		// TODO Auto-generated method stub
@@ -237,5 +316,7 @@ public class Busqueda extends ActivityMenuLateral implements TextWatcher{
 		// TODO Auto-generated method stub
 
 	}
+
+
 
 }
