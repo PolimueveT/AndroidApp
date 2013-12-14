@@ -32,11 +32,15 @@
         </activity>
         <activity
             android:name="com.polimuevet.android.Registro"
-            android:label="@string/title_activity_registro" >
+            android:label="Registro" >
         </activity>
         <activity
             android:name="com.polimuevet.android.Busqueda"
-            android:label="@string/title_activity_busqueda" >
+            android:label="Buscar Trayecto" >
+        </activity>
+        <activity
+            android:name="com.polimuevet.android.Trayectos"
+            android:label="Trayectos" >
         </activity>
     </application>
 

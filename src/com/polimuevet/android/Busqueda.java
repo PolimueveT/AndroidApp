@@ -120,7 +120,8 @@ public class Busqueda extends ActivityMenuLateral implements TextWatcher, OnClic
 	public void onClick(View arg0) {
 	
 		if (arg0.getId() == R.id.buscar) {
-			Intent intent = new Intent(Busqueda.this, Busqueda.class);
+			cerrar=true;
+			Intent intent = new Intent(Busqueda.this, Trayectos.class);
 			startActivity(intent);
 		}
 	}
