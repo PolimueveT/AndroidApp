@@ -23,6 +23,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -50,8 +51,9 @@ class HttpTrips extends AsyncTask<String, Void, Void> {
 		if (lista.getTrips() != null) {
 			//Collections.sort(lista.getParkings());
 			ListView TripsView = (ListView) ((Activity) context).findViewById(R.id.trayectos);
-		
-			Tadapter = new AdaptadorTrips(context, R.layout.elemento_fila,
+			TextView titulo = (TextView) ((Activity)context).findViewById(R.id.titulo);
+			titulo.setText(lista.getTrips().size()+" trayectos encontrados");
+			Tadapter = new AdaptadorTrips(context, R.layout.parking_row,
 					lista.getTrips());
 			TripsView.setAdapter(Tadapter);
 			Tadapter.notifyDataSetChanged();

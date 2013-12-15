@@ -39,7 +39,7 @@ public class Trayectos extends ActivityMenuLateral {
 	 * un layout a cada elemento de la lista
 	 */
 	public void asociarAdapter() {
-		Tadapter = new AdaptadorTrips(this, R.layout.elemento_fila,
+		Tadapter = new AdaptadorTrips(this, R.layout.parking_row,
 				lista.getTrips());
 		TripsView.setAdapter(Tadapter);
 	}

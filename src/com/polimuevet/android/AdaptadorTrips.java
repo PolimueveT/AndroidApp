@@ -1,6 +1,9 @@
 package com.polimuevet.android;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import android.app.Activity;
 import android.content.Context;
@@ -24,7 +27,7 @@ public class AdaptadorTrips extends ArrayAdapter<Trip> {
 
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
-		int nplazas = 0, nocupadas = 0;
+		
 		// posicion=position;
 		View v = convertView;
 		if (v == null) {
@@ -33,55 +36,56 @@ public class AdaptadorTrips extends ArrayAdapter<Trip> {
 			LayoutInflater vi = (LayoutInflater) context
 					.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 
-			v = vi.inflate(R.layout.elemento_fila, null);
+			v = vi.inflate(R.layout.trip_row, null);
 
 		}
 		Trip t = items.get(position);
 		if (t != null) {
 
-			TextView codigo = (TextView) v.findViewById(R.id.codigo);
-			TextView lugar = (TextView) v.findViewById(R.id.lugar);
-			TextView plazas = (TextView) v.findViewById(R.id.plazas);
-			TextView ocupadas = (TextView) v.findViewById(R.id.ocupadas);
-			TextView estado = (TextView) v.findViewById(R.id.estado);
+			TextView origen = (TextView) v.findViewById(R.id.origen);
+			TextView destino = (TextView) v.findViewById(R.id.destino);
+			TextView fecha = (TextView) v.findViewById(R.id.fecha);
+			TextView precio = (TextView) v.findViewById(R.id.precio);
+			
 
-			if (codigo != null) {
-				codigo.setText("a");
+			if (origen != null) {
+				
+				origen.setText(quitarCP(t.getOrigen()));
 			}
-			if (lugar != null) {
-				lugar.setText("a");
+			if (destino != null) {
+				destino.setText(quitarCP(t.getDestino()));
 			}
-			if (plazas != null) {
-				plazas.setText("a");
+			if (precio != null) {
+				precio.setText(""+t.getPrecio_plaza()+"€");
+			}
+			if (fecha != null) {
+				Date parsedDateInstance;
+				try {
+					parsedDateInstance = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(t.getFecha_time());
+					String formattedDate = new SimpleDateFormat("MM/dd/yyyy-HH:mm" ).format(parsedDateInstance);
+					fecha.setText(formattedDate);
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				
 				
 			}
-			if (ocupadas != null) {
-				
-
-				ocupadas.setText("a");
-			}
-			if (estado != null) {
-				/*if (p.getEstado().compareTo("Cerrado") == 0) {
-					estado.setBackgroundColor(context.getResources().getColor(
-							R.color.Gray));
-					estado.setText(p.getEstado());
-				} else if (p.getEstado().compareTo("Libre") == 0) {
-					estado.setBackgroundColor(context.getResources().getColor(
-							R.color.Icverde));
-					estado.setText(p.getEstado());
-				} else if (p.getEstado().compareTo("Completo") == 0) {
-					estado.setBackgroundColor(context.getResources().getColor(
-							R.color.Icrojo));
-					estado.setText(p.getEstado());
-				} else if (p.getEstado().compareTo("Personal Autorizado") == 0) {
-					estado.setBackgroundColor(context.getResources().getColor(
-							R.color.Icamarillo));
-					estado.setText("Autorizado");
-				}*/
-				// estado.setText(p.getEstado());
-			}
+		
 
 		}
 		return v;
 	}
+	
+	public String quitarCP(String direccion){
+		String[]partes=direccion.split(",");
+		if (partes.length>2){
+		return partes[0]+partes[1];
+		}
+		else {
+			return partes[0];
+		}
+	}
+	
 }

@@ -33,7 +33,7 @@ public class AdaptadorParking extends ArrayAdapter<Parking> {
 			LayoutInflater vi = (LayoutInflater) context
 					.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 
-			v = vi.inflate(R.layout.elemento_fila, null);
+			v = vi.inflate(R.layout.parking_row, null);
 
 		}
 		Parking p = items.get(position);

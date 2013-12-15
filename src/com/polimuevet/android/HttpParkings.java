@@ -52,7 +52,7 @@ class HttpParkings extends AsyncTask<String, Void, Void> {
 			Collections.sort(lista.getParkings());
 			ListView ParkingsView = (ListView) ((Activity) context).findViewById(R.id.parkings);
 		
-			Padapter = new AdaptadorParking(context, R.layout.elemento_fila,
+			Padapter = new AdaptadorParking(context, R.layout.parking_row,
 					lista.getParkings());
 			ParkingsView.setAdapter(Padapter);
 			Padapter.notifyDataSetChanged();

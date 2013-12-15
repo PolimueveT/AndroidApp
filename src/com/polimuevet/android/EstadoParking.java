@@ -45,7 +45,7 @@ public class EstadoParking extends ActivityMenuLateral {
 	 * parking , de calcular plazas disponibles etc.
 	 */
 	public void asociarAdapter() {
-		Padapter = new AdaptadorParking(this, R.layout.elemento_fila,
+		Padapter = new AdaptadorParking(this, R.layout.parking_row,
 				lista.getParkings());
 		ParkingsView.setAdapter(Padapter);
 	}

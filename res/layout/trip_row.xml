@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/card_background_white" >
+
+    <ImageView
+        android:id="@+id/iccalendario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_calendario"
+        android:layout_marginTop="5dp" />
+   
+    <ImageView
+        android:id="@+id/icorigen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/iccalendario"
+        android:layout_below="@+id/iccalendario"
+        android:src="@drawable/ic_origen" />
+
+    <ImageView
+        android:id="@+id/icdestino"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/icorigen"
+        android:layout_below="@+id/icorigen"
+        android:src="@drawable/ic_destino" />
+
+        <TextView
+        android:id="@+id/fecha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/iccalendario"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/iccalendario"
+        android:textSize="20sp"
+        android:text="Fecha" />
+    
+    
+    <TextView
+        android:id="@+id/origen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/icorigen"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/icorigen"
+        android:text="Origen"
+       />
+
+    <TextView
+        android:id="@+id/destino"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/icdestino"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/icdestino"
+        android:text="Destino" />
+    
+ 
+
+    <TextView
+        android:id="@+id/precio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="12dp"
+        android:text="x€"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+ 
+
+</RelativeLayout>
