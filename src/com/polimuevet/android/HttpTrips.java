@@ -17,10 +17,13 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -29,33 +32,37 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-class HttpTrips extends AsyncTask<String, Void, Void> {
+class HttpTrips extends AsyncTask<String, Void, Void> implements
+		OnItemClickListener {
 
 	private TripList lista;
 	View v;
 	Context context;
 	ProgressBar progreso;
 	private AdaptadorTrips Tadapter;
-	
+
 	public HttpTrips(Context context, ProgressBar progreso) {
-		this.context=context;
-		this.progreso=progreso;
-	
+		this.context = context;
+		this.progreso = progreso;
+
 	}
 
 	@Override
 	protected void onPostExecute(Void result) {
 
 		super.onPostExecute(result);
-		View v=new View(context);
+		View v = new View(context);
 		if (lista.getTrips() != null) {
-			//Collections.sort(lista.getParkings());
-			ListView TripsView = (ListView) ((Activity) context).findViewById(R.id.trayectos);
-			TextView titulo = (TextView) ((Activity)context).findViewById(R.id.titulo);
-			titulo.setText(lista.getTrips().size()+" trayectos encontrados");
+			// Collections.sort(lista.getParkings());
+			ListView TripsView = (ListView) ((Activity) context)
+					.findViewById(R.id.trayectos);
+			TextView titulo = (TextView) ((Activity) context)
+					.findViewById(R.id.titulo);
+			titulo.setText(lista.getTrips().size() + " trayectos encontrados");
 			Tadapter = new AdaptadorTrips(context, R.layout.parking_row,
 					lista.getTrips());
 			TripsView.setAdapter(Tadapter);
+			TripsView.setOnItemClickListener(this);
 			Tadapter.notifyDataSetChanged();
 
 		} else {
@@ -114,7 +121,7 @@ class HttpTrips extends AsyncTask<String, Void, Void> {
 				Gson gson = gbuilder.create();
 				JSONObject json = new JSONObject(responseString);
 				lista = gson.fromJson(json.toString(), TripList.class);
-				
+
 			} else {
 				Log.e("Getter", "Failed to download file");
 			}
@@ -129,4 +136,15 @@ class HttpTrips extends AsyncTask<String, Void, Void> {
 
 		return null;
 	}
+
+	@Override
+	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+		
+		Log.d("LISTVIEW", "Se ha tocado el item de la lista " + arg2);
+		Intent intent = new Intent((Activity)context, TripDetail.class);
+		((Activity)context).startActivity(intent);
+		
+
+	}
+
 }

@@ -42,6 +42,10 @@
             android:name="com.polimuevet.android.Trayectos"
             android:label="Trayectos" >
         </activity>
+        <activity
+            android:name="com.polimuevet.android.TripDetail"
+            android:label="Vista detallada" >
+        </activity>
     </application>
 
 </manifest>

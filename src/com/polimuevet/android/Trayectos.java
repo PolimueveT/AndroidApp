@@ -7,6 +7,7 @@ import android.content.SharedPreferences.Editor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -91,7 +92,7 @@ public class Trayectos extends ActivityMenuLateral {
 	}
 	@Override
 	public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+	
 		switch (i) {
 		case 0:
 			// Intent intent = new Intent(Portada.this, Registro.class);
@@ -117,6 +118,8 @@ public class Trayectos extends ActivityMenuLateral {
 			break;
 		}
 		mDrawer.closeDrawers();
+		
+	
 	}
 	private void cerrar_sesion() {
 		cerrar = true;
