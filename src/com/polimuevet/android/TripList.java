@@ -10,13 +10,24 @@ import java.util.ArrayList;
  */
 
 public class TripList {
-	private ArrayList<Trip> trips;
+	private ArrayList<Trip> data;
+	boolean success;
+	String info;
 
 	public ArrayList<Trip> getTrips() {
-		return trips;
+		return data;
 	}
 
 	public void setTrips(ArrayList<Trip> trips) {
-		this.trips = trips;
+		this.data = trips;
+	}
+
+	public TripList(ArrayList<Trip> data, boolean success, String info) {
+		super();
+		this.data = data;
+		this.success = success;
+		this.info = info;
+	}
+	public TripList() {
 	}
 }

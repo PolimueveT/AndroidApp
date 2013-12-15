@@ -49,11 +49,11 @@ class HttpTrips extends AsyncTask<String, Void, Void> {
 		View v=new View(context);
 		if (lista.getTrips() != null) {
 			//Collections.sort(lista.getParkings());
-			ListView ParkingsView = (ListView) ((Activity) context).findViewById(R.id.parkings);
+			ListView TripsView = (ListView) ((Activity) context).findViewById(R.id.trayectos);
 		
 			Tadapter = new AdaptadorTrips(context, R.layout.elemento_fila,
 					lista.getTrips());
-			ParkingsView.setAdapter(Tadapter);
+			TripsView.setAdapter(Tadapter);
 			Tadapter.notifyDataSetChanged();
 
 		} else {
@@ -111,8 +111,8 @@ class HttpTrips extends AsyncTask<String, Void, Void> {
 				GsonBuilder gbuilder = new GsonBuilder();
 				Gson gson = gbuilder.create();
 				JSONObject json = new JSONObject(responseString);
-				RespuestaBusqueda busqueda = gson.fromJson(json.toString(), RespuestaBusqueda.class);
-				lista=busqueda.getData();
+				lista = gson.fromJson(json.toString(), TripList.class);
+				
 			} else {
 				Log.e("Getter", "Failed to download file");
 			}
