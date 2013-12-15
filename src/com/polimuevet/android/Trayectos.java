@@ -147,6 +147,10 @@ public class Trayectos extends ActivityMenuLateral {
 				mDrawer.openDrawer(mDrawerOptions);
 			}
 			return true;
+			
+		case R.id.action_refresh:
+			conectar();
+			return true;
 
 		default:
 			return super.onOptionsItemSelected(item);
@@ -160,7 +164,7 @@ public class Trayectos extends ActivityMenuLateral {
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		// if nav drawer is opened, hide the action items
 		boolean drawerOpen = mDrawer.isDrawerOpen(mDrawerOptions);
-		// menu.findItem(R.id.action_refresh).setVisible(!drawerOpen);
+		 menu.findItem(R.id.action_refresh).setVisible(!drawerOpen);
 		return super.onPrepareOptionsMenu(menu);
 	}
 
