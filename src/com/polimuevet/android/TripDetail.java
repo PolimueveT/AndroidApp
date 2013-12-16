@@ -1,19 +1,28 @@
 package com.polimuevet.android;
 
-import android.os.Bundle;
-import android.app.Activity;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.TextView;
 
 public class TripDetail extends ActivityMenuLateral {
 
 	 boolean cerrar=false;
+	private TextView destino;
+	private TextView origen;
+	private TextView fecha;
+	private TextView plazas;
+	private TextView precio;
+	private TextView equipaje;
 
 
 
@@ -22,6 +31,37 @@ public class TripDetail extends ActivityMenuLateral {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_trip_detail);
 		menu_lateral(R.array.lateral_trayectos, this);
+		Bundle b = getIntent().getExtras(); 
+	   
+	    
+	    origen=(TextView)findViewById(R.id.origen);
+	    destino=(TextView)findViewById(R.id.destino);
+	    fecha = (TextView)findViewById(R.id.fecha);
+	    plazas = (TextView)findViewById(R.id.plazas);
+	    precio = (TextView)findViewById(R.id.precio);
+	    equipaje = (TextView)findViewById(R.id.equipaje);
+	    
+	    
+	    
+	    origen.setText(b.getString("Origen"));
+	    destino.setText(b.getString("Destino"));
+	    plazas.setText("Plazas disponibles:"+b.getInt("Num_plazas"));
+	    precio.setText(""+b.getFloat("Precio_plaza")+"€");
+	    equipaje.setText(b.getString("Max_tamanyo_equipaje"));
+	  try {
+		fecha.setText(formato_fecha(b.getString("Fecha_time")));
+	} catch (ParseException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	    
+	}
+	
+	public String formato_fecha(String fecha_servidor) throws ParseException{
+		 Object parsedDateInstance = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(fecha_servidor);
+			String formattedDate = new SimpleDateFormat("MM/dd/yyyy - HH:mm" ).format(parsedDateInstance);
+			return formattedDate;
+		
 	}
 	@Override
 	public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

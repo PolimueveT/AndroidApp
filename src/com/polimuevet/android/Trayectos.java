@@ -24,6 +24,7 @@ public class Trayectos extends ActivityMenuLateral {
 	ListView TripsView;
 	TripList lista = new TripList();
 	private AdaptadorTrips Tadapter;
+	private HttpTrips get;
 
 
 	@Override
@@ -70,9 +71,9 @@ public class Trayectos extends ActivityMenuLateral {
 
 		// obtener trayectos 
 
-		HttpTrips get = new HttpTrips(Trayectos.this, progreso);
+		 get = new HttpTrips(Trayectos.this, progreso);
 		//get.execute("http://polimuevet.eu01.aws.af.cm/api/gettrips");
-		get.execute("http://192.168.1.12:3000/api/gettrips");
+		get.execute("http://158.42.47.86:3000/api/gettrips");
 
 	}
 	
@@ -178,6 +179,8 @@ public class Trayectos extends ActivityMenuLateral {
 		if (cerrar) {
 			finish();
 		}
+		
+		get.cancel(true);
 
 	}
 	

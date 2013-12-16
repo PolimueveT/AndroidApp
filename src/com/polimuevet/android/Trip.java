@@ -11,7 +11,7 @@ public class Trip {
 	String Fecha_time;
 	float Precio_plaza;
 	int Tiempo_max_espera;
-	int Max_tamaño_equipaje;
+	// int Max_tamaño_equipaje;
 	// ArrayList<Boolean> Tipo_pasajeros;
 	tipos Tipo_pasajero;
 	String Observaciones;
@@ -24,10 +24,9 @@ public class Trip {
 
 	public Trip(int num_plazas, String origen, String destino,
 			String fecha_time, float precio_plaza, int tiempo_max_espera,
-			int max_tamaño_equipaje, tipos tipo_pasajero, String observaciones,
-			String creador_id, ArrayList<Double> origen_latlng,
-			ArrayList<Double> destino_latlng, String max_tamanyo_equipaje,
-			ArrayList<Person> inscritos, String _id) {
+			tipos tipo_pasajero, String observaciones, String creador_id,
+			ArrayList<Double> origen_latlng, ArrayList<Double> destino_latlng,
+			String max_tamanyo_equipaje, ArrayList<Person> inscritos, String _id) {
 		super();
 		Num_plazas = num_plazas;
 		Origen = origen;
@@ -35,7 +34,7 @@ public class Trip {
 		Fecha_time = fecha_time;
 		Precio_plaza = precio_plaza;
 		Tiempo_max_espera = tiempo_max_espera;
-		Max_tamaño_equipaje = max_tamaño_equipaje;
+
 		Tipo_pasajero = tipo_pasajero;
 		Observaciones = observaciones;
 		Creador_id = creador_id;
@@ -114,14 +113,6 @@ public class Trip {
 
 	public void setTiempo_max_espera(int tiempo_max_espera) {
 		Tiempo_max_espera = tiempo_max_espera;
-	}
-
-	public int getMax_tamaño_equipaje() {
-		return Max_tamaño_equipaje;
-	}
-
-	public void setMax_tamaño_equipaje(int max_tamaño_equipaje) {
-		Max_tamaño_equipaje = max_tamaño_equipaje;
 	}
 
 	public tipos getTipo_pasajero() {

@@ -18,7 +18,10 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -141,10 +144,35 @@ class HttpTrips extends AsyncTask<String, Void, Void> implements
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		
 		Log.d("LISTVIEW", "Se ha tocado el item de la lista " + arg2);
+		Trip trip=lista.getTrips().get(arg2);
+		Bundle b = new Bundle();
+		b.putInt("Num_plazas", trip.getNum_plazas());
+		b.putString("_id", trip.get_id());
+		b.putString("Creador_id", trip.getCreador_id());
+		b.putString("Destino", quitarCP(trip.getDestino()));
+		b.putString("Fecha_time", trip.getFecha_time());
+		b.putString("Max_tamanyo_equipaje", trip.getMax_tamanyo_equipaje());
+		b.putString("Observaciones", trip.getObservaciones());
+		b.putString("Origen", quitarCP(trip.getOrigen()));
+		b.putFloat("Precio_plaza", trip.getPrecio_plaza());
+		b.putInt("Tiempo_max_espera", trip.getTiempo_max_espera());
+	
+
+		
 		Intent intent = new Intent((Activity)context, TripDetail.class);
+		intent.putExtras(b);
 		((Activity)context).startActivity(intent);
 		
 
+	}
+	public String quitarCP(String direccion){
+		String[]partes=direccion.split(",");
+		if (partes.length>2){
+		return partes[0]+partes[1];
+		}
+		else {
+			return partes[0];
+		}
 	}
 
 }
