@@ -82,7 +82,7 @@ public class TripDetail extends ActionBarActivity implements OnClickListener {
 	public String formato_fecha(String fecha_servidor) throws ParseException {
 		Object parsedDateInstance = new SimpleDateFormat(
 				"yyyy-MM-dd'T'HH:mm:ss").parse(fecha_servidor);
-		String formattedDate = new SimpleDateFormat("MM/dd/yyyy - HH:mm")
+		String formattedDate = new SimpleDateFormat("dd/MM/yyyy - HH:mm")
 				.format(parsedDateInstance);
 		return formattedDate;
 

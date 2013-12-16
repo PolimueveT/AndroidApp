@@ -63,7 +63,7 @@ public class AdaptadorTrips extends ArrayAdapter<Trip> {
 				Date parsedDateInstance;
 				try {
 					parsedDateInstance = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(t.getFecha_time());
-					String formattedDate = new SimpleDateFormat("MM/dd/yyyy - HH:mm" ).format(parsedDateInstance);
+					String formattedDate = new SimpleDateFormat("dd/MM/yyyy - HH:mm" ).format(parsedDateInstance);
 					fecha.setText(formattedDate);
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block

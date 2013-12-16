@@ -31,6 +31,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -38,7 +39,7 @@ import com.google.gson.GsonBuilder;
 
 class HttpUnirse extends AsyncTask<String, Void, Void> {
 
-	//private TripList lista;
+	// private TripList lista;
 	Respuesta respuesta;
 	View v;
 	Context context;
@@ -46,11 +47,12 @@ class HttpUnirse extends AsyncTask<String, Void, Void> {
 	String personId;
 	String tripId;
 
-	public HttpUnirse(Context context, ProgressBar progreso,String PersonId,String tripId) {
+	public HttpUnirse(Context context, ProgressBar progreso, String PersonId,
+			String tripId) {
 		this.context = context;
 		this.progreso = progreso;
-		this.personId=PersonId;
-		this.tripId=tripId;
+		this.personId = PersonId;
+		this.tripId = tripId;
 
 	}
 
@@ -59,18 +61,24 @@ class HttpUnirse extends AsyncTask<String, Void, Void> {
 
 		super.onPostExecute(result);
 		View v = new View(context);
-		if (respuesta != null &&respuesta.isSuccess()) {
+		if (respuesta != null && respuesta.isSuccess()) {
 			// Collections.sort(lista.getParkings());
-			
+
+			TextView plazas = (TextView) ((Activity) context)
+					.findViewById(R.id.plazas);
 			Button unirse = (Button) ((Activity) context)
 					.findViewById(R.id.unirse);
-			
+
 			unirse.setText("Quitarte");
-			
+			unirse.setEnabled(false);
+			int pl = Integer
+					.parseInt(plazas.getText().toString().split(":")[1]);
+			pl--;
+			plazas.setText("Plazas disponibles: "+pl);
 
 		} else {
-			Toast notification = Toast.makeText(context,
-					respuesta.getInfo(), Toast.LENGTH_SHORT);
+			Toast notification = Toast.makeText(context, respuesta.getInfo(),
+					Toast.LENGTH_SHORT);
 			notification.setGravity(Gravity.CENTER, 0, 0);
 			notification.show();
 		}
@@ -107,7 +115,7 @@ class HttpUnirse extends AsyncTask<String, Void, Void> {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		//HttpGet httpGet = new HttpGet(urls[0]);
+		// HttpGet httpGet = new HttpGet(urls[0]);
 
 		try {
 			HttpResponse response = client.execute(req);
@@ -149,15 +157,18 @@ class HttpUnirse extends AsyncTask<String, Void, Void> {
 
 		return null;
 	}
+
 	public List<NameValuePair> recoger_datos() {
-		//TO DO
+		// TO DO
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-		//el tripId si que lo tengo
-		nameValuePairs.add(new BasicNameValuePair("tripId",tripId));
-		
-		//debe ser el id de la sesion de momento no lo recibo fuerzo a uno local para la demo
-		nameValuePairs.add(new BasicNameValuePair("personId","529d062bc32db82e22b92c6f"));
-	
+		// el tripId si que lo tengo
+		nameValuePairs.add(new BasicNameValuePair("tripId", tripId));
+
+		// debe ser el id de la sesion de momento no lo recibo fuerzo a uno
+		// local para la demo
+		nameValuePairs.add(new BasicNameValuePair("personId",
+				"529d062bc32db82e22b92c6f"));
+
 		return nameValuePairs;
 	}
 }
