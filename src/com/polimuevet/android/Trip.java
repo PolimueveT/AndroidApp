@@ -19,14 +19,14 @@ public class Trip {
 	ArrayList<Double> Origen_latlng;
 	ArrayList<Double> Destino_latlng;
 	String Max_tamanyo_equipaje;
-	ArrayList<Person> Inscritos;
+	ArrayList<String> Inscritos;
 	String _id;
 
 	public Trip(int num_plazas, String origen, String destino,
 			String fecha_time, float precio_plaza, int tiempo_max_espera,
 			tipos tipo_pasajero, String observaciones, String creador_id,
 			ArrayList<Double> origen_latlng, ArrayList<Double> destino_latlng,
-			String max_tamanyo_equipaje, ArrayList<Person> inscritos, String _id) {
+			String max_tamanyo_equipaje, ArrayList<String> inscritos, String _id) {
 		super();
 		Num_plazas = num_plazas;
 		Origen = origen;
@@ -163,11 +163,11 @@ public class Trip {
 		Max_tamanyo_equipaje = max_tamanyo_equipaje;
 	}
 
-	public ArrayList<Person> getInscritos() {
+	public ArrayList<String> getInscritos() {
 		return Inscritos;
 	}
 
-	public void setInscritos(ArrayList<Person> inscritos) {
+	public void setInscritos(ArrayList<String> inscritos) {
 		Inscritos = inscritos;
 	}
 

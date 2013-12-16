@@ -54,8 +54,6 @@
             android:background="@drawable/card_background_white"
             android:orientation="vertical" >
 
-            
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -97,7 +95,7 @@
                     android:text="Destino"
                     android:textSize="18sp" />
             </LinearLayout>
-            
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -118,7 +116,7 @@
                     android:text="Alumn. Prof. Pers."
                     android:textSize="18sp" />
             </LinearLayout>
-            
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -174,16 +172,21 @@
                     android:text="Plazas"
                     android:textSize="18sp" />
             </LinearLayout>
-
         </LinearLayout>
-         <LinearLayout
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:background="@drawable/card_background_white"
             android:orientation="vertical" >
 
-
+            <ProgressBar
+                android:id="@+id/carga"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -205,8 +208,8 @@
                     android:text="Jorge Perez"
                     android:textSize="18sp" />
             </LinearLayout>
-            
-                        <LinearLayout
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
@@ -226,10 +229,7 @@
                     android:text="Seat León"
                     android:textSize="18sp" />
             </LinearLayout>
-
-        
         </LinearLayout>
-        
     </LinearLayout>
 
     <LinearLayout
@@ -237,7 +237,7 @@
         android:layout_height="wrap_content" >
 
         <Button
-            android:id="@+id/buscar"
+            android:id="@+id/unirse"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/apptheme_btn_default_holo_light"

@@ -7,14 +7,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class TripDetail extends ActionBarActivity {
+public class TripDetail extends ActionBarActivity implements OnClickListener {
 
 	boolean cerrar = false;
 	private TextView destino;
@@ -23,6 +32,12 @@ public class TripDetail extends ActionBarActivity {
 	private TextView plazas;
 	private TextView precio;
 	private TextView equipaje;
+	private Button unirse;
+	private ProgressBar progreso;
+	private HttpConductor get;
+	String id_conductor;
+	private HttpUnirse put;
+	private String tripId;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +46,7 @@ public class TripDetail extends ActionBarActivity {
 		// menu_lateral(R.array.lateral_trayectos, this);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		//getSupportActionBar().setHomeButtonEnabled(true);
-		
+		progreso = (ProgressBar) findViewById(R.id.carga);
 		Bundle b = getIntent().getExtras();
 
 		origen = (TextView) findViewById(R.id.origen);
@@ -40,6 +55,8 @@ public class TripDetail extends ActionBarActivity {
 		plazas = (TextView) findViewById(R.id.plazas);
 		precio = (TextView) findViewById(R.id.precio);
 		equipaje = (TextView) findViewById(R.id.equipaje);
+		
+		tripId=b.getString("_id");
 
 		origen.setText(b.getString("Origen"));
 		destino.setText(b.getString("Destino"));
@@ -53,6 +70,12 @@ public class TripDetail extends ActionBarActivity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		id_conductor=b.getString("Creador_id");
+		Log.d("ID Conductor", id_conductor);
+		unirse=(Button)findViewById(R.id.unirse);
+		unirse.setOnClickListener(this);
+		
+		conectar();
 
 	}
 
@@ -78,49 +101,75 @@ public class TripDetail extends ActionBarActivity {
 
 	}
 
-	// @Override
-	// public void onItemClick(AdapterView<?> adapterView, View view, int i,
-	// long l) {
-	//
-	// switch (i) {
-	// case 0:
-	// // Intent intent = new Intent(Portada.this, Registro.class);
-	// // startActivity(intent);
-	// break;
-	// case 1:
-	// cerrar = true;
-	// Intent intentb = new Intent(TripDetail.this, Busqueda.class);
-	// startActivity(intentb);
-	// break;
-	// case 2:
-	// cerrar = true;
-	// Intent intente = new Intent(TripDetail.this, EstadoParking.class);
-	// startActivity(intente);
-	//
-	// break;
-	// case 3:
-	// cerrar_sesion();
-	//
-	// break;
-	//
-	// default:
-	// break;
-	// }
-	// mDrawer.closeDrawers();
-	//
-	//
-	// }
-	private void cerrar_sesion() {
-		cerrar = true;
-		SharedPreferences preferences = getSharedPreferences("sesion",
-				Context.MODE_PRIVATE);
-		Editor editor = preferences.edit();
-		editor.putBoolean("login", false);
-		editor.putString("user", "");
-		editor.commit();
-		Intent intent = new Intent(TripDetail.this, Portada.class);
-		startActivity(intent);
+	/**
+	 * Intenta conectar con el servidor si el dispositivo tiene conexión a
+	 * internet
+	 * 
+	 */
+	public void conectar() {
+		if (isOnline()) {
+			cargar_conductor();
+			// reintentar.setVisibility(View.GONE);
+		} else {
+			Toast notification = Toast.makeText(this,
+					"Activa tu conexión a internet", Toast.LENGTH_SHORT);
+			notification.setGravity(Gravity.CENTER, 0, 0);
+			notification.show();
+			progreso.setVisibility(View.GONE);
+		}
 	}
+	
+
+	private void cargar_conductor() {
+
+		// obtener conductor
+
+		 get = new HttpConductor(TripDetail.this, progreso);
+		//get.execute("http://polimuevet.eu01.aws.af.cm/api/gettrips");
+		get.execute("http://192.168.1.12:3000/api/getuser/"+id_conductor);
+
+	}
+	
+	
+	public void unir_trayecto() {
+		if (isOnline()) {
+			unir();
+			// reintentar.setVisibility(View.GONE);
+		} else {
+			Toast notification = Toast.makeText(this,
+					"Activa tu conexión a internet", Toast.LENGTH_SHORT);
+			notification.setGravity(Gravity.CENTER, 0, 0);
+			notification.show();
+			progreso.setVisibility(View.GONE);
+		}
+	}
+	
+
+	private void unir() {
+
+		// obtener conductor
+
+		 put = new HttpUnirse(TripDetail.this, progreso,"",tripId);
+		//get.execute("http://polimuevet.eu01.aws.af.cm/api/gettrips");
+		put.execute("http://192.168.1.12:3000/api/applytrip");
+
+	}
+	
+	/**
+	 * Comprueba si el dispositivo tiene conexión a internet
+	 * 
+	 * @return true si tiene conexión ,false en caso contrario
+	 */
+
+	public boolean isOnline() {
+		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo netInfo = cm.getActiveNetworkInfo();
+		if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+			return true;
+		}
+		return false;
+	}
+
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -167,6 +216,13 @@ public class TripDetail extends ActionBarActivity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.trip_detail, menu);
 		return true;
+	}
+
+	@Override
+	public void onClick(View arg0) {
+		// TODO Auto-generated method stub
+		unir_trayecto();
+		
 	}
 
 }
