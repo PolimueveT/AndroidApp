@@ -44,7 +44,12 @@
         </activity>
         <activity
             android:name="com.polimuevet.android.TripDetail"
-            android:label="Vista detallada" >
+            android:label="Detalles del trayecto"
+            android:parentActivityName="com.polimuevet.android.Trayectos" >
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="com.polimuevet.android.Trayectos" />
         </activity>
     </application>
 

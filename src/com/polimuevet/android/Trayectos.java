@@ -73,7 +73,7 @@ public class Trayectos extends ActivityMenuLateral {
 
 		 get = new HttpTrips(Trayectos.this, progreso);
 		//get.execute("http://polimuevet.eu01.aws.af.cm/api/gettrips");
-		get.execute("http://158.42.47.86:3000/api/gettrips");
+		get.execute("http://192.168.1.12:3000/api/gettrips");
 
 	}
 	
@@ -177,6 +177,7 @@ public class Trayectos extends ActivityMenuLateral {
 		// TODO Auto-generated method stub
 		super.onPause();
 		if (cerrar) {
+			Log.d("pause", "trayectos se cierra");
 			finish();
 		}
 		

@@ -57,12 +57,13 @@ public class AdaptadorTrips extends ArrayAdapter<Trip> {
 			}
 			if (precio != null) {
 				precio.setText(""+t.getPrecio_plaza()+"€");
+				color_precio(precio,t.getPrecio_plaza());
 			}
 			if (fecha != null) {
 				Date parsedDateInstance;
 				try {
 					parsedDateInstance = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(t.getFecha_time());
-					String formattedDate = new SimpleDateFormat("MM/dd/yyyy-HH:mm" ).format(parsedDateInstance);
+					String formattedDate = new SimpleDateFormat("MM/dd/yyyy - HH:mm" ).format(parsedDateInstance);
 					fecha.setText(formattedDate);
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
@@ -78,6 +79,21 @@ public class AdaptadorTrips extends ArrayAdapter<Trip> {
 		return v;
 	}
 	
+	private void color_precio(TextView precio,Float Precio_plaza) {
+		// TODO Auto-generated method stub
+		if(Precio_plaza<=0.75){
+			precio.setTextColor(context.getResources().getColor(R.color.Icverde));
+			
+		}
+		else if(Precio_plaza >0.75 && Precio_plaza<2.0){
+			precio.setTextColor(context.getResources().getColor(R.color.Orange));
+		}
+		else if(Precio_plaza>=2.0){
+			precio.setTextColor(context.getResources().getColor(R.color.Icrojo));
+		}
+		
+	}
+
 	public String quitarCP(String direccion){
 		String[]partes=direccion.split(",");
 		if (partes.length>2){
