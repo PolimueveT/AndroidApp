@@ -7,6 +7,7 @@ import java.util.Date;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +28,7 @@ public class AdaptadorTrips extends ArrayAdapter<Trip> {
 
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
-		
+		String personId="52af7cddcfc6b87e0fab03d6";
 		// posicion=position;
 		View v = convertView;
 		if (v == null) {
@@ -40,12 +41,16 @@ public class AdaptadorTrips extends ArrayAdapter<Trip> {
 
 		}
 		Trip t = items.get(position);
+		Log.d("TRIP", t.getOrigen()+t.getDestino()+" tamaño inscritos"+t.getInscritos().size());
 		if (t != null) {
-
+			
+			ArrayList<String>ins=t.getInscritos();
+			
 			TextView origen = (TextView) v.findViewById(R.id.origen);
 			TextView destino = (TextView) v.findViewById(R.id.destino);
 			TextView fecha = (TextView) v.findViewById(R.id.fecha);
 			TextView precio = (TextView) v.findViewById(R.id.precio);
+			TextView unido = (TextView) v.findViewById(R.id.isunido);
 			
 
 			if (origen != null) {
@@ -71,6 +76,17 @@ public class AdaptadorTrips extends ArrayAdapter<Trip> {
 				}
 
 				
+				
+			}
+			if(unido!=null){
+				
+				
+				for(int i=0;i<ins.size();i++){
+					if(ins.get(i).compareTo(personId)==0){
+						unido.setVisibility(View.VISIBLE);
+						Log.d("UNIDO", ins.get(i)+"   "+personId);
+					}
+				}
 				
 			}
 		

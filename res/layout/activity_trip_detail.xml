@@ -41,10 +41,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="8dp"
                 android:gravity="right"
+                android:shadowColor="@color/Black"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2"
                 android:text="1€"
                 android:textColor="@color/Orange"
                 android:textSize="35sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:singleLine="true" />
         </LinearLayout>
 
         <LinearLayout
@@ -174,19 +179,20 @@
             </LinearLayout>
         </LinearLayout>
 
+        <ProgressBar
+            android:id="@+id/carga"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
         <LinearLayout
+            android:id="@+id/layout_conductor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:background="@drawable/card_background_white"
-            android:orientation="vertical" >
-
-            <ProgressBar
-                android:id="@+id/carga"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:visibility="gone" />
+            android:orientation="vertical"
+            android:visibility="gone" >
 
             <LinearLayout
                 android:layout_width="match_parent"

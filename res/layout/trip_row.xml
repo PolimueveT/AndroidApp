@@ -67,8 +67,21 @@
         android:layout_marginRight="12dp"
         android:text="x€"
         android:textSize="35sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:shadowColor="@color/Black"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="2"
+        android:singleLine="true" />
 
- 
+    <TextView
+        android:id="@+id/isunido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/precio"
+        android:layout_below="@+id/icorigen"
+        android:text="Unido"
+        android:visibility="gone"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </RelativeLayout>

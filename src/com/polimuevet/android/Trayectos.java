@@ -33,18 +33,18 @@ public class Trayectos extends ActivityMenuLateral {
 		setContentView(R.layout.activity_trayectos);
 		menu_lateral(R.array.lateral_trayectos, this);
 		progreso = (ProgressBar) findViewById(R.id.carga);
-		TripsView = (ListView) findViewById(R.id.trayectos);
+		//TripsView = (ListView) findViewById(R.id.trayectos);
 		conectar();
 	}
 	/**
 	 * Crea el adapter para el Listview lista , este adapter se encarga de poner
 	 * un layout a cada elemento de la lista
 	 */
-	public void asociarAdapter() {
-		Tadapter = new AdaptadorTrips(this, R.layout.parking_row,
-				lista.getTrips());
-		TripsView.setAdapter(Tadapter);
-	}
+//	public void asociarAdapter() {
+//		Tadapter = new AdaptadorTrips(this, R.layout.parking_row,
+//				lista.getTrips());
+//		TripsView.setAdapter(Tadapter);
+//	}
 	/**
 	 * Intenta conectar con el servidor si el dispositivo tiene conexión a
 	 * internet

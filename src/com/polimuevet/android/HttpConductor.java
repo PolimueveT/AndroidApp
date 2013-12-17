@@ -17,17 +17,11 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,8 +51,8 @@ class HttpConductor extends AsyncTask<String, Void, Void>  {
 		// View v = new View(context);
 		if (lista.getUsers() != null) {
 			// Collections.sort(lista.getParkings());
-			ListView TripsView = (ListView) ((Activity) context)
-					.findViewById(R.id.trayectos);
+			LinearLayout lc=(LinearLayout)((Activity) context).findViewById(R.id.layout_conductor);
+			lc.setVisibility(View.VISIBLE);
 			TextView conductor = (TextView) ((Activity) context)
 					.findViewById(R.id.conductor);
 			conductor.setText(lista.getUsers().get(0).getNombre());

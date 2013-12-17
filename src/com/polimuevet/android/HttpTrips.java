@@ -62,11 +62,15 @@ class HttpTrips extends AsyncTask<String, Void, Void> implements
 			TextView titulo = (TextView) ((Activity) context)
 					.findViewById(R.id.titulo);
 			titulo.setText(lista.getTrips().size() + " trayectos encontrados");
+			
+			Log.d("ADAPTER", "creamos adapter");
 			Tadapter = new AdaptadorTrips(context, R.layout.parking_row,
 					lista.getTrips());
 			TripsView.setAdapter(Tadapter);
+			Log.d("ADAPTER", "ponemos adapter");
 			TripsView.setOnItemClickListener(this);
-			Tadapter.notifyDataSetChanged();
+			Log.d("ADAPTER", "ponemos clciklistener");
+			//Tadapter.notifyDataSetChanged();
 
 		} else {
 			Toast notification = Toast.makeText(context,

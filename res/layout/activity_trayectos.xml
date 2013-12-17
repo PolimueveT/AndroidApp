@@ -40,7 +40,7 @@
             <ListView
                 android:id="@+id/trayectos"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="fill_parent"
                 android:divider="@null"
                 android:dividerHeight="0dp" >
             </ListView>
