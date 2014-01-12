@@ -117,10 +117,10 @@ public class Registro extends Activity implements OnClickListener {
 		return false;
 	}
 
-	public boolean comprobar_contraseñas() {
-		String contraseña = pass.getText().toString();
+	public boolean comprobar_pass() {
+		String contras = pass.getText().toString();
 		String confir = passconf.getText().toString();
-		if (contraseña.compareTo(confir) == 0) {
+		if (contras.compareTo(confir) == 0) {
 			return true;
 		}
 		return false;
@@ -171,7 +171,7 @@ public class Registro extends Activity implements OnClickListener {
 			
 
 			// si las contraseñas coinciden
-			else if (!comprobar_contraseñas()) {
+			else if (!comprobar_pass()) {
 				// toast contraseñas no coinciden
 				Toast notification = Toast.makeText(this,
 						"La contraseña y la confirmación deben ser iguales",

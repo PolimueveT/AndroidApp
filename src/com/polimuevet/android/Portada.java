@@ -79,7 +79,7 @@ public class Portada extends ActionBarActivity implements OnClickListener {
 
 		} else {
 			Toast notification = Toast.makeText(this,
-					"Activa tu conexiÃ³n a internet", Toast.LENGTH_SHORT);
+					"Activa tu conexión a internet", Toast.LENGTH_SHORT);
 			notification.setGravity(Gravity.CENTER, 0, 0);
 			notification.show();
 			progreso.setVisibility(View.GONE);
@@ -95,7 +95,7 @@ public class Portada extends ActionBarActivity implements OnClickListener {
 		String password = pass.getText().toString();
 		HttpLogin get = new HttpLogin();
 		//get.execute("http://polimuevet.eu01.aws.af.cm/api/isuserregistered/"+ usuario + "/" + password);
-		get.execute("http://192.168.1.12:3000/api/isuserregistered/"+ usuario + "/" + password);
+		get.execute("http://192.168.1.10:3000/api/isuserregistered/"+ usuario + "/" + password);
 
 	}
 
@@ -123,7 +123,7 @@ public class Portada extends ActionBarActivity implements OnClickListener {
 			} else {
 				pass.setText("");
 				Toast notification = Toast.makeText(Portada.this,
-						"Usuario o contraseÃ±a incorrectos", Toast.LENGTH_SHORT);
+						"Usuario o contraseña incorrectos", Toast.LENGTH_SHORT);
 				notification.setGravity(Gravity.CENTER, 0, 0);
 				notification.show();
 				// progreso.setVisibility(View.GONE);

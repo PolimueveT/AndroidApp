@@ -9,5 +9,6 @@
     <string name="title_activity_busqueda">Busqueda</string>
     <string name="title_activity_trayectos">Trayectos</string>
     <string name="title_activity_trip_detail">TripDetail</string>
+    <string name="title_activity_addtrip">Addtrip</string>
 
 </resources>
