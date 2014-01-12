@@ -97,7 +97,7 @@ public class Busqueda extends ActivityMenuLateral implements TextWatcher, OnClic
 	public void configurar_spinner(){
 		 SpinnerArray =  new ArrayList<String>();
 		    SpinnerArray.add("Hoy");
-		    SpinnerArray.add("MaÃ±ana");
+		    SpinnerArray.add("Mañana");
 		    final Calendar c = Calendar.getInstance();
 			year = c.get(Calendar.YEAR);
 			month = c.get(Calendar.MONTH);

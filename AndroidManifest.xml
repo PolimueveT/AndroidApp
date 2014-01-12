@@ -54,7 +54,7 @@
         </activity>
         <activity
             android:name="com.polimuevet.android.Addtrip"
-            android:label="@string/title_activity_addtrip" >
+            android:label="Nuevo trayecto" >
         </activity>
     </application>
 
