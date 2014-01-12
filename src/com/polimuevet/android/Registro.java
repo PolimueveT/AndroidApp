@@ -266,7 +266,7 @@ public class Registro extends Activity implements OnClickListener {
 	}
 
 	/**
-	 * Recoge la información que ha introducido el usuario en todos los campos y
+	 * Recoge la informaci�n que ha introducido el usuario en todos los campos y
 	 * lo prepara para enviarlo en el POST creando pares de valores
 	 * 
 	 * @return la lista de pares clave valor
@@ -296,7 +296,7 @@ public class Registro extends Activity implements OnClickListener {
 	}
 
 	/**
-	 * Petición get al servidor a la url urls[0] que recibe como parámetro al
+	 * Petici�n post al servidor a la url urls[0] que recibe como parámetro al
 	 * instanciarse,el json que devuelve se guarda en respuesta variable global
 	 * de tipo Respuesta
 	 * 
