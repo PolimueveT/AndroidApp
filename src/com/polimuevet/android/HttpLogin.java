@@ -19,18 +19,22 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.os.AsyncTask;
-import android.util.Log;
-import android.view.Gravity;
-import android.widget.Toast;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-public class HttpNewTrip extends AsyncTask<String, Void, Void> {
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.Menu;
+import android.widget.Toast;
+
+public class HttpLogin extends AsyncTask<String, Void, Void> {
 
 	Respuesta respuesta;
 	
@@ -38,7 +42,7 @@ public class HttpNewTrip extends AsyncTask<String, Void, Void> {
 	
 	List<NameValuePair> datos;
 
-	public HttpNewTrip(Context context, List<NameValuePair> datos) {
+	public HttpLogin(Context context, List<NameValuePair> datos) {
 		this.context = context;
 		this.datos=datos;
 
@@ -49,15 +53,9 @@ public class HttpNewTrip extends AsyncTask<String, Void, Void> {
 
 		super.onPostExecute(result);
 		
-		if (respuesta != null && respuesta.isSuccess()) {
+		if (respuesta != null && respuesta.isSuccess() && respuesta.data.compareTo("false")!=0) {
 		((Activity)context).setProgressBarIndeterminateVisibility(false);
-		Toast notification = Toast.makeText(context, "Trayecto creado",
-				Toast.LENGTH_SHORT);
-		notification.setGravity(Gravity.CENTER, 0, 0);
-		notification.show();
-		//cerrar = true;
-		Intent intentb = new Intent(context, Busqueda.class);
-		((Activity)context).startActivity(intentb);
+		loguear();
 		} else {
 			Toast notification = Toast.makeText(context, respuesta.getInfo(),
 					Toast.LENGTH_SHORT);
@@ -66,6 +64,23 @@ public class HttpNewTrip extends AsyncTask<String, Void, Void> {
 		}
 		((Activity)context).setProgressBarIndeterminateVisibility(false);
 
+	}
+
+	/**
+	 * Almacena en el shared preferences que se ha iniciado sesiÃ³n y da acceso a
+	 * la aplicación
+	 */
+	private void loguear() {
+		
+		SharedPreferences preferences = ((Activity)context).getSharedPreferences("sesion",
+				Context.MODE_PRIVATE);
+		Editor editor = preferences.edit();
+		editor.putBoolean("login", true);
+		editor.putString("user", respuesta.data);
+		editor.commit();
+		Intent intent = new Intent(context, Busqueda.class);
+		((Activity)context).startActivity(intent);
+		((Activity)context).finish();
 	}
 
 	@Override

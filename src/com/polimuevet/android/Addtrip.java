@@ -1,27 +1,14 @@
 package com.polimuevet.android;
 
-import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
-import org.apache.http.StatusLine;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -34,29 +21,22 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 public class Addtrip extends ActivityMenuLateral implements TextWatcher,
 		OnClickListener {
@@ -87,7 +67,7 @@ public class Addtrip extends ActivityMenuLateral implements TextWatcher,
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+		
 		setContentView(R.layout.activity_addtrip);
 		menu_lateral(R.array.lateral_addtrip, this);
 		
@@ -545,8 +525,8 @@ public class Addtrip extends ActivityMenuLateral implements TextWatcher,
 //		nameValuePairs.add(new BasicNameValuePair("fecha_time", fecha
 //				.getText().toString()));
 //		obtener_radiobuttons();
-//		nameValuePairs.add(new BasicNameValuePair("pass", pass.getText()
-//				.toString()));
+		nameValuePairs.add(new BasicNameValuePair("precio", precio.getText()
+				.toString()));
 //
 //		nameValuePairs.add(new BasicNameValuePair("passconf", passconf
 //				.getText().toString()));

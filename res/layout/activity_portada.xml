@@ -17,15 +17,6 @@
         android:text="Registrarse"
         android:textSize="18sp" />
 
-    <ProgressBar
-        android:id="@+id/carga"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:visibility="gone" />
-
     <Button
         android:id="@+id/acceder"
         android:layout_width="fill_parent"
@@ -40,7 +31,7 @@
         android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/user"
+        android:id="@+id/email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/password"
@@ -48,8 +39,8 @@
         android:layout_marginBottom="16dp"
         android:background="@drawable/apptheme_edit_text_holo_light"
         android:ems="10"
-        android:hint="Usuario"
-        android:inputType="textPersonName"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
         android:textSize="24sp" />
 
     <EditText
@@ -65,26 +56,26 @@
         android:inputType="textPassword"
         android:textSize="24sp" />
 
-    <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/textView1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="34dp"
-        android:src="@drawable/polimuevet" />
-
     <TextView
         android:id="@+id/textView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/user"
-        android:layout_alignLeft="@+id/imageView1"
-        android:layout_marginBottom="27dp"
+        android:layout_above="@+id/email"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="38dp"
         android:gravity="center"
         android:text="Ahorra viajando a la universidad en grupo.Compartir es ganar"
         android:textColor="@color/Gray"
         android:textSize="20sp"
         android:textStyle="italic" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView1"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_marginBottom="27dp"
+        android:src="@drawable/polimuevet" />
 
 </RelativeLayout>

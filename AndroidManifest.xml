@@ -54,11 +54,16 @@
         </activity>
         <activity
             android:name="com.polimuevet.android.Addtrip"
-            android:label="Nuevo trayecto" >
+            android:label="Nuevo trayecto"
+            android:noHistory="true" >
         </activity>
         <activity
             android:name="com.polimuevet.android.HttpNewTrip"
             android:label="@string/title_activity_http_new_trip" >
+        </activity>
+        <activity
+            android:name="com.polimuevet.android.HttpLogin"
+            android:label="@string/title_activity_http_login" >
         </activity>
     </application>
 

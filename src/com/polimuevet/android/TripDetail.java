@@ -4,9 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -37,7 +35,7 @@ public class TripDetail extends ActionBarActivity implements OnClickListener {
 	private HttpConductor get;
 	String id_conductor;
 	private HttpUnirse put;
-	private String tripId;
+	private String tripId,PersonId;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +55,10 @@ public class TripDetail extends ActionBarActivity implements OnClickListener {
 		equipaje = (TextView) findViewById(R.id.equipaje);
 		
 		tripId=b.getString("_id");
-
+		SharedPreferences preferences = getSharedPreferences("sesion",
+				Context.MODE_PRIVATE);
+		PersonId=preferences.getString("user","");
+		
 		origen.setText(b.getString("Origen"));
 		destino.setText(b.getString("Destino"));
 		plazas.setText("Plazas disponibles:" + b.getInt("Num_plazas"));
@@ -149,7 +150,7 @@ public class TripDetail extends ActionBarActivity implements OnClickListener {
 
 		// obtener conductor
 
-		 put = new HttpUnirse(TripDetail.this, progreso,"",tripId);
+		 put = new HttpUnirse(TripDetail.this, progreso,PersonId,tripId);
 		//get.execute("http://polimuevet.eu01.aws.af.cm/api/gettrips");
 		put.execute("http://192.168.1.12:3000/api/applytrip");
 

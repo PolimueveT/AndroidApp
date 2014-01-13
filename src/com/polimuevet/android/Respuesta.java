@@ -4,13 +4,13 @@ public class Respuesta {
 	
 	boolean success;
 	String info;
-	boolean data;
+	String data;
 	
 	
 	public Respuesta() {
 	}
 	
-	public Respuesta(boolean success, String info, boolean data) {
+	public Respuesta(boolean success, String info, String data) {
 		super();
 		this.success = success;
 		this.info = info;
@@ -28,13 +28,15 @@ public class Respuesta {
 	public void setInfo(String info) {
 		this.info = info;
 	}
-	public boolean isData() {
+	
+	public String getData() {
 		return data;
 	}
-	public void setData(boolean data) {
+
+	public void setData(String data) {
 		this.data = data;
 	}
-	
+
 	public String testrespuesta(){
 		return new String("success: "+success+" info: "+info+" data: "+data);
 	}

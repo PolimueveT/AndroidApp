@@ -167,7 +167,7 @@ class HttpUnirse extends AsyncTask<String, Void, Void> {
 		// debe ser el id de la sesion de momento no lo recibo fuerzo a uno
 		// local para la demo
 		nameValuePairs.add(new BasicNameValuePair("personId",
-				"52af7cddcfc6b87e0fab03d6"));
+				personId));
 
 		return nameValuePairs;
 	}
