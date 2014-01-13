@@ -156,9 +156,9 @@ public class TripDetail extends ActionBarActivity implements OnClickListener {
 	}
 	
 	/**
-	 * Comprueba si el dispositivo tiene conexiÃ³n a internet
+	 * Comprueba si el dispositivo tiene conexión a internet
 	 * 
-	 * @return true si tiene conexiÃ³n ,false en caso contrario
+	 * @return true si tiene conexión ,false en caso contrario
 	 */
 
 	public boolean isOnline() {

@@ -168,7 +168,7 @@
                             android:background="@drawable/apptheme_edit_text_holo_light"
                             android:ems="10"
                             android:hint="Precio/plaza"
-                            android:inputType="number"
+                            android:inputType="numberDecimal"
                             android:textSize="20sp" />
                     </LinearLayout>
                     <LinearLayout
@@ -191,12 +191,6 @@
                         
                     </LinearLayout>
                 </LinearLayout>
-
-                <ProgressBar
-                    android:id="@+id/carga"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone" />
 
                 <LinearLayout
                     android:id="@+id/layout_conductor"

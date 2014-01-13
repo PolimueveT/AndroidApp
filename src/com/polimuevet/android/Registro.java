@@ -128,7 +128,7 @@ public class Registro extends Activity implements OnClickListener {
 	}
 
 	/**
-	 * Comprueba si todos los campos tienen informaciÃ³n "correcta" para enviar
+	 * Comprueba si todos los campos tienen información "correcta" para enviar
 	 * al servidor
 	 * 
 	 * @return true si la info es correcta , false en caso contrario

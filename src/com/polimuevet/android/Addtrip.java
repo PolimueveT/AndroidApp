@@ -26,15 +26,14 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
@@ -45,6 +44,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -54,6 +54,9 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class Addtrip extends ActivityMenuLateral implements TextWatcher,
 		OnClickListener {
@@ -78,19 +81,24 @@ public class Addtrip extends ActivityMenuLateral implements TextWatcher,
 	ArrayAdapter<String> adapter;
 	protected int hour;
 	protected int minute;
-	private ProgressBar progreso;
+
 	Respuesta respuesta;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		//supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.activity_addtrip);
 		menu_lateral(R.array.lateral_addtrip, this);
+		
 		hora = (EditText) findViewById(R.id.hora);
 		hora.setFocusable(false);
 		hora.setClickable(true);
 		// hora.setEnabled(false);
 		hora.setOnClickListener(this);
+		
+		plazas = (EditText) findViewById(R.id.plazas);
+		precio = (EditText) findViewById(R.id.precio);
 
 		crear = (Button) findViewById(R.id.crear);
 		crear.setOnClickListener(this);
@@ -359,11 +367,166 @@ public class Addtrip extends ActivityMenuLateral implements TextWatcher,
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		if (v.getId() == R.id.crear) {
-
+			if (comprobar_datos()) {
+				conectar();
+			}
 		} else {
 			showDialog(TIME_DIALOG_ID);
 		}
 
+	}
+	
+	private boolean comprobar_hora() {
+		String shora = hora.getText().toString();
+
+		if (shora.compareTo("")!=0) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean comprobar_plazas() {
+		String plz = plazas.getText().toString();
+		int np=Integer.parseInt(plz);
+		if (np > 0 && np<9) {
+			return true;
+		}
+		return false;
+
+	}
+	
+	
+	public boolean comprobar_precio() {
+		String price = precio.getText().toString();
+		Float pr=Float.parseFloat(price);
+		if (pr<=3.0) {
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Comprueba si todos los campos tienen información "correcta" para enviar
+	 * al servidor
+	 * 
+	 * @return true si la info es correcta , false en caso contrario
+	 */
+	public boolean comprobar_datos() {
+		boolean ok = true;
+
+		// campos vacios
+		if (origen.getText().toString().compareTo("") == 0) {
+
+			ok = false;
+		} else if (destino.getText().toString().compareTo("") == 0) {
+
+			ok = false;
+		} else if (hora.getText().toString().compareTo("") == 0) {
+
+			ok = false;
+		} else if (plazas.getText().toString().compareTo("") == 0) {
+
+			ok = false;
+		}
+
+		else if (precio.getText().toString().compareTo("") == 0) {
+
+			ok = false;
+		}
+
+		// si no hay ningún campo vacio
+		if (ok) {
+			if (!comprobar_hora()) {
+				Toast notification = Toast.makeText(this,
+						"Error en la hora",
+						Toast.LENGTH_SHORT);
+				notification.setGravity(Gravity.CENTER, 0, 0);
+				notification.show();
+				
+				ok=false;
+			}
+							
+			
+
+			
+			else if (!comprobar_plazas()) {
+				
+				Toast notification = Toast.makeText(this,
+						"Error en el número de plazas",
+						Toast.LENGTH_SHORT);
+				notification.setGravity(Gravity.CENTER, 0, 0);
+				notification.show();
+				ok=false;
+				
+			}
+			
+			else if (!comprobar_precio()) {
+				// toast contraseÃ±as no coinciden
+				Toast notification = Toast.makeText(this,
+						"Error en el precio",
+						Toast.LENGTH_SHORT);
+				notification.setGravity(Gravity.CENTER, 0, 0);
+				notification.show();
+				ok=false;
+				
+			}
+			
+		}
+
+		else {
+			// toast rellena campos
+			Toast notification = Toast.makeText(this,
+					"Debes rellenar todos los campos", Toast.LENGTH_SHORT);
+			notification.setGravity(Gravity.CENTER, 0, 0);
+			notification.show();
+			setProgressBarIndeterminateVisibility(false);
+		}
+
+		return ok;
+	}
+
+	/**
+	 * Intenta regristar un nuevo usuario si no se puede muestra toast con error
+	 * 
+	 */
+	public void conectar() {
+		if (isOnline()) {
+			crear.setEnabled(false);
+			register_trip();
+
+		} else {
+			Toast notification = Toast.makeText(this,
+					"Activa tu conexión a internet", Toast.LENGTH_SHORT);
+			notification.setGravity(Gravity.CENTER, 0, 0);
+			notification.show();
+			setProgressBarIndeterminateVisibility(false);
+		}
+	}
+
+	/**
+	 * Conecta con el servidor para intentar registrar un usuario nuevo
+	 */
+	private void register_trip() {
+
+		HttpNewTrip post = new HttpNewTrip(Addtrip.this,recoger_datos());
+		//post.execute("http://polimuevet.eu01.aws.af.cm/api/newtrip");
+		 post.execute("http://192.168.1.10:3000/api/newtrip");
+
+	}
+
+	/**
+	 * Comprueba si el dispositivo tiene conexión a internet
+	 * 
+	 * @return true si tiene conexión ,false en caso contrario
+	 */
+
+	public boolean isOnline() {
+		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo netInfo = cm.getActiveNetworkInfo();
+		if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+			return true;
+		}
+		return false;
 	}
 	
 	
@@ -375,11 +538,11 @@ public class Addtrip extends ActivityMenuLateral implements TextWatcher,
 	 */
 	public List<NameValuePair> recoger_datos() {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-//		nameValuePairs.add(new BasicNameValuePair("nombre", user.getText()
-//				.toString()));
-//		nameValuePairs.add(new BasicNameValuePair("email", email.getText()
-//				.toString()));
-//		nameValuePairs.add(new BasicNameValuePair("fechanacimiento", fecha
+		nameValuePairs.add(new BasicNameValuePair("origen", origen.getText()
+				.toString()));
+		nameValuePairs.add(new BasicNameValuePair("destino", destino.getText()
+				.toString()));
+//		nameValuePairs.add(new BasicNameValuePair("fecha_time", fecha
 //				.getText().toString()));
 //		obtener_radiobuttons();
 //		nameValuePairs.add(new BasicNameValuePair("pass", pass.getText()
@@ -397,107 +560,6 @@ public class Addtrip extends ActivityMenuLateral implements TextWatcher,
 		return nameValuePairs;
 	}
 	
-	/**
-	 * Petición post al servidor a la url urls[0] que recibe como parÃ¡metro al
-	 * instanciarse,el json que devuelve se guarda en respuesta variable global
-	 * de tipo Respuesta
-	 * 
-	 * @author cesar
-	 * 
-	 */
-	class HttpRegister extends AsyncTask<String, Void, Void> {
-
-		@Override
-		protected void onPostExecute(Void result) {
-			// TODO completar intent Acceso al app , error en caso contrario
-			super.onPostExecute(result);
-
-			progreso.setVisibility(View.GONE);
-			Log.d("JSON", respuesta.testrespuesta());
-			if (respuesta.success) {
-				finish();
-			} else {
-				
-				Toast notification = Toast.makeText(Addtrip.this,
-						"Fallo al crear el trayecto , intentalo otra vez",
-						Toast.LENGTH_SHORT);
-				notification.setGravity(Gravity.CENTER, 0, 0);
-				notification.show();
-				// progreso.setVisibility(View.GONE);
-
-			}
-
-		}
-
-		@Override
-		protected void onPreExecute() {
-			// TODO Auto-generated method stub
-			super.onPreExecute();
-			progreso.setVisibility(View.VISIBLE);
-
-		}
-
-		@Override
-		protected void onProgressUpdate(Void... values) {
-			// TODO Auto-generated method stub
-			super.onProgressUpdate(values);
-		}
-
-		@Override
-		protected Void doInBackground(String... urls) {
-			// TODO Auto-generated method stub
-			StringBuilder builder = new StringBuilder();
-			HttpClient client = new DefaultHttpClient();
-
-			// Ejemplo POST
-			HttpPost req = new HttpPost(urls[0]);
-
-			try {
-				req.setEntity(new UrlEncodedFormEntity(recoger_datos()));
-			} catch (UnsupportedEncodingException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-
-			try {
-				HttpResponse response = client.execute(req);
-				StatusLine statusLine = response.getStatusLine();
-				int statusCode = statusLine.getStatusCode();
-				Log.d("RESPUESTA", "statusCode: " + statusCode);
-				if (statusCode == 200) {
-					HttpEntity entity = response.getEntity();
-					InputStream content = entity.getContent();
-					BufferedReader reader = new BufferedReader(
-							new InputStreamReader(content));
-					String line;
-					while ((line = reader.readLine()) != null) {
-						builder.append(line);
-					}
-					Log.v("Getter", "Your data: " + builder.toString());
-
-					String responseString = builder.toString();
-					String responsefinal = "{\"respuesta\":" + responseString
-							+ "}";
-					Log.d("JSON", responsefinal);
-					GsonBuilder gbuilder = new GsonBuilder();
-					Gson gson = gbuilder.create();
-					JSONObject json = new JSONObject(responseString);
-					respuesta = gson.fromJson(json.toString(), Respuesta.class);
-
-				} else {
-					Log.e("Getter", "Failed to download file");
-				}
-			} catch (ClientProtocolException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			return null;
-		}
-	}
+	
 
 }

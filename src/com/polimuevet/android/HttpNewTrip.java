@@ -15,7 +15,6 @@ import org.apache.http.StatusLine;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -25,34 +24,28 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-class HttpUnirse extends AsyncTask<String, Void, Void> {
+public class HttpNewTrip extends AsyncTask<String, Void, Void> {
 
-	// private TripList lista;
 	Respuesta respuesta;
-	View v;
+	
 	Context context;
-	ProgressBar progreso;
-	String personId;
-	String tripId;
+	
+	List<NameValuePair> datos;
 
-	public HttpUnirse(Context context, ProgressBar progreso, String PersonId,
-			String tripId) {
+	public HttpNewTrip(Context context, List<NameValuePair> datos) {
 		this.context = context;
-		this.progreso = progreso;
-		this.personId = PersonId;
-		this.tripId = tripId;
+		this.datos=datos;
 
 	}
 
@@ -62,27 +55,21 @@ class HttpUnirse extends AsyncTask<String, Void, Void> {
 		super.onPostExecute(result);
 		
 		if (respuesta != null && respuesta.isSuccess()) {
-			// Collections.sort(lista.getParkings());
-
-			TextView plazas = (TextView) ((Activity) context)
-					.findViewById(R.id.plazas);
-			Button unirse = (Button) ((Activity) context)
-					.findViewById(R.id.unirse);
-
-			unirse.setText("Quitarte");
-			unirse.setEnabled(false);
-			int pl = Integer
-					.parseInt(plazas.getText().toString().split(":")[1]);
-			pl--;
-			plazas.setText("Plazas disponibles: "+pl);
-
+		((Activity)context).setProgressBarIndeterminateVisibility(false);
+		Toast notification = Toast.makeText(context, "Trayecto creado",
+				Toast.LENGTH_SHORT);
+		notification.setGravity(Gravity.CENTER, 0, 0);
+		notification.show();
+		//cerrar = true;
+		Intent intentb = new Intent(context, Busqueda.class);
+		((Activity)context).startActivity(intentb);
 		} else {
 			Toast notification = Toast.makeText(context, respuesta.getInfo(),
 					Toast.LENGTH_SHORT);
 			notification.setGravity(Gravity.CENTER, 0, 0);
 			notification.show();
 		}
-		progreso.setVisibility(View.GONE);
+		((Activity)context).setProgressBarIndeterminateVisibility(false);
 
 	}
 
@@ -90,7 +77,7 @@ class HttpUnirse extends AsyncTask<String, Void, Void> {
 	protected void onPreExecute() {
 
 		super.onPreExecute();
-		progreso.setVisibility(View.VISIBLE);
+		((Activity)context).setProgressBarIndeterminateVisibility(true);
 
 	}
 
@@ -107,10 +94,10 @@ class HttpUnirse extends AsyncTask<String, Void, Void> {
 		HttpClient client = new DefaultHttpClient();
 
 		// Ejemplo POST
-		HttpPut req = new HttpPut(urls[0]);
+		HttpPost req = new HttpPost(urls[0]);
 
 		try {
-			req.setEntity(new UrlEncodedFormEntity(recoger_datos()));
+			req.setEntity(new UrlEncodedFormEntity(datos));
 		} catch (UnsupportedEncodingException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -158,17 +145,4 @@ class HttpUnirse extends AsyncTask<String, Void, Void> {
 		return null;
 	}
 
-	public List<NameValuePair> recoger_datos() {
-		// TO DO
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-		// el tripId si que lo tengo
-		nameValuePairs.add(new BasicNameValuePair("tripId", tripId));
-
-		// debe ser el id de la sesion de momento no lo recibo fuerzo a uno
-		// local para la demo
-		nameValuePairs.add(new BasicNameValuePair("personId",
-				"52af7cddcfc6b87e0fab03d6"));
-
-		return nameValuePairs;
-	}
 }

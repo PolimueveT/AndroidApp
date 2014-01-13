@@ -61,7 +61,7 @@ public class EstadoParking extends ActivityMenuLateral {
 			// reintentar.setVisibility(View.GONE);
 		} else {
 			Toast notification = Toast.makeText(this,
-					"Activa tu conexiÃ³n a internet", Toast.LENGTH_SHORT);
+					"Activa tu conexión a internet", Toast.LENGTH_SHORT);
 			notification.setGravity(Gravity.CENTER, 0, 0);
 			notification.show();
 			progreso.setVisibility(View.GONE);
@@ -82,9 +82,9 @@ public class EstadoParking extends ActivityMenuLateral {
 	}
 
 	/**
-	 * Comprueba si el dispositivo tiene conexiÃ³n a internet
+	 * Comprueba si el dispositivo tiene conexión a internet
 	 * 
-	 * @return true si tiene conexiÃ³n ,false en caso contrario
+	 * @return true si tiene conexión ,false en caso contrario
 	 */
 
 	public boolean isOnline() {
