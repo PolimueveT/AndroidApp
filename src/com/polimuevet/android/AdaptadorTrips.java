@@ -7,6 +7,7 @@ import java.util.Date;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,18 +18,22 @@ import android.widget.TextView;
 public class AdaptadorTrips extends ArrayAdapter<Trip> {
 	private ArrayList<Trip> items;
 	private Context context;
+	private String PersonId;
 
 	public AdaptadorTrips(Context context, int textViewResourceId,
 			ArrayList<Trip> items) {
 		super(context, textViewResourceId, items);
 		this.items = items;
 		this.context = context;
+		SharedPreferences preferences = ((Activity)context).getSharedPreferences("sesion",
+				Context.MODE_PRIVATE);
+		PersonId=preferences.getString("user","");
 
 	}
 
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
-		String personId="52af7cddcfc6b87e0fab03d6";
+		//String personId="52af7cddcfc6b87e0fab03d6";
 		// posicion=position;
 		View v = convertView;
 		if (v == null) {
@@ -82,9 +87,9 @@ public class AdaptadorTrips extends ArrayAdapter<Trip> {
 				
 				
 				for(int i=0;i<ins.size();i++){
-					if(ins.get(i).compareTo(personId)==0){
+					if(ins.get(i).compareTo(PersonId)==0){
 						unido.setVisibility(View.VISIBLE);
-						Log.d("UNIDO", ins.get(i)+"   "+personId);
+						Log.d("UNIDO", ins.get(i)+"   "+PersonId);
 					}
 				}
 				

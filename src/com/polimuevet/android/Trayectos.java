@@ -27,12 +27,14 @@ public class Trayectos extends ActivityMenuLateral {
 	private HttpTrips get;
 
 
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_trayectos);
 		menu_lateral(R.array.lateral_trayectos, this);
 		progreso = (ProgressBar) findViewById(R.id.carga);
+		
 		//TripsView = (ListView) findViewById(R.id.trayectos);
 		conectar();
 	}

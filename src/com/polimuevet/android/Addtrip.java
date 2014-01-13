@@ -3,8 +3,11 @@ package com.polimuevet.android;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.http.NameValuePair;
@@ -24,6 +27,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -120,13 +124,21 @@ public class Addtrip extends ActivityMenuLateral implements TextWatcher,
 		year = c.get(Calendar.YEAR);
 		month = c.get(Calendar.MONTH);
 		day = c.get(Calendar.DAY_OF_MONTH);
+		today=day + "/" + (month+1) + "/" + year;
 		for (int i = 0; i < 15; i++) {
 			c.add(Calendar.DAY_OF_MONTH, +1);
 			day = c.get(Calendar.DAY_OF_MONTH);
 			month = c.get(Calendar.MONTH);
 			year = c.get(Calendar.YEAR);
 			int mes = month + 1;
-			SpinnerArray.add(day + "/" + mes + "/" + year);
+			
+			if(i==0){
+				tomorrow=day + "/" + mes + "/" + year;
+			}
+			else {
+				SpinnerArray.add(day + "/" + mes + "/" + year);
+			}
+			
 		}
 		adapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_spinner_item, SpinnerArray);
@@ -335,6 +347,8 @@ public class Addtrip extends ActivityMenuLateral implements TextWatcher,
 
 		}
 	};
+	private String today;
+	private String tomorrow;
 
 	private static String pad(int c) {
 		if (c >= 10)
@@ -522,22 +536,50 @@ public class Addtrip extends ActivityMenuLateral implements TextWatcher,
 				.toString()));
 		nameValuePairs.add(new BasicNameValuePair("destino", destino.getText()
 				.toString()));
-//		nameValuePairs.add(new BasicNameValuePair("fecha_time", fecha
-//				.getText().toString()));
-//		obtener_radiobuttons();
+		
+	
+			nameValuePairs.add(new BasicNameValuePair("fecha_time", obtener_fecha()));
+		
+		
+		
 		nameValuePairs.add(new BasicNameValuePair("precio", precio.getText()
 				.toString()));
-//
-//		nameValuePairs.add(new BasicNameValuePair("passconf", passconf
-//				.getText().toString()));
-//
-//		obtener_radiobuttons();
-//		nameValuePairs.add(new BasicNameValuePair("sexo", radioSexButton
-//				.getText().toString()));
-//		nameValuePairs.add(new BasicNameValuePair("usertype", radioTipoButton
-//				.getText().toString()));
+		
+		String Tequipaje =equipaje.getSelectedItem().toString();
+		
+		nameValuePairs.add(new BasicNameValuePair("equipaje", Tequipaje));
+
+		nameValuePairs.add(new BasicNameValuePair("num_plazas",plazas.getText().toString()));
+		
+		SharedPreferences preferences = getSharedPreferences("sesion",
+				Context.MODE_PRIVATE);
+		String PersonId=preferences.getString("user","");
+		
+		nameValuePairs.add(new BasicNameValuePair("creador_id", PersonId));
 
 		return nameValuePairs;
+	}
+
+	private String obtener_fecha() {
+		
+		String dia=Items.getSelectedItem().toString();
+		if (dia.compareTo("Hoy")==0){
+			dia=today;
+		}
+		else if(dia.compareTo("Mañana")==0){
+			dia=tomorrow;
+		}
+		Date fechatime;
+		try {
+						
+			fechatime = new SimpleDateFormat("dd/MM/yyyy - HH:mm").parse(dia+" - "+pad(hour)+":"+pad(minute));
+			return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss" ).format(fechatime);
+			
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return dia;
 	}
 	
 	

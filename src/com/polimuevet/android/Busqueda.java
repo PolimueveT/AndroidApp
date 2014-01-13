@@ -121,6 +121,7 @@ public class Busqueda extends ActivityMenuLateral implements TextWatcher, OnClic
 	
 		if (arg0.getId() == R.id.buscar) {
 			cerrar=true;
+			//falta recoger los campos y pasar los valores al activity Trayectos para filtrar
 			Intent intent = new Intent(Busqueda.this, Trayectos.class);
 			startActivity(intent);
 		}
