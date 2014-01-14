@@ -22,9 +22,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.preference.EditTextPreference;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBar.Tab;
+import android.support.v7.app.ActionBar.TabListener;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -42,176 +52,89 @@ import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-public class Addtrip extends ActivityMenuLateral implements TextWatcher,
-		OnClickListener {
-	static final int TIME_DIALOG_ID = 999;
-	AutoCompleteTextView destino;
-	AutoCompleteTextView origen;
-	boolean cerrar = false;
-	EditText hora;
-	EditText plazas;
-	EditText precio;
+import com.polimuevet.android.R.color;
 
+public class Addtrip extends ActivityMenuLateral implements OnClickListener {
+
+	static final int TIME_DIALOG_ID = 999;
+	boolean cerrar = false;
 	Button crear;
-	private int year;
-	private int month;
-	private int day;
-	private Spinner Items;
-	private Spinner equipaje;
-	List<String> SpinnerArray;
-	List<String> SpinnerArrayeq;
-	ArrayAdapter<String> adaptereq;
-	ArrayList<String> calles = new ArrayList<String>();
 	ArrayAdapter<String> adapter;
 	protected int hour;
 	protected int minute;
-
 	Respuesta respuesta;
+	ViewPager pager;
+	MyPageAdapter padapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		setContentView(R.layout.activity_addtrip);
 		menu_lateral(R.array.lateral_addtrip, this);
-		
-		hora = (EditText) findViewById(R.id.hora);
-		hora.setFocusable(false);
-		hora.setClickable(true);
-		// hora.setEnabled(false);
-		hora.setOnClickListener(this);
-		
-		plazas = (EditText) findViewById(R.id.plazas);
-		precio = (EditText) findViewById(R.id.precio);
+		padapter = new MyPageAdapter(getSupportFragmentManager());
+		pager = (ViewPager) findViewById(R.id.viewPager);
+		getSupportActionBar().setStackedBackgroundDrawable(
+				new ColorDrawable(color.Orange));
+
+		pager.setAdapter(padapter);
+		pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+			@Override
+			public void onPageSelected(int arg0) {
+				// TODO Auto-generated method stub
+				getSupportActionBar().setSelectedNavigationItem(arg0);
+			}
+
+			@Override
+			public void onPageScrolled(int arg0, float arg1, int arg2) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onPageScrollStateChanged(int arg0) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+		TabListener tabListener = new TabListener() {
+
+			@Override
+			public void onTabUnselected(Tab arg0, FragmentTransaction arg1) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onTabSelected(Tab arg0, FragmentTransaction arg1) {
+				// TODO Auto-generated method stub
+				pager.setCurrentItem(arg0.getPosition());
+			}
+
+			@Override
+			public void onTabReselected(Tab arg0, FragmentTransaction arg1) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		Tab tab = getSupportActionBar().newTab();
+		tab.setText("Información");
+		tab.setTabListener(tabListener);
+
+		getSupportActionBar().addTab(tab);
+
+		tab = getSupportActionBar().newTab();
+		tab.setText("Restricciones");
+		tab.setTabListener(tabListener);
+		getSupportActionBar().addTab(tab);
 
 		crear = (Button) findViewById(R.id.crear);
 		crear.setOnClickListener(this);
-		Items = (Spinner) findViewById(R.id.spinnerdia);
-		equipaje = (Spinner) findViewById(R.id.spinnermaleta);
-		configurar_spinner();
-		configurar_spinner_eq();
-
-		origen = (AutoCompleteTextView) findViewById(R.id.origen);
-		origen.addTextChangedListener(this);
-		destino = (AutoCompleteTextView) findViewById(R.id.destino);
-		destino.addTextChangedListener(this);
-		cargarcalles();
-		cargarfacultades();
-		origen.setAdapter(new ArrayAdapter<String>(this,
-				android.R.layout.simple_dropdown_item_1line, calles));
-
-		destino.setAdapter(new ArrayAdapter<String>(this,
-				android.R.layout.simple_dropdown_item_1line, calles));
-	}
-
-	public void configurar_spinner_eq() {
-		SpinnerArrayeq = new ArrayList<String>();
-		SpinnerArrayeq.add("Mochila");
-		SpinnerArrayeq.add("Maleta");
-		
-		adaptereq = new ArrayAdapter<String>(this,
-				android.R.layout.simple_spinner_item, SpinnerArrayeq);
-		adaptereq.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-		equipaje.setAdapter(adaptereq);
-	}
-
-	public void configurar_spinner() {
-		SpinnerArray = new ArrayList<String>();
-		SpinnerArray.add("Hoy");
-		SpinnerArray.add("Mañana");
-		final Calendar c = Calendar.getInstance();
-		year = c.get(Calendar.YEAR);
-		month = c.get(Calendar.MONTH);
-		day = c.get(Calendar.DAY_OF_MONTH);
-		today=day + "/" + (month+1) + "/" + year;
-		for (int i = 0; i < 15; i++) {
-			c.add(Calendar.DAY_OF_MONTH, +1);
-			day = c.get(Calendar.DAY_OF_MONTH);
-			month = c.get(Calendar.MONTH);
-			year = c.get(Calendar.YEAR);
-			int mes = month + 1;
-			
-			if(i==0){
-				tomorrow=day + "/" + mes + "/" + year;
-			}
-			else {
-				SpinnerArray.add(day + "/" + mes + "/" + year);
-			}
-			
-		}
-		adapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_spinner_item, SpinnerArray);
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-		Items.setAdapter(adapter);
-	}
-
-	public void cargarcalles() {
-		try {
-			InputStream inputStream = getResources().openRawResource(
-					R.raw.calles);
-
-			XmlPullParser parser = XmlPullParserFactory.newInstance()
-					.newPullParser();
-			parser.setInput(inputStream, null);
-			int eventType = XmlPullParser.START_DOCUMENT;
-			while (eventType != XmlPullParser.END_DOCUMENT) {
-				if (eventType == XmlPullParser.START_TAG) {
-					if (parser.getName().equalsIgnoreCase("calle")) {
-
-						calles.add(parser.getAttributeValue(null, "nombre"));
-
-					}
-
-				}
-				eventType = parser.next();
-			}
-			inputStream.close();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (XmlPullParserException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
-
-	public void cargarfacultades() {
-		try {
-			InputStream inputStream = getResources().openRawResource(
-					R.raw.facultades);
-
-			XmlPullParser parser = XmlPullParserFactory.newInstance()
-					.newPullParser();
-			parser.setInput(inputStream, null);
-			int eventType = XmlPullParser.START_DOCUMENT;
-			while (eventType != XmlPullParser.END_DOCUMENT) {
-				if (eventType == XmlPullParser.START_TAG) {
-					if (parser.getName().equalsIgnoreCase("facultad")) {
-
-						calles.add(parser.getAttributeValue(null, "nombre"));
-
-					}
-
-				}
-				eventType = parser.next();
-			}
-			inputStream.close();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (XmlPullParserException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
 	}
 
@@ -305,25 +228,6 @@ public class Addtrip extends ActivityMenuLateral implements TextWatcher,
 	}
 
 	@Override
-	public void afterTextChanged(Editable s) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void beforeTextChanged(CharSequence s, int start, int count,
-			int after) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void onTextChanged(CharSequence s, int start, int before, int count) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	protected Dialog onCreateDialog(int id) {
 		switch (id) {
 		case TIME_DIALOG_ID:
@@ -338,145 +242,33 @@ public class Addtrip extends ActivityMenuLateral implements TextWatcher,
 	private TimePickerDialog.OnTimeSetListener timePickerListener = new TimePickerDialog.OnTimeSetListener() {
 		public void onTimeSet(TimePicker view, int selectedHour,
 				int selectedMinute) {
-			hour = selectedHour;
-			minute = selectedMinute;
+		
+			 FragmentnewtripA f = (FragmentnewtripA) padapter.getItem(0);
+			Log.d("TEST visible",""+f.isVisible());
+			//f.get
+			f.sethour(selectedHour);
+			f.setminute(selectedMinute);
+			f.fijar_tiempo(selectedHour, selectedMinute);
 
-			// set current time into textview
-			hora.setText(new StringBuilder().append(pad(hour)).append(":")
-					.append(pad(minute)));
+			
 
 		}
 	};
-	private String today;
-	private String tomorrow;
-
-	private static String pad(int c) {
-		if (c >= 10)
-			return String.valueOf(c);
-		else
-			return "0" + String.valueOf(c);
-	}
 
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		if (v.getId() == R.id.crear) {
-			if (comprobar_datos()) {
+			FragmentnewtripA f = (FragmentnewtripA) padapter.getItem(0);
+			if (f.comprobar_datos()) {
 				conectar();
 			}
+			
+
 		} else {
 			showDialog(TIME_DIALOG_ID);
 		}
 
-	}
-	
-	private boolean comprobar_hora() {
-		String shora = hora.getText().toString();
-
-		if (shora.compareTo("")!=0) {
-			return true;
-		}
-		return false;
-	}
-
-	public boolean comprobar_plazas() {
-		String plz = plazas.getText().toString();
-		int np=Integer.parseInt(plz);
-		if (np > 0 && np<9) {
-			return true;
-		}
-		return false;
-
-	}
-	
-	
-	public boolean comprobar_precio() {
-		String price = precio.getText().toString();
-		Float pr=Float.parseFloat(price);
-		if (pr<=3.0) {
-			return true;
-		}
-		return false;
-	}
-	
-	/**
-	 * Comprueba si todos los campos tienen información "correcta" para enviar
-	 * al servidor
-	 * 
-	 * @return true si la info es correcta , false en caso contrario
-	 */
-	public boolean comprobar_datos() {
-		boolean ok = true;
-
-		// campos vacios
-		if (origen.getText().toString().compareTo("") == 0) {
-
-			ok = false;
-		} else if (destino.getText().toString().compareTo("") == 0) {
-
-			ok = false;
-		} else if (hora.getText().toString().compareTo("") == 0) {
-
-			ok = false;
-		} else if (plazas.getText().toString().compareTo("") == 0) {
-
-			ok = false;
-		}
-
-		else if (precio.getText().toString().compareTo("") == 0) {
-
-			ok = false;
-		}
-
-		// si no hay ningún campo vacio
-		if (ok) {
-			if (!comprobar_hora()) {
-				Toast notification = Toast.makeText(this,
-						"Error en la hora",
-						Toast.LENGTH_SHORT);
-				notification.setGravity(Gravity.CENTER, 0, 0);
-				notification.show();
-				
-				ok=false;
-			}
-							
-			
-
-			
-			else if (!comprobar_plazas()) {
-				
-				Toast notification = Toast.makeText(this,
-						"Error en el número de plazas",
-						Toast.LENGTH_SHORT);
-				notification.setGravity(Gravity.CENTER, 0, 0);
-				notification.show();
-				ok=false;
-				
-			}
-			
-			else if (!comprobar_precio()) {
-				// toast contraseÃ±as no coinciden
-				Toast notification = Toast.makeText(this,
-						"Error en el precio",
-						Toast.LENGTH_SHORT);
-				notification.setGravity(Gravity.CENTER, 0, 0);
-				notification.show();
-				ok=false;
-				
-			}
-			
-		}
-
-		else {
-			// toast rellena campos
-			Toast notification = Toast.makeText(this,
-					"Debes rellenar todos los campos", Toast.LENGTH_SHORT);
-			notification.setGravity(Gravity.CENTER, 0, 0);
-			notification.show();
-			setProgressBarIndeterminateVisibility(false);
-		}
-
-		return ok;
 	}
 
 	/**
@@ -502,9 +294,9 @@ public class Addtrip extends ActivityMenuLateral implements TextWatcher,
 	 */
 	private void register_trip() {
 
-		HttpNewTrip post = new HttpNewTrip(Addtrip.this,recoger_datos());
-		//post.execute("http://polimuevet.eu01.aws.af.cm/api/newtrip");
-		 post.execute("http://192.168.1.10:3000/api/newtrip");
+		HttpNewTrip post = new HttpNewTrip(Addtrip.this, recoger_datos());
+		// post.execute("http://polimuevet.eu01.aws.af.cm/api/newtrip");
+		post.execute("http://192.168.1.10:3000/api/newtrip");
 
 	}
 
@@ -522,8 +314,7 @@ public class Addtrip extends ActivityMenuLateral implements TextWatcher,
 		}
 		return false;
 	}
-	
-	
+
 	/**
 	 * Recoge la información que ha introducido el usuario en todos los campos y
 	 * lo prepara para enviarlo en el POST creando pares de valores
@@ -532,56 +323,76 @@ public class Addtrip extends ActivityMenuLateral implements TextWatcher,
 	 */
 	public List<NameValuePair> recoger_datos() {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-		nameValuePairs.add(new BasicNameValuePair("origen", origen.getText()
-				.toString()));
-		nameValuePairs.add(new BasicNameValuePair("destino", destino.getText()
-				.toString()));
-		
-	
-			nameValuePairs.add(new BasicNameValuePair("fecha_time", obtener_fecha()));
-		
-		
-		
-		nameValuePairs.add(new BasicNameValuePair("precio", precio.getText()
-				.toString()));
-		
-		String Tequipaje =equipaje.getSelectedItem().toString();
-		
-		nameValuePairs.add(new BasicNameValuePair("equipaje", Tequipaje));
-
-		nameValuePairs.add(new BasicNameValuePair("num_plazas",plazas.getText().toString()));
-		
-		SharedPreferences preferences = getSharedPreferences("sesion",
-				Context.MODE_PRIVATE);
-		String PersonId=preferences.getString("user","");
-		
-		nameValuePairs.add(new BasicNameValuePair("creador_id", PersonId));
+		/*
+		 * nameValuePairs.add(new BasicNameValuePair("origen", origen.getText()
+		 * .toString())); nameValuePairs.add(new BasicNameValuePair("destino",
+		 * destino.getText() .toString()));
+		 * 
+		 * 
+		 * nameValuePairs.add(new BasicNameValuePair("fecha_time",
+		 * obtener_fecha()));
+		 * 
+		 * 
+		 * 
+		 * nameValuePairs.add(new BasicNameValuePair("precio", precio.getText()
+		 * .toString()));
+		 * 
+		 * String Tequipaje =equipaje.getSelectedItem().toString();
+		 * 
+		 * nameValuePairs.add(new BasicNameValuePair("equipaje", Tequipaje));
+		 * 
+		 * nameValuePairs.add(new
+		 * BasicNameValuePair("num_plazas",plazas.getText().toString()));
+		 * 
+		 * SharedPreferences preferences = getSharedPreferences("sesion",
+		 * Context.MODE_PRIVATE); String
+		 * PersonId=preferences.getString("user","");
+		 * 
+		 * nameValuePairs.add(new BasicNameValuePair("creador_id", PersonId));
+		 */
 
 		return nameValuePairs;
 	}
 
-	private String obtener_fecha() {
-		
-		String dia=Items.getSelectedItem().toString();
-		if (dia.compareTo("Hoy")==0){
-			dia=today;
+	private class MyPageAdapter extends FragmentPagerAdapter {
+
+		public MyPageAdapter(FragmentManager fm) {
+			super(fm);
+
 		}
-		else if(dia.compareTo("Mañana")==0){
-			dia=tomorrow;
+
+		@Override
+		public Fragment getItem(int arg0) {
+			// TODO Auto-generated method stub
+			switch (arg0) {
+			case 0:
+				return new FragmentnewtripA();
+			case 1:
+				return new FragmentnewtripA();
+			}
+
+			return null;
 		}
-		Date fechatime;
-		try {
-						
-			fechatime = new SimpleDateFormat("dd/MM/yyyy - HH:mm").parse(dia+" - "+pad(hour)+":"+pad(minute));
-			return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss" ).format(fechatime);
-			
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
+		@Override
+		public int getCount() {
+
+			return 2;
 		}
-		return dia;
+
+		@Override
+		public CharSequence getPageTitle(int position) {
+
+			switch (position) {
+			case 0:
+				return "Fragment";
+			case 1:
+				return "Fragment";
+
+			}
+			return null;
+		}
+
 	}
-	
-	
 
 }

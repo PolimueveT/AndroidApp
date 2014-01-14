@@ -15,7 +15,7 @@
         android:allowBackup="true"
         android:icon="@drawable/carpooling"
         android:label="Polimuevet"
-        android:theme="@style/Theme.AppCompat.Light.DarkActionBar" >
+        android:theme="@style/Theme.Polistyle" >
         <activity
             android:name="com.polimuevet.android.EstadoParking"
             android:configChanges="keyboardHidden|orientation"
