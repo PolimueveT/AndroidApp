@@ -67,7 +67,7 @@ public class Portada extends ActionBarActivity implements OnClickListener {
 
 		} else {
 			Toast notification = Toast.makeText(this,
-					"Activa tu conexión a internet", Toast.LENGTH_SHORT);
+					"Activa tu conexiï¿½n a internet", Toast.LENGTH_SHORT);
 			notification.setGravity(Gravity.CENTER, 0, 0);
 			notification.show();
 			setProgressBarIndeterminateVisibility(false);
@@ -82,7 +82,8 @@ public class Portada extends ActionBarActivity implements OnClickListener {
 		
 		HttpLogin post = new HttpLogin(Portada.this,recoger_datos());
 		//get.execute("http://polimuevet.eu01.aws.af.cm/api/isuserregistered/"+ usuario + "/" + password);
-		post.execute("http://192.168.1.10:3000/api/ismailregistered");
+		//post.execute("http://192.168.1.10:3000/api/ismailregistered");
+		post.execute("http://polimuevet.eu01.aws.af.cm/api/ismailregistered");
 
 	}
 	public List<NameValuePair> recoger_datos() {
@@ -94,9 +95,9 @@ public class Portada extends ActionBarActivity implements OnClickListener {
 	
 
 	/**
-	 * Comprueba si el dispositivo tiene conexión a internet
+	 * Comprueba si el dispositivo tiene conexiï¿½n a internet
 	 * 
-	 * @return true si tiene conexión ,false en caso contrario
+	 * @return true si tiene conexiï¿½n ,false en caso contrario
 	 */
 
 	public boolean isOnline() {

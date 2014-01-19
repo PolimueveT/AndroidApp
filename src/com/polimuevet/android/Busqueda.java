@@ -49,6 +49,7 @@ public class Busqueda extends ActivityMenuLateral implements TextWatcher, OnClic
 	private int month;
 	private int day;
 	private Spinner Items;
+	private Spinner franja;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +82,8 @@ public class Busqueda extends ActivityMenuLateral implements TextWatcher, OnClic
 		 Items = (Spinner) findViewById(R.id.spinnerdia);
 		configurar_spinner();
 
+		franja = (Spinner) findViewById(R.id.spinnerfranja);
+		configurar_spinnerFranja();
 		origen = (AutoCompleteTextView) findViewById(R.id.origen);
 		origen.addTextChangedListener(this);
 		cargarcalles();
@@ -95,9 +98,9 @@ public class Busqueda extends ActivityMenuLateral implements TextWatcher, OnClic
 	}
 
 	public void configurar_spinner(){
-		 SpinnerArray =  new ArrayList<String>();
+		 	SpinnerArray =  new ArrayList<String>();
 		    SpinnerArray.add("Hoy");
-		    SpinnerArray.add("Ma�ana");
+		    SpinnerArray.add("Mañana");
 		    final Calendar c = Calendar.getInstance();
 			year = c.get(Calendar.YEAR);
 			month = c.get(Calendar.MONTH);
@@ -321,6 +324,17 @@ public class Busqueda extends ActivityMenuLateral implements TextWatcher, OnClic
 		// TODO Auto-generated method stub
 
 	}
+	
+	
+	private void configurar_spinnerFranja(){
+	 	SpinnerArray =  new ArrayList<String>();
+	    SpinnerArray.add("Por la mañana");
+	    SpinnerArray.add("Por la tarde");
+	    adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, SpinnerArray);
+	    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+	    
+	    franja.setAdapter(adapter);
+}
 
 
 

@@ -123,7 +123,7 @@ public class Addtrip extends ActivityMenuLateral implements OnClickListener {
 		};
 
 		Tab tab = getSupportActionBar().newTab();
-		tab.setText("Información");
+		tab.setText("Informaciï¿½n");
 		tab.setTabListener(tabListener);
 
 		getSupportActionBar().addTab(tab);
@@ -282,7 +282,7 @@ public class Addtrip extends ActivityMenuLateral implements OnClickListener {
 
 		} else {
 			Toast notification = Toast.makeText(this,
-					"Activa tu conexión a internet", Toast.LENGTH_SHORT);
+					"Activa tu conexiï¿½n a internet", Toast.LENGTH_SHORT);
 			notification.setGravity(Gravity.CENTER, 0, 0);
 			notification.show();
 			setProgressBarIndeterminateVisibility(false);
@@ -295,15 +295,15 @@ public class Addtrip extends ActivityMenuLateral implements OnClickListener {
 	private void register_trip() {
 
 		HttpNewTrip post = new HttpNewTrip(Addtrip.this, recoger_datos());
-		// post.execute("http://polimuevet.eu01.aws.af.cm/api/newtrip");
-		post.execute("http://192.168.1.10:3000/api/newtrip");
+		post.execute("http://polimuevet.eu01.aws.af.cm/api/newtrip");
+		//post.execute("http://192.168.1.10:3000/api/newtrip");
 
 	}
 
 	/**
-	 * Comprueba si el dispositivo tiene conexión a internet
+	 * Comprueba si el dispositivo tiene conexiï¿½n a internet
 	 * 
-	 * @return true si tiene conexión ,false en caso contrario
+	 * @return true si tiene conexiï¿½n ,false en caso contrario
 	 */
 
 	public boolean isOnline() {
@@ -316,7 +316,7 @@ public class Addtrip extends ActivityMenuLateral implements OnClickListener {
 	}
 
 	/**
-	 * Recoge la información que ha introducido el usuario en todos los campos y
+	 * Recoge la informaciï¿½n que ha introducido el usuario en todos los campos y
 	 * lo prepara para enviarlo en el POST creando pares de valores
 	 * 
 	 * @return la lista de pares clave valor

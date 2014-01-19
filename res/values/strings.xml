@@ -13,4 +13,6 @@
     <string name="title_activity_http_new_trip">HttpNewTrip</string>
     <string name="title_activity_http_login">HttpLogin</string>
 
+    <string name="busqueda_hoy">Hoy</string>
+    <string name="busqueda_manyana">Mañana</string>
 </resources>

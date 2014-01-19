@@ -58,7 +58,7 @@ public class Trayectos extends ActivityMenuLateral {
 			// reintentar.setVisibility(View.GONE);
 		} else {
 			Toast notification = Toast.makeText(this,
-					"Activa tu conexión a internet", Toast.LENGTH_SHORT);
+					"Activa tu conexiï¿½n a internet", Toast.LENGTH_SHORT);
 			notification.setGravity(Gravity.CENTER, 0, 0);
 			notification.show();
 			progreso.setVisibility(View.GONE);
@@ -74,15 +74,15 @@ public class Trayectos extends ActivityMenuLateral {
 		// obtener trayectos 
 
 		 get = new HttpTrips(Trayectos.this, progreso);
-		//get.execute("http://polimuevet.eu01.aws.af.cm/api/gettrips");
-		get.execute("http://192.168.1.10:3000/api/gettrips");
+		get.execute("http://polimuevet.eu01.aws.af.cm/api/gettrips");
+		//get.execute("http://192.168.1.10:3000/api/gettrips");
 
 	}
 	
 	/**
 	 * Comprueba si el dispositivo tiene conexiÃ³n a internet
 	 * 
-	 * @return true si tiene conexión ,false en caso contrario
+	 * @return true si tiene conexiï¿½n ,false en caso contrario
 	 */
 
 	public boolean isOnline() {

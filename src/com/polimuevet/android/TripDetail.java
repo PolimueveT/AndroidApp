@@ -113,7 +113,7 @@ public class TripDetail extends ActionBarActivity implements OnClickListener {
 			// reintentar.setVisibility(View.GONE);
 		} else {
 			Toast notification = Toast.makeText(this,
-					"Activa tu conexión a internet", Toast.LENGTH_SHORT);
+					"Activa tu conexiï¿½n a internet", Toast.LENGTH_SHORT);
 			notification.setGravity(Gravity.CENTER, 0, 0);
 			notification.show();
 			progreso.setVisibility(View.GONE);
@@ -126,8 +126,8 @@ public class TripDetail extends ActionBarActivity implements OnClickListener {
 		// obtener conductor
 
 		 get = new HttpConductor(TripDetail.this, progreso);
-		//get.execute("http://polimuevet.eu01.aws.af.cm/api/gettrips");
-		get.execute("http://192.168.1.10:3000/api/getuser/"+id_conductor);
+		get.execute("http://polimuevet.eu01.aws.af.cm/api/gettrips");
+		//get.execute("http://192.168.1.10:3000/api/getuser/"+id_conductor);
 
 	}
 	
@@ -138,7 +138,7 @@ public class TripDetail extends ActionBarActivity implements OnClickListener {
 			// reintentar.setVisibility(View.GONE);
 		} else {
 			Toast notification = Toast.makeText(this,
-					"Activa tu conexión a internet", Toast.LENGTH_SHORT);
+					"Activa tu conexiï¿½n a internet", Toast.LENGTH_SHORT);
 			notification.setGravity(Gravity.CENTER, 0, 0);
 			notification.show();
 			progreso.setVisibility(View.GONE);
@@ -151,15 +151,15 @@ public class TripDetail extends ActionBarActivity implements OnClickListener {
 		// obtener conductor
 
 		 put = new HttpUnirse(TripDetail.this, progreso,PersonId,tripId);
-		//get.execute("http://polimuevet.eu01.aws.af.cm/api/gettrips");
-		put.execute("http://192.168.1.10:3000/api/applytrip");
+		get.execute("http://polimuevet.eu01.aws.af.cm/api/gettrips");
+		//put.execute("http://192.168.1.10:3000/api/applytrip");
 
 	}
 	
 	/**
-	 * Comprueba si el dispositivo tiene conexión a internet
+	 * Comprueba si el dispositivo tiene conexiï¿½n a internet
 	 * 
-	 * @return true si tiene conexión ,false en caso contrario
+	 * @return true si tiene conexiï¿½n ,false en caso contrario
 	 */
 
 	public boolean isOnline() {
