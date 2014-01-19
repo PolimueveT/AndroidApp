@@ -6,8 +6,9 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -42,7 +43,9 @@ public class Busqueda extends ActivityMenuLateral implements TextWatcher, OnClic
 	private RadioGroup radiomodoGroup;
 	private RadioButton radiomodoButton;
 	 ArrayAdapter<String> adapter ;
+	 ArrayAdapter<String> adapter2;
     List<String> SpinnerArray;
+    List<String> SpinnerArray2;
 	private boolean cerrar = false;
 	Button buscar;
 	private int year;
@@ -126,7 +129,10 @@ public class Busqueda extends ActivityMenuLateral implements TextWatcher, OnClic
 			cerrar=true;
 			//falta recoger los campos y pasar los valores al activity Trayectos para filtrar
 			Intent intent = new Intent(Busqueda.this, Trayectos.class);
+			intent.putExtras(recoger_datos());
 			startActivity(intent);
+//			HttpSearch post = new HttpSearch(Busqueda.this, recoger_datos());
+//			post.execute("http://polimuevet.eu01.aws.af.cm/api/getfilteredtrips");
 		}
 	}
 	
@@ -327,15 +333,23 @@ public class Busqueda extends ActivityMenuLateral implements TextWatcher, OnClic
 	
 	
 	private void configurar_spinnerFranja(){
-	 	SpinnerArray =  new ArrayList<String>();
-	    SpinnerArray.add("Por la mañana");
-	    SpinnerArray.add("Por la tarde");
-	    adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, SpinnerArray);
-	    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		SpinnerArray2 =  new ArrayList<String>();
+		SpinnerArray2.add("Por la mañana");
+		SpinnerArray2.add("Por la tarde");
+	    adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, SpinnerArray2);
+	    adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 	    
 	    franja.setAdapter(adapter);
-}
+	}
 
+	
+	private Bundle recoger_datos() {
+		Bundle b = new Bundle();
+		b.putString("origen", origen.getText().toString());
+		b.putString("destino", destino.getText().toString());
+		b.putString("fecha", Items.getSelectedItem().toString());		
+		return b;
+	}
 
 
 }

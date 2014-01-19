@@ -1,5 +1,11 @@
 package com.polimuevet.android;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -24,13 +30,14 @@ public class Trayectos extends ActivityMenuLateral {
 	ListView TripsView;
 	TripList lista = new TripList();
 	private AdaptadorTrips Tadapter;
-	private HttpTrips get;
-
+	private HttpSearch post;
+	Bundle datosBusq;
 
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		datosBusq = getIntent().getExtras();
 		setContentView(R.layout.activity_trayectos);
 		menu_lateral(R.array.lateral_trayectos, this);
 		progreso = (ProgressBar) findViewById(R.id.carga);
@@ -70,12 +77,15 @@ public class Trayectos extends ActivityMenuLateral {
 	 * en el listview lista
 	 */
 	private void cargar_trayectos() {
-
+		
 		// obtener trayectos 
-
-		 get = new HttpTrips(Trayectos.this, progreso);
-		get.execute("http://polimuevet.eu01.aws.af.cm/api/gettrips");
-		//get.execute("http://192.168.1.10:3000/api/gettrips");
+		
+		post = new HttpSearch(Trayectos.this, recoger_datos(datosBusq));
+		post.execute("http://polimuevet.eu01.aws.af.cm/api/getfilteredtrips");
+		//post.execute("http://192.168.0.201:3000/api/getfilteredtrips");
+//		 get = new HttpTrips(Trayectos.this, progreso);
+//		get.execute("http://polimuevet.eu01.aws.af.cm/api/gettrips");
+		//get.execute("http://10.0.2.15:3000/api/gettrips");
 
 	}
 	
@@ -183,7 +193,7 @@ public class Trayectos extends ActivityMenuLateral {
 			finish();
 		}
 		
-		get.cancel(true);
+		post.cancel(true);
 
 	}
 	
@@ -193,6 +203,15 @@ public class Trayectos extends ActivityMenuLateral {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.trayectos, menu);
 		return true;
+	}
+	
+	
+	private List<NameValuePair> recoger_datos(Bundle b) {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+		nameValuePairs.add(new BasicNameValuePair("origen", b.getString("origen")));
+		nameValuePairs.add(new BasicNameValuePair("destino", b.getString("destino")));
+	
+		return nameValuePairs;
 	}
 
 }

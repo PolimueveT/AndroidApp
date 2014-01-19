@@ -127,7 +127,7 @@ public class TripDetail extends ActionBarActivity implements OnClickListener {
 
 		 get = new HttpConductor(TripDetail.this, progreso);
 		get.execute("http://polimuevet.eu01.aws.af.cm/api/gettrips");
-		//get.execute("http://192.168.1.10:3000/api/getuser/"+id_conductor);
+		//get.execute("http://192.168.0.201:3000/api/getuser/"+id_conductor);
 
 	}
 	
@@ -151,8 +151,9 @@ public class TripDetail extends ActionBarActivity implements OnClickListener {
 		// obtener conductor
 
 		 put = new HttpUnirse(TripDetail.this, progreso,PersonId,tripId);
-		get.execute("http://polimuevet.eu01.aws.af.cm/api/gettrips");
-		//put.execute("http://192.168.1.10:3000/api/applytrip");
+		//get.execute("http://polimuevet.eu01.aws.af.cm/api/gettrips");
+		//put.execute("http://192.168.0.201:3000/api/applytrip");
+		put.execute("http://polimuevet.eu01.aws.af.cm/api/applytrip");
 
 	}
 	
