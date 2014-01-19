@@ -15,4 +15,8 @@
 
     <string name="busqueda_hoy">Hoy</string>
     <string name="busqueda_manyana">Mañana</string>
+    
+    <string name="trip_informacion">Información</string>
+    <string name="trip_restricciones">Restricciones</string>
+    <string name="conexion_internet">Activa tu conexión a internet</string>
 </resources>

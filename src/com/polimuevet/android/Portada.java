@@ -67,7 +67,7 @@ public class Portada extends ActionBarActivity implements OnClickListener {
 
 		} else {
 			Toast notification = Toast.makeText(this,
-					"Activa tu conexi�n a internet", Toast.LENGTH_SHORT);
+					R.string.conexion_internet, Toast.LENGTH_SHORT);
 			notification.setGravity(Gravity.CENTER, 0, 0);
 			notification.show();
 			setProgressBarIndeterminateVisibility(false);

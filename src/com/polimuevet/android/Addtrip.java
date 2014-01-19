@@ -123,13 +123,13 @@ public class Addtrip extends ActivityMenuLateral implements OnClickListener {
 		};
 
 		Tab tab = getSupportActionBar().newTab();
-		tab.setText("Informaci�n");
+		tab.setText(R.string.trip_informacion);
 		tab.setTabListener(tabListener);
 
 		getSupportActionBar().addTab(tab);
 
 		tab = getSupportActionBar().newTab();
-		tab.setText("Restricciones");
+		tab.setText(R.string.trip_restricciones);
 		tab.setTabListener(tabListener);
 		getSupportActionBar().addTab(tab);
 
@@ -282,7 +282,7 @@ public class Addtrip extends ActivityMenuLateral implements OnClickListener {
 
 		} else {
 			Toast notification = Toast.makeText(this,
-					"Activa tu conexi�n a internet", Toast.LENGTH_SHORT);
+					R.string.conexion_internet, Toast.LENGTH_SHORT);
 			notification.setGravity(Gravity.CENTER, 0, 0);
 			notification.show();
 			setProgressBarIndeterminateVisibility(false);
@@ -301,9 +301,9 @@ public class Addtrip extends ActivityMenuLateral implements OnClickListener {
 	}
 
 	/**
-	 * Comprueba si el dispositivo tiene conexi�n a internet
+	 * Comprueba si el dispositivo tiene conexión a internet
 	 * 
-	 * @return true si tiene conexi�n ,false en caso contrario
+	 * @return true si tiene conexión ,false en caso contrario
 	 */
 
 	public boolean isOnline() {
@@ -316,7 +316,7 @@ public class Addtrip extends ActivityMenuLateral implements OnClickListener {
 	}
 
 	/**
-	 * Recoge la informaci�n que ha introducido el usuario en todos los campos y
+	 * Recoge la información que ha introducido el usuario en todos los campos y
 	 * lo prepara para enviarlo en el POST creando pares de valores
 	 * 
 	 * @return la lista de pares clave valor

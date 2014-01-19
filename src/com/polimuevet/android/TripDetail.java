@@ -113,7 +113,7 @@ public class TripDetail extends ActionBarActivity implements OnClickListener {
 			// reintentar.setVisibility(View.GONE);
 		} else {
 			Toast notification = Toast.makeText(this,
-					"Activa tu conexi�n a internet", Toast.LENGTH_SHORT);
+					R.string.conexion_internet, Toast.LENGTH_SHORT);
 			notification.setGravity(Gravity.CENTER, 0, 0);
 			notification.show();
 			progreso.setVisibility(View.GONE);
@@ -138,7 +138,7 @@ public class TripDetail extends ActionBarActivity implements OnClickListener {
 			// reintentar.setVisibility(View.GONE);
 		} else {
 			Toast notification = Toast.makeText(this,
-					"Activa tu conexi�n a internet", Toast.LENGTH_SHORT);
+					R.string.conexion_internet, Toast.LENGTH_SHORT);
 			notification.setGravity(Gravity.CENTER, 0, 0);
 			notification.show();
 			progreso.setVisibility(View.GONE);
