@@ -3,6 +3,7 @@ package com.polimuevet.android;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -102,19 +103,22 @@ public class Busqueda extends ActivityMenuLateral implements TextWatcher, OnClic
 
 	public void configurar_spinner(){
 		 	SpinnerArray =  new ArrayList<String>();
-		    SpinnerArray.add("Hoy");
-		    SpinnerArray.add("Mañana");
+//		    SpinnerArray.add("Hoy");
+//		    SpinnerArray.add("Mañana");
 		    final Calendar c = Calendar.getInstance();
-			year = c.get(Calendar.YEAR);
-			month = c.get(Calendar.MONTH);
-			day = c.get(Calendar.DAY_OF_MONTH);
+//			year = c.get(Calendar.YEAR);
+//			month = c.get(Calendar.MONTH);
+//			day = c.get(Calendar.DAY_OF_MONTH);
+		    SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 			for(int i=0;i<15;i++){
-			c.add(Calendar.DAY_OF_MONTH,+1);
-			day = c.get(Calendar.DAY_OF_MONTH);
-			month = c.get(Calendar.MONTH);
-			year = c.get(Calendar.YEAR);
-			int mes=month+1;
-			SpinnerArray.add(day+"/"+mes+"/"+year);
+				c.add(Calendar.DAY_OF_MONTH,+1);
+//			day = c.get(Calendar.DAY_OF_MONTH);
+//			month = c.get(Calendar.MONTH);
+//			year = c.get(Calendar.YEAR);
+//			int mes=month+1;
+		    
+			SpinnerArray.add(formato.format(c.getTime()));
+			
 			}
 		    adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, SpinnerArray);
 		    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -339,7 +343,7 @@ public class Busqueda extends ActivityMenuLateral implements TextWatcher, OnClic
 	    adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, SpinnerArray2);
 	    adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 	    
-	    franja.setAdapter(adapter);
+	    franja.setAdapter(adapter2);
 	}
 
 	
@@ -347,7 +351,13 @@ public class Busqueda extends ActivityMenuLateral implements TextWatcher, OnClic
 		Bundle b = new Bundle();
 		b.putString("origen", origen.getText().toString());
 		b.putString("destino", destino.getText().toString());
-		b.putString("fecha", Items.getSelectedItem().toString());		
+		b.putString("Fecha", Items.getSelectedItem().toString());
+		if(franja.getSelectedItem().toString().contains("tarde")){
+			b.putString("Hora", "T");	
+		}else{
+			b.putString("Hora", "M");
+		}
+		
 		return b;
 	}
 

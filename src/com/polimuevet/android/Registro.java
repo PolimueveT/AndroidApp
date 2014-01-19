@@ -219,7 +219,7 @@ public class Registro extends Activity implements OnClickListener {
 
 		HttpRegister post = new HttpRegister();
 		post.execute("http://polimuevet.eu01.aws.af.cm/api/newuser");
-		 //post.execute("http://192.168.0.201:3000/api/newuser");
+		//post.execute("http://192.168.0.201:3000/api/newuser");
 
 	}
 

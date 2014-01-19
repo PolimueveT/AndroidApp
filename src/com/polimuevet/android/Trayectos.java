@@ -210,7 +210,8 @@ public class Trayectos extends ActivityMenuLateral {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
 		nameValuePairs.add(new BasicNameValuePair("origen", b.getString("origen")));
 		nameValuePairs.add(new BasicNameValuePair("destino", b.getString("destino")));
-	
+		nameValuePairs.add(new BasicNameValuePair("Fecha", b.getString("Fecha")));
+		nameValuePairs.add(new BasicNameValuePair("Hora", b.getString("Hora")));
 		return nameValuePairs;
 	}
 
