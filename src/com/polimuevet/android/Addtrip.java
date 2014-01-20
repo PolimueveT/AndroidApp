@@ -65,6 +65,10 @@ public class Addtrip extends ActivityMenuLateral implements OnClickListener {
 	Respuesta respuesta;
 	ViewPager pager;
 	MyPageAdapter padapter;
+	
+	FragmentnewtripA newTripFragment;
+	
+	List<Fragment> fragments;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +81,12 @@ public class Addtrip extends ActivityMenuLateral implements OnClickListener {
 		getSupportActionBar().setStackedBackgroundDrawable(
 				new ColorDrawable(color.Orange));
 
+		// Asigno memoria a la lista de fragments
+		fragments = new ArrayList<Fragment>();
+		// Agrego los fragments
+		fragments.add(new FragmentnewtripA());
+		fragments.add(new Fragment());
+		
 		pager.setAdapter(padapter);
 		pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
@@ -362,22 +372,15 @@ public class Addtrip extends ActivityMenuLateral implements OnClickListener {
 		}
 
 		@Override
-		public Fragment getItem(int arg0) {
+		public Fragment getItem(int position) {
 			// TODO Auto-generated method stub
-			switch (arg0) {
-			case 0:
-				return new FragmentnewtripA();
-			case 1:
-				return new FragmentnewtripA();
-			}
-
-			return null;
+			return fragments.get(position);
 		}
 
 		@Override
 		public int getCount() {
 
-			return 2;
+			return fragments.size();
 		}
 
 		@Override

@@ -313,6 +313,12 @@ public class Registro extends Activity implements OnClickListener {
 			progreso.setVisibility(View.GONE);
 			Log.d("JSON", respuesta.testrespuesta());
 			if (respuesta.success) {
+				Toast notification = Toast.makeText(Registro.this,
+						"Usuario Registrado! Favor entrar a su cuenta.",
+						Toast.LENGTH_SHORT);
+				notification.setGravity(Gravity.CENTER, 0, 0);
+				notification.show();
+				
 				finish();
 			} else {
 				pass.setText("");
