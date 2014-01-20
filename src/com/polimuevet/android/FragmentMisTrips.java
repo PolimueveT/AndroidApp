@@ -74,7 +74,7 @@ public class FragmentMisTrips extends Fragment implements OnItemClickListener {
 			// Tadapter.notifyDataSetChanged();
 
 		} else {
-			titulo.setText(lista.getTrips().size() + " trayectos encontrados");
+			titulo.setText("0 trayectos encontrados");
 		}
 
 		getActivity().setProgressBarIndeterminateVisibility(false);
