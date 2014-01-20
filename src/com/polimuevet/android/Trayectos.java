@@ -25,7 +25,7 @@ import android.widget.Toast;
 
 public class Trayectos extends ActivityMenuLateral {
 
-	private boolean cerrar=false;
+	public boolean cerrar=false;
 	private ProgressBar progreso;
 	ListView TripsView;
 	TripList lista = new TripList();

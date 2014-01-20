@@ -189,6 +189,7 @@ OnItemClickListener{
 		
 		Intent intent = new Intent((Activity)context, TripDetail.class);
 		intent.putExtras(b);
+		((Trayectos)context).cerrar = true;
 		((Activity)context).startActivity(intent);
 		
 
