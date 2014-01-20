@@ -21,12 +21,13 @@ public class Trip {
 	String Max_tamanyo_equipaje;
 	ArrayList<String> Inscritos;
 	String _id;
+	ArrayList<String> restricciones;
 
 	public Trip(int num_plazas, String origen, String destino,
 			String fecha_time, float precio_plaza, int tiempo_max_espera,
 			tipos tipo_pasajero, String observaciones, String creador_id,
 			ArrayList<Double> origen_latlng, ArrayList<Double> destino_latlng,
-			String max_tamanyo_equipaje, ArrayList<String> inscritos, String _id) {
+			String max_tamanyo_equipaje, ArrayList<String> inscritos, String _id, ArrayList<String> restriccion) {
 		super();
 		Num_plazas = num_plazas;
 		Origen = origen;
@@ -42,6 +43,7 @@ public class Trip {
 		Destino_latlng = destino_latlng;
 		Max_tamanyo_equipaje = max_tamanyo_equipaje;
 		Inscritos = inscritos;
+		restriccion = restriccion;
 		this._id = _id;
 	}
 
@@ -244,7 +246,7 @@ public class Trip {
 		}
 
 	}
-
+	
 	class tipos {
 		boolean alumnos;
 		boolean profesores;

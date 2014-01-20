@@ -65,7 +65,6 @@ public class Registro extends Activity implements OnClickListener {
 	private int year;
 	private int month;
 	private int day;
-	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -164,11 +163,9 @@ public class Registro extends Activity implements OnClickListener {
 						Toast.LENGTH_SHORT);
 				notification.setGravity(Gravity.CENTER, 0, 0);
 				notification.show();
-				
-				ok=false;
+
+				ok = false;
 			}
-							
-			
 
 			// si las contraseñas coinciden
 			else if (!comprobar_pass()) {
@@ -178,8 +175,8 @@ public class Registro extends Activity implements OnClickListener {
 						Toast.LENGTH_SHORT);
 				notification.setGravity(Gravity.CENTER, 0, 0);
 				notification.show();
-				ok=false;
-				
+				ok = false;
+
 			}
 		}
 
@@ -218,8 +215,7 @@ public class Registro extends Activity implements OnClickListener {
 	private void register_user() {
 
 		HttpRegister post = new HttpRegister();
-		post.execute("http://polimuevet.eu01.aws.af.cm/api/newuser");
-		//post.execute("http://192.168.0.201:3000/api/newuser");
+		post.execute(Config.URL + "/api/newuser");
 
 	}
 
@@ -266,8 +262,8 @@ public class Registro extends Activity implements OnClickListener {
 	}
 
 	/**
-	 * Recoge la informaci�n que ha introducido el usuario en todos los campos y
-	 * lo prepara para enviarlo en el POST creando pares de valores
+	 * Recoge la informaci�n que ha introducido el usuario en todos los campos
+	 * y lo prepara para enviarlo en el POST creando pares de valores
 	 * 
 	 * @return la lista de pares clave valor
 	 */
@@ -296,9 +292,9 @@ public class Registro extends Activity implements OnClickListener {
 	}
 
 	/**
-	 * Petici�n post al servidor a la url urls[0] que recibe como parámetro al
-	 * instanciarse,el json que devuelve se guarda en respuesta variable global
-	 * de tipo Respuesta
+	 * Petici�n post al servidor a la url urls[0] que recibe como parámetro
+	 * al instanciarse,el json que devuelve se guarda en respuesta variable
+	 * global de tipo Respuesta
 	 * 
 	 * @author cesar
 	 * 
@@ -318,7 +314,7 @@ public class Registro extends Activity implements OnClickListener {
 						Toast.LENGTH_SHORT);
 				notification.setGravity(Gravity.CENTER, 0, 0);
 				notification.show();
-				
+
 				finish();
 			} else {
 				pass.setText("");

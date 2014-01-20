@@ -19,5 +19,19 @@
     
     <string name="trip_informacion">Información</string>
     <string name="trip_restricciones">Restricciones</string>
+    <string name="trip_tipo_pasajero">Tipo de Pasajero</string>
     <string name="conexion_internet">Activa tu conexión a internet</string>
+    
+    <!-- Opciones Restricciones -->
+    <string name="no_fumadores">No Fumadores</string>
+    <string name="no_comida">No Comida</string>
+    <string name="no_animales">No Animales</string>
+    
+    <!-- Tipos Pasajero -->
+    <string name="alumno">Alumnos</string>
+    <string name="profesores">Profesores</string>
+    <string name="personal">Personal</string>
+    
+    <string name="observaciones">Observaciones</string>
+    
 </resources>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:background="@drawable/card_background_white"
+    android:orientation="vertical">
+
+    <CheckBox
+        android:id="@+id/cbNoFumadores"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="19sp"
+        android:padding="3dp"
+        android:text="@string/no_fumadores" />
+    
+    <CheckBox
+        android:id="@+id/cbNoAnimales"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="19sp"
+        android:padding="3dp"
+        android:text="@string/no_animales" />
+    
+    <CheckBox
+        android:id="@+id/cbNoComida"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="19sp"
+        android:padding="3dp"
+        android:text="@string/no_comida" />
+    
+    <TextView
+        android:id="@+id/tvTipoPasajero"
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="19sp"
+        android:padding="3dp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:text="@string/trip_tipo_pasajero" />
+    
+    <CheckBox
+        android:id="@+id/cbAlumnos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="19sp"
+        android:padding="3dp"
+        android:text="@string/alumno" />
+    
+    <CheckBox
+        android:id="@+id/cbProfesores"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="19sp"
+        android:padding="3dp"
+        android:text="@string/profesores" />
+    
+    <CheckBox
+        android:id="@+id/cbPersonal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="19sp"
+        android:padding="3dp"
+        android:text="@string/personal" />
+    
+    <TextView
+        android:id="@+id/tvObservaciones"
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="19sp"
+        android:padding="3dp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:text="@string/observaciones" />
+
+    <EditText
+        android:id="@+id/etObservaciones"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="19sp"
+        android:padding="3dp"
+        android:ems="10" >
+    </EditText>
+    
+</LinearLayout>

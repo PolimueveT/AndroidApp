@@ -32,23 +32,23 @@ import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-public class FragmentnewtripA extends Fragment implements TextWatcher,
+public class FragmentNewTripForm extends Fragment implements TextWatcher,
 		OnClickListener {
 	static final int TIME_DIALOG_ID = 999;
-	private static EditText hora;
-	private EditText plazas;
-	private EditText precio;
-	private Spinner Items;
-	private Spinner equipaje;
-	private AutoCompleteTextView origen;
-	private AutoCompleteTextView destino;
-	private ArrayList<String> SpinnerArrayeq;
-	private ArrayList<String> SpinnerArray;
+	public static EditText hora;
+	public EditText plazas;
+	public EditText precio;
+	public Spinner Items;
+	public Spinner equipaje;
+	public AutoCompleteTextView origen;
+	public AutoCompleteTextView destino;
+	public ArrayList<String> SpinnerArrayeq;
+	public ArrayList<String> SpinnerArray;
 	private int year;
 	private int month;
 	private int day;
-	private String today;
-	private String tomorrow;
+	public String today;
+	public String tomorrow;
 	ArrayList<String> calles = new ArrayList<String>();
 	private ArrayAdapter<String> adaptereq;
 	private ArrayAdapter<String> adapter;
@@ -345,7 +345,7 @@ public class FragmentnewtripA extends Fragment implements TextWatcher,
 		return ok;
 	}
 
-	private String obtener_fecha() {
+	public String obtener_fecha() {
 
 		String dia = Items.getSelectedItem().toString();
 		if (dia.compareTo("Hoy") == 0) {

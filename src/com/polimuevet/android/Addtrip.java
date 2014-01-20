@@ -65,9 +65,9 @@ public class Addtrip extends ActivityMenuLateral implements OnClickListener {
 	Respuesta respuesta;
 	ViewPager pager;
 	MyPageAdapter padapter;
-	
-	FragmentnewtripA newTripFragment;
-	
+
+	FragmentNewTripForm newTripFragment;
+
 	List<Fragment> fragments;
 
 	@Override
@@ -84,9 +84,9 @@ public class Addtrip extends ActivityMenuLateral implements OnClickListener {
 		// Asigno memoria a la lista de fragments
 		fragments = new ArrayList<Fragment>();
 		// Agrego los fragments
-		fragments.add(new FragmentnewtripA());
-		fragments.add(new Fragment());
-		
+		fragments.add(new FragmentNewTripForm());
+		fragments.add(new FragmentNewTripRestricciones());
+
 		pager.setAdapter(padapter);
 		pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
@@ -252,15 +252,13 @@ public class Addtrip extends ActivityMenuLateral implements OnClickListener {
 	private TimePickerDialog.OnTimeSetListener timePickerListener = new TimePickerDialog.OnTimeSetListener() {
 		public void onTimeSet(TimePicker view, int selectedHour,
 				int selectedMinute) {
-		
-			 FragmentnewtripA f = (FragmentnewtripA) padapter.getItem(0);
-			Log.d("TEST visible",""+f.isVisible());
-			//f.get
+
+			FragmentNewTripForm f = (FragmentNewTripForm) padapter.getItem(0);
+			Log.d("TEST visible", "" + f.isVisible());
+			// f.get
 			f.sethour(selectedHour);
 			f.setminute(selectedMinute);
 			f.fijar_tiempo(selectedHour, selectedMinute);
-
-			
 
 		}
 	};
@@ -269,11 +267,10 @@ public class Addtrip extends ActivityMenuLateral implements OnClickListener {
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		if (v.getId() == R.id.crear) {
-			FragmentnewtripA f = (FragmentnewtripA) padapter.getItem(0);
+			FragmentNewTripForm f = (FragmentNewTripForm) padapter.getItem(0);
 			if (f.comprobar_datos()) {
 				conectar();
 			}
-			
 
 		} else {
 			showDialog(TIME_DIALOG_ID);
@@ -305,8 +302,7 @@ public class Addtrip extends ActivityMenuLateral implements OnClickListener {
 	private void register_trip() {
 
 		HttpNewTrip post = new HttpNewTrip(Addtrip.this, recoger_datos());
-		post.execute("http://polimuevet.eu01.aws.af.cm/api/newtrip");
-		//post.execute("http://192.168.0.201:3000/api/newtrip");
+		post.execute(Config.URL + "/api/newtrip");
 
 	}
 
@@ -326,40 +322,74 @@ public class Addtrip extends ActivityMenuLateral implements OnClickListener {
 	}
 
 	/**
-	 * Recoge la información que ha introducido el usuario en todos los campos y
-	 * lo prepara para enviarlo en el POST creando pares de valores
+	 * Recoge la información que ha introducido el usuario en todos los campos
+	 * y lo prepara para enviarlo en el POST creando pares de valores
 	 * 
 	 * @return la lista de pares clave valor
 	 */
 	public List<NameValuePair> recoger_datos() {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-		/*
-		 * nameValuePairs.add(new BasicNameValuePair("origen", origen.getText()
-		 * .toString())); nameValuePairs.add(new BasicNameValuePair("destino",
-		 * destino.getText() .toString()));
-		 * 
-		 * 
-		 * nameValuePairs.add(new BasicNameValuePair("fecha_time",
-		 * obtener_fecha()));
-		 * 
-		 * 
-		 * 
-		 * nameValuePairs.add(new BasicNameValuePair("precio", precio.getText()
-		 * .toString()));
-		 * 
-		 * String Tequipaje =equipaje.getSelectedItem().toString();
-		 * 
-		 * nameValuePairs.add(new BasicNameValuePair("equipaje", Tequipaje));
-		 * 
-		 * nameValuePairs.add(new
-		 * BasicNameValuePair("num_plazas",plazas.getText().toString()));
-		 * 
-		 * SharedPreferences preferences = getSharedPreferences("sesion",
-		 * Context.MODE_PRIVATE); String
-		 * PersonId=preferences.getString("user","");
-		 * 
-		 * nameValuePairs.add(new BasicNameValuePair("creador_id", PersonId));
-		 */
+
+		// Recoger los datos del primer Fragment
+		FragmentNewTripForm f = (FragmentNewTripForm) padapter.getItem(0);
+
+		nameValuePairs.add(new BasicNameValuePair("origen", f.origen.getText()
+				.toString()));
+		nameValuePairs.add(new BasicNameValuePair("destino", f.destino
+				.getText().toString()));
+		nameValuePairs.add(new BasicNameValuePair("num_plazas", f.plazas
+				.getText().toString()));
+		nameValuePairs.add(new BasicNameValuePair("precio", f.precio
+				.getText().toString()));
+		nameValuePairs.add(new BasicNameValuePair("equipaje",
+				(String) f.equipaje.getSelectedItem()));
+		nameValuePairs.add(new BasicNameValuePair("fecha_time", f
+				.obtener_fecha()));
+
+		// Recoger datos del segundo fragment
+		FragmentNewTripRestricciones frag = (FragmentNewTripRestricciones) padapter
+				.getItem(1);
+
+		if (frag.cbNoFumadores.isChecked()) {
+			nameValuePairs.add(new BasicNameValuePair(
+					"restricciones[no_fumadores]", "true"));
+		}
+
+		if (frag.cbNoComida.isChecked()) {
+			nameValuePairs.add(new BasicNameValuePair(
+					"restricciones[no_comida]", "true"));
+		}
+
+		if (frag.cbNoAnimales.isChecked()) {
+			nameValuePairs.add(new BasicNameValuePair(
+					"restricciones[no_animales]", "true"));
+		}
+
+		if (frag.cbAlumnos.isChecked()) {
+			nameValuePairs.add(new BasicNameValuePair("tipo_pasajero[alumnos]",
+					"true"));
+		}
+
+		if (frag.cbProfesores.isChecked()) {
+			nameValuePairs.add(new BasicNameValuePair(
+					"tipo_pasajero[profesores]", "true"));
+		}
+
+		if (frag.cbPersonal.isChecked()) {
+			nameValuePairs.add(new BasicNameValuePair(
+					"tipo_pasajero[personal]", "true"));
+		}
+
+		nameValuePairs.add(new BasicNameValuePair("observaciones",
+				frag.etObservaciones.getText().toString()));
+
+		// Creador ID
+		SharedPreferences preferences = getSharedPreferences("sesion",
+				Context.MODE_PRIVATE);
+		String PersonId = preferences.getString("user", "");
+
+		nameValuePairs.add(new BasicNameValuePair("creador_id", PersonId));
+
 
 		return nameValuePairs;
 	}

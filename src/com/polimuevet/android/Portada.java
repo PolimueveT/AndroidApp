@@ -43,7 +43,7 @@ public class Portada extends ActionBarActivity implements OnClickListener {
 		acceder.setOnClickListener(this);
 		registrar = (Button) findViewById(R.id.registrar);
 		registrar.setOnClickListener(this);
-		
+
 		respuesta = new Respuesta();
 		mail = (EditText) findViewById(R.id.email);
 		pass = (EditText) findViewById(R.id.password);
@@ -79,20 +79,22 @@ public class Portada extends ActionBarActivity implements OnClickListener {
 	 */
 	private void login_server() {
 		// TODO url definitiva
-		
-		HttpLogin post = new HttpLogin(Portada.this,recoger_datos());
-		//get.execute("http://polimuevet.eu01.aws.af.cm/api/isuserregistered/"+ usuario + "/" + password);
-		//post.execute("http://192.168.0.201:3000/api/ismailregistered");
-		post.execute("http://polimuevet.eu01.aws.af.cm/api/ismailregistered");
+
+		HttpLogin post = new HttpLogin(Portada.this, recoger_datos());
+		// get.execute("http://polimuevet.eu01.aws.af.cm/api/isuserregistered/"+
+		// usuario + "/" + password);
+		post.execute(Config.URL + "/api/ismailregistered");
 
 	}
+
 	public List<NameValuePair> recoger_datos() {
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-		nameValuePairs.add(new BasicNameValuePair("mail", mail.getText().toString()));
-		nameValuePairs.add(new BasicNameValuePair("pass", pass.getText().toString()));
+		nameValuePairs.add(new BasicNameValuePair("mail", mail.getText()
+				.toString()));
+		nameValuePairs.add(new BasicNameValuePair("pass", pass.getText()
+				.toString()));
 		return nameValuePairs;
 	}
-	
 
 	/**
 	 * Comprueba si el dispositivo tiene conexi�n a internet
@@ -131,8 +133,6 @@ public class Portada extends ActionBarActivity implements OnClickListener {
 		}
 
 	}
-
-
 
 	@Override
 	protected void onResume() {
