@@ -35,7 +35,7 @@ public class TripDetail extends ActionBarActivity implements OnClickListener {
 	private HttpConductor get;
 	String id_conductor;
 	private HttpUnirse put;
-	private String tripId,PersonId;
+	private String tripId, PersonId;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +43,7 @@ public class TripDetail extends ActionBarActivity implements OnClickListener {
 		setContentView(R.layout.activity_trip_detail);
 		// menu_lateral(R.array.lateral_trayectos, this);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		//getSupportActionBar().setHomeButtonEnabled(true);
+		// getSupportActionBar().setHomeButtonEnabled(true);
 		progreso = (ProgressBar) findViewById(R.id.carga);
 		Bundle b = getIntent().getExtras();
 
@@ -53,12 +53,12 @@ public class TripDetail extends ActionBarActivity implements OnClickListener {
 		plazas = (TextView) findViewById(R.id.plazas);
 		precio = (TextView) findViewById(R.id.precio);
 		equipaje = (TextView) findViewById(R.id.equipaje);
-		
-		tripId=b.getString("_id");
+
+		tripId = b.getString("_id");
 		SharedPreferences preferences = getSharedPreferences("sesion",
 				Context.MODE_PRIVATE);
-		PersonId=preferences.getString("user","");
-		
+		PersonId = preferences.getString("user", "");
+
 		origen.setText(b.getString("Origen"));
 		destino.setText(b.getString("Destino"));
 		plazas.setText("Plazas disponibles:" + b.getInt("Num_plazas"));
@@ -71,11 +71,11 @@ public class TripDetail extends ActionBarActivity implements OnClickListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		id_conductor=b.getString("Creador_id");
+		id_conductor = b.getString("Creador_id");
 		Log.d("ID Conductor", id_conductor);
-		unirse=(Button)findViewById(R.id.unirse);
+		unirse = (Button) findViewById(R.id.unirse);
 		unirse.setOnClickListener(this);
-		
+
 		conectar();
 
 	}
@@ -119,19 +119,16 @@ public class TripDetail extends ActionBarActivity implements OnClickListener {
 			progreso.setVisibility(View.GONE);
 		}
 	}
-	
 
 	private void cargar_conductor() {
 
 		// obtener conductor
 
-		 get = new HttpConductor(TripDetail.this, progreso);
-		get.execute("http://polimuevet.eu01.aws.af.cm/api/gettrips");
-		//get.execute("http://192.168.0.201:3000/api/getuser/"+id_conductor);
+		get = new HttpConductor(TripDetail.this, progreso);
+		get.execute(Config.URL + "/api/gettrips");
 
 	}
-	
-	
+
 	public void unir_trayecto() {
 		if (isOnline()) {
 			unir();
@@ -144,19 +141,18 @@ public class TripDetail extends ActionBarActivity implements OnClickListener {
 			progreso.setVisibility(View.GONE);
 		}
 	}
-	
 
 	private void unir() {
 
 		// obtener conductor
 
-		 put = new HttpUnirse(TripDetail.this, progreso,PersonId,tripId);
-		//get.execute("http://polimuevet.eu01.aws.af.cm/api/gettrips");
-		//put.execute("http://192.168.0.201:3000/api/applytrip");
-		put.execute("http://polimuevet.eu01.aws.af.cm/api/applytrip");
+		put = new HttpUnirse(TripDetail.this, progreso, PersonId, tripId);
+		// get.execute("http://polimuevet.eu01.aws.af.cm/api/gettrips");
+		// put.execute("http://192.168.0.201:3000/api/applytrip");
+		put.execute(Config.URL + "/api/applytrip");
 
 	}
-	
+
 	/**
 	 * Comprueba si el dispositivo tiene conexi�n a internet
 	 * 
@@ -171,7 +167,6 @@ public class TripDetail extends ActionBarActivity implements OnClickListener {
 		}
 		return false;
 	}
-
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -224,7 +219,7 @@ public class TripDetail extends ActionBarActivity implements OnClickListener {
 	public void onClick(View arg0) {
 		// TODO Auto-generated method stub
 		unir_trayecto();
-		
+
 	}
 
 }

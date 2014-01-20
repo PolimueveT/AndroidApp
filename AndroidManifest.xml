@@ -43,6 +43,10 @@
             android:label="Trayectos" >
         </activity>
         <activity
+            android:name="com.polimuevet.android.MisTrayectos"
+            android:label="Mis Trayectos" >
+        </activity>
+        <activity
             android:name="com.polimuevet.android.TripDetail"
             android:label="Detalles del trayecto"
             android:parentActivityName="com.polimuevet.android.Trayectos" >

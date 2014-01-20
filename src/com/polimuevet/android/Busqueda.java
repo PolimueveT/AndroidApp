@@ -239,9 +239,12 @@ public class Busqueda extends ActivityMenuLateral implements TextWatcher, OnClic
 			Intent intent = new Intent(Busqueda.this, EstadoParking.class);
 			startActivity(intent);
 			break;
-			
-	
-		case 2:
+		case 2:	
+			cerrar = true;
+			Intent intentMisTrayectos = new Intent(Busqueda.this, MisTrayectos.class);
+			startActivity(intentMisTrayectos);
+			break;
+		case 3:
 			cerrar_sesion();
 
 			break;

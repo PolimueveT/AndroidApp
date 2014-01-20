@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string-array name="lateral_busqueda">
+    <string-array name="lateral_mistrayectos">
         <item>Crear trayecto</item>
-        <item>Estado Parkings</item>
-        <item>Mis Trayectos</item>
+        <item>Buscar trayecto</item>
+        <item>Estado Parking</item>
         <item>Cerrar sesión</item>
     </string-array>
 

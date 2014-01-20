@@ -81,11 +81,7 @@ public class Trayectos extends ActivityMenuLateral {
 		// obtener trayectos 
 		
 		post = new HttpSearch(Trayectos.this, recoger_datos(datosBusq));
-		post.execute("http://polimuevet.eu01.aws.af.cm/api/getfilteredtrips");
-		//post.execute("http://192.168.0.201:3000/api/getfilteredtrips");
-//		 get = new HttpTrips(Trayectos.this, progreso);
-//		get.execute("http://polimuevet.eu01.aws.af.cm/api/gettrips");
-		//get.execute("http://10.0.2.15:3000/api/gettrips");
+		post.execute(Config.URL + "/api/getfilteredtrips");
 
 	}
 	

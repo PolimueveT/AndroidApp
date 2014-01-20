@@ -66,7 +66,7 @@ public class AdaptadorTrips extends ArrayAdapter<Trip> {
 				destino.setText(quitarCP(t.getDestino()));
 			}
 			if (precio != null) {
-				precio.setText(""+t.getPrecio_plaza()+"€");
+				precio.setText(t.getPrecio_plaza()+"Û");
 				color_precio(precio,t.getPrecio_plaza());
 			}
 			if (fecha != null) {

@@ -77,7 +77,7 @@ public class EstadoParking extends ActivityMenuLateral {
 		// obtener estado parkings
 
 		HttpParkings get = new HttpParkings(EstadoParking.this, progreso);
-		get.execute("http://polimuevet.eu01.aws.af.cm/api/parking");
+		get.execute(Config.URL + "/api/parking");
 		//get.execute("http://192.168.0.201:3000/api/parking");
 
 	}
