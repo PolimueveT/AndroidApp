@@ -111,13 +111,14 @@ public class Busqueda extends ActivityMenuLateral implements TextWatcher, OnClic
 //			day = c.get(Calendar.DAY_OF_MONTH);
 		    SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 			for(int i=0;i<15;i++){
+				SpinnerArray.add(formato.format(c.getTime()));
 				c.add(Calendar.DAY_OF_MONTH,+1);
 //			day = c.get(Calendar.DAY_OF_MONTH);
 //			month = c.get(Calendar.MONTH);
 //			year = c.get(Calendar.YEAR);
 //			int mes=month+1;
 		    
-			SpinnerArray.add(formato.format(c.getTime()));
+			
 			
 			}
 		    adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, SpinnerArray);
