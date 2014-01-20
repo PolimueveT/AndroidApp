@@ -128,7 +128,7 @@ public class Registro extends Activity implements OnClickListener {
 	}
 
 	/**
-	 * Comprueba si todos los campos tienen información "correcta" para enviar
+	 * Comprueba si todos los campos tienen informaciï¿½n "correcta" para enviar
 	 * al servidor
 	 * 
 	 * @return true si la info es correcta , false en caso contrario
@@ -219,7 +219,7 @@ public class Registro extends Activity implements OnClickListener {
 
 		HttpRegister post = new HttpRegister();
 		post.execute("http://polimuevet.eu01.aws.af.cm/api/newuser");
-		// post.execute("http://192.168.1.12/api/newuser");
+		//post.execute("http://192.168.0.201:3000/api/newuser");
 
 	}
 
@@ -266,7 +266,7 @@ public class Registro extends Activity implements OnClickListener {
 	}
 
 	/**
-	 * Recoge la información que ha introducido el usuario en todos los campos y
+	 * Recoge la informaciï¿½n que ha introducido el usuario en todos los campos y
 	 * lo prepara para enviarlo en el POST creando pares de valores
 	 * 
 	 * @return la lista de pares clave valor
@@ -296,7 +296,7 @@ public class Registro extends Activity implements OnClickListener {
 	}
 
 	/**
-	 * Petición post al servidor a la url urls[0] que recibe como parÃ¡metro al
+	 * Peticiï¿½n post al servidor a la url urls[0] que recibe como parÃ¡metro al
 	 * instanciarse,el json que devuelve se guarda en respuesta variable global
 	 * de tipo Respuesta
 	 * 

@@ -82,7 +82,7 @@ public class Portada extends ActionBarActivity implements OnClickListener {
 		
 		HttpLogin post = new HttpLogin(Portada.this,recoger_datos());
 		//get.execute("http://polimuevet.eu01.aws.af.cm/api/isuserregistered/"+ usuario + "/" + password);
-		//post.execute("http://192.168.1.10:3000/api/ismailregistered");
+		//post.execute("http://192.168.0.201:3000/api/ismailregistered");
 		post.execute("http://polimuevet.eu01.aws.af.cm/api/ismailregistered");
 
 	}

@@ -306,7 +306,7 @@ public class Addtrip extends ActivityMenuLateral implements OnClickListener {
 
 		HttpNewTrip post = new HttpNewTrip(Addtrip.this, recoger_datos());
 		post.execute("http://polimuevet.eu01.aws.af.cm/api/newtrip");
-		//post.execute("http://192.168.1.10:3000/api/newtrip");
+		//post.execute("http://192.168.0.201:3000/api/newtrip");
 
 	}
 

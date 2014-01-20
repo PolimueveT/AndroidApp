@@ -61,7 +61,7 @@ public class EstadoParking extends ActivityMenuLateral {
 			// reintentar.setVisibility(View.GONE);
 		} else {
 			Toast notification = Toast.makeText(this,
-					"Activa tu conexión a internet", Toast.LENGTH_SHORT);
+					"Activa tu conexiï¿½n a internet", Toast.LENGTH_SHORT);
 			notification.setGravity(Gravity.CENTER, 0, 0);
 			notification.show();
 			progreso.setVisibility(View.GONE);
@@ -78,13 +78,14 @@ public class EstadoParking extends ActivityMenuLateral {
 
 		HttpParkings get = new HttpParkings(EstadoParking.this, progreso);
 		get.execute("http://polimuevet.eu01.aws.af.cm/api/parking");
+		//get.execute("http://192.168.0.201:3000/api/parking");
 
 	}
 
 	/**
-	 * Comprueba si el dispositivo tiene conexión a internet
+	 * Comprueba si el dispositivo tiene conexiï¿½n a internet
 	 * 
-	 * @return true si tiene conexión ,false en caso contrario
+	 * @return true si tiene conexiï¿½n ,false en caso contrario
 	 */
 
 	public boolean isOnline() {
