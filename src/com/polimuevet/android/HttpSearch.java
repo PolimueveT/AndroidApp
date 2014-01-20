@@ -88,6 +88,7 @@ OnItemClickListener{
 			notification.show();
 			
 			Intent intent = new Intent((Activity)context, Busqueda.class);
+			((Trayectos)context).cerrar = true;
 			((Activity)context).startActivity(intent);
 		}
 
@@ -188,8 +189,7 @@ OnItemClickListener{
 
 		
 		Intent intent = new Intent((Activity)context, TripDetail.class);
-		intent.putExtras(b);
-		((Trayectos)context).cerrar = true;
+		intent.putExtras(b);		
 		((Activity)context).startActivity(intent);
 		
 
