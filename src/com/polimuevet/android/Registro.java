@@ -49,7 +49,7 @@ import com.google.gson.GsonBuilder;
 public class Registro extends Activity implements OnClickListener {
 
 	static final int DATE_DIALOG_ID = 999;
-	private ProgressBar progreso;
+	//private ProgressBar progreso;
 	EditText user;
 	EditText email;
 	EditText pass;
@@ -72,7 +72,7 @@ public class Registro extends Activity implements OnClickListener {
 		setContentView(R.layout.activity_registro);
 		registrar = (Button) findViewById(R.id.registrar);
 		registrar.setOnClickListener(this);
-		progreso = (ProgressBar) findViewById(R.id.carga);
+		//progreso = (ProgressBar) findViewById(R.id.carga);
 		respuesta = new Respuesta();
 		user = (EditText) findViewById(R.id.nombreusuario);
 		email = (EditText) findViewById(R.id.emailusuario);
@@ -186,7 +186,8 @@ public class Registro extends Activity implements OnClickListener {
 					"Debes rellenar todos los campos", Toast.LENGTH_SHORT);
 			notification.setGravity(Gravity.CENTER, 0, 0);
 			notification.show();
-			progreso.setVisibility(View.GONE);
+			//progreso.setVisibility(View.GONE);
+			setProgressBarIndeterminateVisibility(false);
 		}
 
 		return ok;
@@ -205,7 +206,8 @@ public class Registro extends Activity implements OnClickListener {
 					"Activa tu conexión a internet", Toast.LENGTH_SHORT);
 			notification.setGravity(Gravity.CENTER, 0, 0);
 			notification.show();
-			progreso.setVisibility(View.GONE);
+			//progreso.setVisibility(View.GONE);
+			setProgressBarIndeterminateVisibility(false);
 		}
 	}
 
@@ -305,8 +307,8 @@ public class Registro extends Activity implements OnClickListener {
 		protected void onPostExecute(Void result) {
 			// TODO completar intent Acceso al app , error en caso contrario
 			super.onPostExecute(result);
-
-			progreso.setVisibility(View.GONE);
+			setProgressBarIndeterminateVisibility(false);
+			//progreso.setVisibility(View.GONE);
 			Log.d("JSON", respuesta.testrespuesta());
 			if (respuesta.success) {
 				Toast notification = Toast.makeText(Registro.this,
@@ -333,8 +335,8 @@ public class Registro extends Activity implements OnClickListener {
 		protected void onPreExecute() {
 			// TODO Auto-generated method stub
 			super.onPreExecute();
-			progreso.setVisibility(View.VISIBLE);
-
+			//progreso.setVisibility(View.VISIBLE);
+			setProgressBarIndeterminateVisibility(true);
 		}
 
 		@Override

@@ -39,7 +39,7 @@ public class Trayectos extends ActivityMenuLateral {
 		super.onCreate(savedInstanceState);
 		datosBusq = getIntent().getExtras();
 		setContentView(R.layout.activity_trayectos);
-		menu_lateral(R.array.lateral_trayectos, this);
+		menu_lateral(R.array.lateral_btrayectos, this);
 		progreso = (ProgressBar) findViewById(R.id.carga);
 		
 		//TripsView = (ListView) findViewById(R.id.trayectos);
@@ -104,8 +104,9 @@ public class Trayectos extends ActivityMenuLateral {
 	
 		switch (i) {
 		case 0:
-			// Intent intent = new Intent(Portada.this, Registro.class);
-			// startActivity(intent);
+			cerrar=true;
+			 Intent intent = new Intent(Trayectos.this, Addtrip.class);
+			 startActivity(intent);
 			break;
 		case 1:
 			cerrar = true;
@@ -114,13 +115,18 @@ public class Trayectos extends ActivityMenuLateral {
 			break;
 		case 2:
 			cerrar = true;
+			Intent intentc = new Intent(Trayectos.this, MisTrayectos.class);
+			startActivity(intentc);
+			
+			break;
+		case 3:
+			cerrar = true;
 			Intent intente = new Intent(Trayectos.this, EstadoParking.class);
 			startActivity(intente);
 
 			break;
-		case 3:
+		case 4:
 			cerrar_sesion();
-
 			break;
 
 		default:
@@ -203,11 +209,31 @@ public class Trayectos extends ActivityMenuLateral {
 	
 	
 	private List<NameValuePair> recoger_datos(Bundle b) {
+		SharedPreferences prefs =
+			     getSharedPreferences("ultimabusqueda",Context.MODE_PRIVATE);
+			 
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+		if(b!=null){
 		nameValuePairs.add(new BasicNameValuePair("origen", b.getString("origen")));
 		nameValuePairs.add(new BasicNameValuePair("destino", b.getString("destino")));
 		nameValuePairs.add(new BasicNameValuePair("Fecha", b.getString("Fecha")));
 		nameValuePairs.add(new BasicNameValuePair("Hora", b.getString("Hora")));
+		
+		
+			SharedPreferences.Editor editor = prefs.edit();
+		 editor.putString("origen",b.getString("origen"));
+		 editor.putString("destino", b.getString("destino"));
+		 editor.putString("Fecha", b.getString("Fecha"));
+		 editor.putString("Hora", b.getString("Hora"));
+		 editor.commit();
+		
+		}
+		else{
+			nameValuePairs.add(new BasicNameValuePair("origen", prefs.getString("origen", "")));
+			nameValuePairs.add(new BasicNameValuePair("destino",prefs.getString("destino", "")));
+			nameValuePairs.add(new BasicNameValuePair("Fecha", prefs.getString("Fecha", "")));
+			nameValuePairs.add(new BasicNameValuePair("Hora", prefs.getString("Hora", "")));
+		}
 		return nameValuePairs;
 	}
 

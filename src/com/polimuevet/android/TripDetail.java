@@ -125,7 +125,7 @@ public class TripDetail extends ActionBarActivity implements OnClickListener {
 		// obtener conductor
 
 		get = new HttpConductor(TripDetail.this, progreso);
-		get.execute(Config.URL + "/api/gettrips");
+		get.execute(Config.URL + "/api/getuser/"+id_conductor);
 
 	}
 

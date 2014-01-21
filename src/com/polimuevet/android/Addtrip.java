@@ -327,6 +327,8 @@ public class Addtrip extends ActivityMenuLateral implements OnClickListener {
 				(String) f.equipaje.getSelectedItem()));
 		nameValuePairs.add(new BasicNameValuePair("fecha_time", f
 				.obtener_fecha()));
+		
+		Log.d("FECHAAAA", f.obtener_fecha());
 
 		// Recoger datos del segundo fragment
 		FragmentNewTripRestricciones frag = (FragmentNewTripRestricciones) padapter

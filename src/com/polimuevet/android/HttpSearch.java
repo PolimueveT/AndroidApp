@@ -72,13 +72,13 @@ OnItemClickListener{
 					.findViewById(R.id.titulo);
 			titulo.setText(lista.getTrips().size() + " trayectos encontrados");
 			
-			Log.d("ADAPTER", "creamos adapter");
+			//Log.d("ADAPTER", "creamos adapter");
 			Tadapter = new AdaptadorTrips(context, R.layout.parking_row,
 					lista.getTrips());
 			TripsView.setAdapter(Tadapter);
-			Log.d("ADAPTER", "ponemos adapter");
+			//Log.d("ADAPTER", "ponemos adapter");
 			TripsView.setOnItemClickListener(this);
-			Log.d("ADAPTER", "ponemos clciklistener");
+			//Log.d("ADAPTER", "ponemos clciklistener");
 			//Tadapter.notifyDataSetChanged();
 
 		} else {

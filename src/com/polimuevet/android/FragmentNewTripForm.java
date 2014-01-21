@@ -89,11 +89,11 @@ public class FragmentNewTripForm extends Fragment implements TextWatcher,
 		cargarcalles();
 		cargarfacultades();
 		origen.setAdapter(new ArrayAdapter<String>(getActivity()
-				.getApplicationContext(),
+				,
 				android.R.layout.simple_dropdown_item_1line, calles));
 
 		destino.setAdapter(new ArrayAdapter<String>(getActivity()
-				.getApplicationContext(),
+				,
 				android.R.layout.simple_dropdown_item_1line, calles));
 
 		return view;
@@ -116,7 +116,7 @@ public class FragmentNewTripForm extends Fragment implements TextWatcher,
 	public void configurar_spinner() {
 		SpinnerArray = new ArrayList<String>();
 		SpinnerArray.add("Hoy");
-		SpinnerArray.add("Ma–ana");
+		SpinnerArray.add("MaÃ±ana");
 		final Calendar c = Calendar.getInstance();
 		year = c.get(Calendar.YEAR);
 		month = c.get(Calendar.MONTH);
@@ -268,7 +268,7 @@ public class FragmentNewTripForm extends Fragment implements TextWatcher,
 	}
 
 	/**
-	 * Comprueba si todos los campos tienen información "correcta" para enviar
+	 * Comprueba si todos los campos tienen informaciï¿½n "correcta" para enviar
 	 * al servidor
 	 * 
 	 * @return true si la info es correcta , false en caso contrario
@@ -296,7 +296,7 @@ public class FragmentNewTripForm extends Fragment implements TextWatcher,
 			ok = false;
 		}
 
-		// si no hay ningún campo vacio
+		// si no hay ningï¿½n campo vacio
 		if (ok) {
 			if (!comprobar_hora()) {
 				Toast notification = Toast.makeText(getActivity()
@@ -312,7 +312,7 @@ public class FragmentNewTripForm extends Fragment implements TextWatcher,
 
 				Toast notification = Toast.makeText(getActivity()
 						.getApplicationContext(),
-						"Error en el número de plazas", Toast.LENGTH_SHORT);
+						"Error en el nï¿½mero de plazas", Toast.LENGTH_SHORT);
 				notification.setGravity(Gravity.CENTER, 0, 0);
 				notification.show();
 				ok = false;
@@ -350,7 +350,7 @@ public class FragmentNewTripForm extends Fragment implements TextWatcher,
 		String dia = Items.getSelectedItem().toString();
 		if (dia.compareTo("Hoy") == 0) {
 			dia = today;
-		} else if (dia.compareTo("Mañana") == 0) {
+		} else if (dia.compareTo("MaÃ±ana") == 0) {
 			dia = tomorrow;
 		}
 		Date fechatime;
